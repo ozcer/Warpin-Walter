@@ -1,7 +1,7 @@
 import pygame
 
 
-# Parses buttons sent from Pygame and translates them into actionss
+# Parses buttons sent from Pygame and translates them into actions
 class EventProcessor:
 
     def __init__(self, state="game"):
@@ -10,11 +10,13 @@ class EventProcessor:
 
     def process(self, event):
         # TODO: Map main menu/pause to escape instead of quitting the game
-        if event.type == pygame.QUIT or event.key == pygame.K_ESCAPE:
-            return {"quit": "game"}
+        if event.type == pygame.QUIT:
+            return {"quit_game": ...}
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                return {"quit_game": ...}
         if self.state == "game":
             return self.process_game(event)
-        return {None: None}
 
     # TODO: allow for secondary button_mapping
     @staticmethod
@@ -30,10 +32,12 @@ class EventProcessor:
             if event.key == pygame.K_RIGHT:
                 return {"move": "right"}
             # TODO: Figure out a way to handle longer/shorter jumping by holding jump
-            if event.key == pygame.K_Z:
+            if event.key == pygame.K_z:
                 return {"jump": "start"}
-            if event.key == pygame.K_X:
+            if event.key == pygame.K_x:
                 return {"swap": "player"}
+
+        return {None: None}
 
 
 

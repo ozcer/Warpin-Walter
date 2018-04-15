@@ -3,6 +3,8 @@ import os
 import random
 import sys
 
+from src.event_processor import EventProcessor
+
 import pygame
 from pygame.locals import *
 from src.const import *
@@ -26,8 +28,10 @@ class Game:
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
         
-        player = Player(self, pos=(200,200))
+        player = Player(self, pos=(200, 200))
         self.add_entity(player)
+
+        self.event_processor = EventProcessor()
         
         for i in range(7):
             ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
@@ -43,16 +47,36 @@ class Game:
             self.update_all_sprites()
             self.draw_all_sprites()
 
-            # fps and update display
             pygame.display.update()
             self.fps_clock.tick(FPS)
-            
-            self.events = pygame.event.get()
+
+            self.events = map(self.event_processor.process, pygame.event.get())
+
             for event in self.events:
-                if event.type == QUIT:
+                quit_game = event.get("quit_game")
+                move = event.get("move")
+                jump = event.get("jump")
+                swap = event.get("swap")
+
+                if quit_game:
                     pygame.quit()
                     sys.exit()
-    
+
+                if move:
+                    if move == "left":
+                        pass
+
+                    elif move == "right":
+                        pass
+
+                if jump:
+                    if jump == "start":
+                        pass
+
+                if swap:
+                    if swap == "player":
+                        pass
+
     def update_all_sprites(self):
         # update all objects
         for sprite in self.entities[ALL_SPRITES]:
@@ -65,16 +89,16 @@ class Game:
                              reverse=True):
             sprite.draw()
     
-    def add_entity(self, object):
+    def add_entity(self, entity):
         # add to its own sprite group
-        class_name = object.__class__.__name__
+        class_name = entity.__class__.__name__
         if class_name not in self.entities:
             self.entities[class_name] = pygame.sprite.Group()
-        self.entities[class_name].add(object)
-        logging.info(f"{object} created")
+        self.entities[class_name].add(entity)
+        logging.info(f"{entity} created")
         
         # also add to global sprite group
-        self.entities[ALL_SPRITES].add(object)
+        self.entities[ALL_SPRITES].add(entity)
     
 
 if __name__ == "__main__":
