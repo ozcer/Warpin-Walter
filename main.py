@@ -12,8 +12,8 @@ from src.const import *
 class Game:
     
     def __init__(self):
-        # pygame window setups
-        os.environ['SDL_VIDEO_CENTERED'] = '1'  # center window
+        # Pygame window setups
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
         pygame.display.set_caption(CAPTION)
         self.surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), 0, 32)
