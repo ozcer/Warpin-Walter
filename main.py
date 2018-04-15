@@ -6,6 +6,7 @@ import sys
 import pygame
 from pygame.locals import *
 from src.const import *
+from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 
 
@@ -27,6 +28,11 @@ class Game:
         
         player = Player(self, pos=(200,200))
         self.add_entity(player)
+        
+        for i in range(7):
+            ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
+                                       DISPLAY_HEIGHT - Ground.height /3 ))
+            self.add_entity(ground)
         
         self.run()
     
