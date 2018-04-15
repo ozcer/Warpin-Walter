@@ -1,10 +1,10 @@
 import pygame
 
 from src.const import *
-from src.game_objects.game_object import GameObject
+from src.game_objects.dynamics import Dynamic
 
 
-class Player(GameObject):
+class Player(Dynamic):
     
     def __init__(self, *args,
                  pos,
