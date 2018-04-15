@@ -8,6 +8,7 @@ from src.event_processor import EventProcessor
 import pygame
 from pygame.locals import *
 from src.const import *
+from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 
 
@@ -31,6 +32,11 @@ class Game:
         self.add_entity(player)
 
         self.event_processor = EventProcessor()
+        
+        for i in range(7):
+            ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
+                                       DISPLAY_HEIGHT - Ground.height /3 ))
+            self.add_entity(ground)
         
         self.run()
     

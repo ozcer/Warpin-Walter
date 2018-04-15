@@ -4,7 +4,7 @@ import pygame
 class GameObject(pygame.sprite.Sprite):
     
     def __init__(self, game, *args,
-                 pos, depth, image, **kwargs):
+                 pos, depth=0, image, **kwargs):
         super().__init__()
         
         self.game = game

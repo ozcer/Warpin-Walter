@@ -4,17 +4,18 @@ from src.const import *
 from src.game_objects.game_object import GameObject
 
 
-class Player(GameObject):
+class Ground(GameObject):
+    
+    width, height = 100, 100
     
     def __init__(self, *args,
                  pos,
                  **kwargs):
-        
         super().__init__(*args,
                          pos=pos,
-                         image=pygame.Surface((50,50)),
+                         image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
-        self.image.fill(YELLOW)
+        self.image.fill(L_BLUE)
     
     def update(self):
         super().update()
