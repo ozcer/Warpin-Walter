@@ -6,7 +6,7 @@ import sys
 import pygame
 from pygame.locals import *
 from src.const import *
-
+from src.game_objects.player import Player
 
 
 class Game:
@@ -24,6 +24,9 @@ class Game:
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
+        
+        player = Player(self, pos=(200,200))
+        self.add_entity(player)
         
         self.run()
     
