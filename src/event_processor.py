@@ -1,7 +1,7 @@
 import pygame
 
 
-# Parses buttons sent from Pygame and translates them into actions
+# Parses buttons sent from Pygame and translates them into actionss
 class EventProcessor:
 
     def __init__(self, state="game"):
