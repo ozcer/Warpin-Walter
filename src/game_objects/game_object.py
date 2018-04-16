@@ -19,4 +19,5 @@ class GameObject(pygame.sprite.Sprite):
         pass
     
     def draw(self):
-        self.game.surface.blit(self.image, self.rect)
+        adjusted = self.game.camera.adjust_rect(self.rect)
+        self.game.surface.blit(self.image, adjusted)
