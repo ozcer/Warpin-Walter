@@ -1,4 +1,4 @@
-
+from src.const import *
 from src.game_objects.game_object import GameObject
 
 class Dynamic(GameObject):
@@ -19,3 +19,6 @@ class Dynamic(GameObject):
         self.x += self.dx
         self.y += self.dy
         self.rect.center = self.x, self.y
+    
+    def apply_gravity(self):
+        self.dy += GRAVITY
