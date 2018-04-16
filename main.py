@@ -3,6 +3,7 @@ import os
 import random
 import sys
 
+from src.camera import Camera
 from src.event_processor import EventProcessor
 
 import pygame
@@ -27,6 +28,9 @@ class Game:
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
+        
+        screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
+        self.camera = Camera(screen)
         
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
