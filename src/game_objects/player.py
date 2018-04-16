@@ -1,6 +1,7 @@
 import pygame
 
 from src.const import *
+from pygame.locals import *
 from src.game_objects.dynamics import Dynamic
 
 
@@ -21,25 +22,25 @@ class Player(Dynamic):
     def update(self):
         super().update()
         self.dx = 0
-        for event in self.game.events:
-            self.process_event(event)
+        self.process_event()
+        self.game.camera.rect.center = self.x, self.y
 
     def draw(self):
         super().draw()
 
-    def process_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_z:
-                self.jump()
-            elif event.key == pygame.K_x:
-                self.swap()
-            elif event.key == pygame.K_LEFT:
-                self.move("left")
-            elif event.key == pygame.K_RIGHT:
-                self.move("right")
+    def process_event(self):
+        # for event in self.game.events:
+        #     if event.type == KEYDOWN:
+        #         if event.key == K_RIGHT:
+        #             self.move("right")
+        keys = pygame.key.get_pressed()  # checking pressed keys
+        if keys[pygame.K_RIGHT]:
+            self.move("right")
+        if keys[pygame.K_LEFT]:
+            self.move("left")
 
     def move(self, direction):
         if direction == "left":
-            self.dx -= self.speed
+            self.dx = -self.speed
         if direction == "right":
-            self.dx += self.speed
+            self.dx = self.speed
