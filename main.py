@@ -57,9 +57,6 @@ class Game:
             pygame.display.update()
             self.fps_clock.tick(FPS)
 
-
-
-
     def update_all_sprites(self):
         # update all objects
         for sprite in self.entities[ALL_SPRITES]:

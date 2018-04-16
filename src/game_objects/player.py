@@ -29,10 +29,6 @@ class Player(Dynamic):
         super().draw()
 
     def process_event(self):
-        # for event in self.game.events:
-        #     if event.type == KEYDOWN:
-        #         if event.key == K_RIGHT:
-        #             self.move("right")
         keys = pygame.key.get_pressed()  # checking pressed keys
         if keys[pygame.K_RIGHT]:
             self.move("right")
