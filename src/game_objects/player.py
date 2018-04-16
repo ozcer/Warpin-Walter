@@ -24,6 +24,7 @@ class Player(Dynamic):
         self.dx = 0
         self.process_event()
         self.game.camera.rect.center = self.x, self.y
+        self.apply_gravity()
 
     def draw(self):
         super().draw()
