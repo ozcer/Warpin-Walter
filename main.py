@@ -4,7 +4,6 @@ import random
 import sys
 
 from src.camera import Camera
-from src.event_processor import EventProcessor
 
 import pygame
 from pygame.locals import *
@@ -34,8 +33,6 @@ class Game:
         
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
-
-        self.event_processor = EventProcessor()
         
         for i in range(7):
             ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
@@ -48,37 +45,20 @@ class Game:
         while True:
             self.surface.fill(L_GREY)
 
-            self.process_events()
+            if pygame.event.peek(pygame.QUIT):
+                pygame.quit()
+                sys.exit()
+
+            self.events = pygame.event.get()
+
             self.update_all_sprites()
             self.draw_all_sprites()
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
 
-            for event in self.events:
-                quit_game = event.get("quit_game")
-                move = event.get("move")
-                jump = event.get("jump")
-                swap = event.get("swap")
 
-                if quit_game:
-                    pygame.quit()
-                    sys.exit()
 
-                if move:
-                    if move == "left":
-                        pass
-
-                    elif move == "right":
-                        pass
-
-                if jump:
-                    if jump == "start":
-                        pass
-
-                if swap:
-                    if swap == "player":
-                        pass
 
     def update_all_sprites(self):
         # update all objects
@@ -102,10 +82,6 @@ class Game:
         
         # also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
-
-    def process_events(self):
-        self.events = map(self.event_processor.process, pygame.event.get())
-    
 
 if __name__ == "__main__":
     Game()
