@@ -47,14 +47,13 @@ class Game:
     def run(self):
         while True:
             self.surface.fill(L_GREY)
-            
+
+            self.process_events()
             self.update_all_sprites()
             self.draw_all_sprites()
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
-
-            self.events = map(self.event_processor.process, pygame.event.get())
 
             for event in self.events:
                 quit_game = event.get("quit_game")
@@ -103,6 +102,9 @@ class Game:
         
         # also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
+
+    def process_events(self):
+        self.events = map(self.event_processor.process, pygame.event.get())
     
 
 if __name__ == "__main__":
