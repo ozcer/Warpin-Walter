@@ -29,4 +29,4 @@ D_BLUE = (0, 75, 160)
 # group of all sprite
 ALL_SPRITES = "ALL"
 
-GRAVITY = .5
+GRAVITY = .1
