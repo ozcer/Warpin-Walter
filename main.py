@@ -31,18 +31,21 @@ class Game:
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
         
+        self.world = "one"
+        
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
         
         for i in range(7):
             ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                        DISPLAY_HEIGHT - Ground.height / 3))
-            self.add_entity(ground)
+            self.add_entity(ground, "one")
             
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
-                self.add_entity(ground)
+                self.add_entity(ground, "two")
+        
         self.run()
     
     def run(self):
@@ -72,7 +75,10 @@ class Game:
                              reverse=True):
             sprite.draw()
     
-    def add_entity(self, entity):
+    def add_entity(self, entity, world=None):
+        # Tag it with world
+        entity.world = None if world is None else world
+        
         # Add entity to class's sprite group
         class_name = entity.__class__.__name__
         if class_name not in self.entities:
@@ -82,6 +88,8 @@ class Game:
         
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
+        
+
 
 if __name__ == "__main__":
     Game()
