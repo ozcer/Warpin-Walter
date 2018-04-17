@@ -57,6 +57,7 @@ class Player(Dynamic):
     def warp(self):
         self.game.world = "two" if self.game.world == "one" else "one"
         print(f"world switched to {self.game.world}")
+        print(f"player world {self.world}")
     
     def on_ground(self):
         detector = self.rect.copy()

@@ -40,6 +40,10 @@ class Game:
             ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                        DISPLAY_HEIGHT - Ground.height / 3))
             self.add_entity(ground, "one")
+
+            ground2 = Ground(self, pos=(i * Ground.width + Ground.width / 2,
+                                       DISPLAY_HEIGHT - Ground.height / 3))
+            self.add_entity(ground2, "two")
             
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
@@ -70,10 +74,15 @@ class Game:
     
     def draw_all_sprites(self):
         # Draw based on depth
-        for sprite in sorted(self.entities[ALL_SPRITES],
-                             key=lambda sprite: sprite.depth,
-                             reverse=True):
-            sprite.draw()
+        sorted_by_depth = sorted(self.entities[ALL_SPRITES],
+                                 key=lambda sprite: sprite.depth,
+                                 reverse=True)
+        for sprite in sorted_by_depth:
+            if sprite.world != self.world and self.world is not None:
+                sprite.draw()
+        for sprite in sorted_by_depth:
+            if sprite.world == self.world or sprite.world is None:
+                sprite.draw()
     
     def add_entity(self, entity, world=None):
         # Tag it with world
