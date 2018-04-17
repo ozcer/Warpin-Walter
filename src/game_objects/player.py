@@ -2,7 +2,7 @@ import pygame
 
 from src.const import *
 from pygame.locals import *
-from src.game_objects.dynamics import Dynamic
+from src.game_objects.dynamic import Dynamic
 
 
 class Player(Dynamic):
