@@ -25,7 +25,7 @@ class GameObject(pygame.sprite.Sprite):
     def draw(self):
         adjusted = self.game.camera.adjust_rect(self.rect)
         if self.world is not None and self.world != self.game.world:
-            self.image.fill(D_GREY)
+            self.image.fill(L_GREY)
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
