@@ -15,7 +15,7 @@ from src.game_objects.player import Player
 class Game:
     
     def __init__(self):
-        # Pygame window setups
+        # Intializing Pygame window
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
         pygame.display.set_caption(CAPTION)
@@ -35,13 +35,13 @@ class Game:
         self.add_entity(player)
         
         for i in range(7):
-            ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
-                                       DISPLAY_HEIGHT - Ground.height /3 ))
+            ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
+                                       DISPLAY_HEIGHT - Ground.height / 3))
             self.add_entity(ground)
             
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
-                                           DISPLAY_HEIGHT - Ground.height *4/ 3))
+                                           DISPLAY_HEIGHT - Ground.height * 4 / 3))
                 self.add_entity(ground)
         self.run()
     
@@ -62,26 +62,25 @@ class Game:
             self.fps_clock.tick(FPS)
 
     def update_all_sprites(self):
-        # update all objects
         for sprite in self.entities[ALL_SPRITES]:
             sprite.update()
     
     def draw_all_sprites(self):
-        # draw abased on depth
+        # Draw based on depth
         for sprite in sorted(self.entities[ALL_SPRITES],
                              key=lambda sprite: sprite.depth,
                              reverse=True):
             sprite.draw()
     
     def add_entity(self, entity):
-        # add to its own sprite group
+        # Add entity to class's sprite group
         class_name = entity.__class__.__name__
         if class_name not in self.entities:
             self.entities[class_name] = pygame.sprite.Group()
         self.entities[class_name].add(entity)
         logging.info(f"{entity} created")
         
-        # also add to global sprite group
+        # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
 
 if __name__ == "__main__":

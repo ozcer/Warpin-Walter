@@ -30,13 +30,14 @@ class Player(Dynamic):
         super().draw()
 
     def process_event(self):
-        keys = pygame.key.get_pressed()  # checking pressed keys
+        # Checking pressed keys
+        keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.move("right")
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
         
-        if keys[pygame.K_SPACE] and self.on_ground():
+        if (keys[pygame.K_SPACE] or keys[pygame.K_x])and self.on_ground():
             self.dy -= 10
 
     def move(self, direction):
