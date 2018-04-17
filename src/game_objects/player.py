@@ -41,7 +41,7 @@ class Player(Dynamic):
             self.move("left")
         # Jumping
         if (keys[pygame.K_w] or keys[pygame.K_x])and self.on_ground():
-            self.dy -= 10
+            self.dy -= 15
         # Warping
         for event in self.game.events:
             if event.type == pygame.KEYDOWN:
