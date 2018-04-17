@@ -30,3 +30,12 @@ D_BLUE = (0, 75, 160)
 ALL_SPRITES = "ALL"
 
 GRAVITY = .1
+
+
+def sign(num):
+    if num > 0:
+        return 1
+    elif num < 0:
+        return -1
+    else:
+        return 0

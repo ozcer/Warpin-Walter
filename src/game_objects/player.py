@@ -35,9 +35,19 @@ class Player(Dynamic):
             self.move("right")
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
+        
+        if keys[pygame.K_SPACE] and self.on_ground():
+            self.dy -= 3
 
     def move(self, direction):
         if direction == "left":
             self.dx = -self.speed
         if direction == "right":
             self.dx = self.speed
+    
+    def on_ground(self):
+        detector = self.rect.copy()
+        detector.bottom += 1
+        if self.detect_solid(detector):
+            return True
+        return False
