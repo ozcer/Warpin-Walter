@@ -4,7 +4,7 @@ import pygame
 class GameObject(pygame.sprite.Sprite):
     
     def __init__(self, game, *args,
-                 pos, depth=0, image, **kwargs):
+                 pos, depth=0, image, is_solid=True, **kwargs):
         super().__init__()
         
         self.game = game
@@ -12,7 +12,10 @@ class GameObject(pygame.sprite.Sprite):
         self.depth = depth
         self.image = image
         self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         self.rect.center = self.x, self.y
+        
+        self.is_solid = is_solid
 
     def update(self):
         pass
