@@ -29,7 +29,7 @@ D_BLUE = (0, 75, 160)
 # group of all sprite
 ALL_SPRITES = "ALL"
 
-GRAVITY = .1
+GRAVITY = .5
 
 
 def sign(num):

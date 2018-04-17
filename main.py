@@ -38,7 +38,11 @@ class Game:
             ground = Ground(self, pos=(i * Ground.width + Ground.width /2 ,
                                        DISPLAY_HEIGHT - Ground.height /3 ))
             self.add_entity(ground)
-        
+            
+            if i == 4:
+                ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
+                                           DISPLAY_HEIGHT - Ground.height *4/ 3))
+                self.add_entity(ground)
         self.run()
     
     def run(self):

@@ -37,7 +37,7 @@ class Player(Dynamic):
             self.move("left")
         
         if keys[pygame.K_SPACE] and self.on_ground():
-            self.dy -= 3
+            self.dy -= 10
 
     def move(self, direction):
         if direction == "left":
