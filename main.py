@@ -113,10 +113,5 @@ class Game:
     def reset(self):
         self.test_level()
 
-
-
-
-
-
 if __name__ == "__main__":
     Game()
