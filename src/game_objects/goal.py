@@ -13,10 +13,18 @@ class Goal(GameObject):
                          pos=pos,
                          image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
-        self.goal = True
 
     def update(self):
         super().update()
 
     def draw(self):
         super().draw()
+
+    def collide_logic(self, entity):
+        try:
+            player = entity.is_player
+        except AttributeError:
+            return None
+        finally:
+            if player:
+                return "goal"

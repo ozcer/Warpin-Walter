@@ -19,6 +19,7 @@ class Player(Dynamic):
         self.color = YELLOW
         self.image.fill(self.color)
         self.speed = 7
+        self.is_player = True
     
     def update(self):
         super().update()

@@ -30,3 +30,8 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
+
+    def collide_logic(self, entity):
+        return None
+
+

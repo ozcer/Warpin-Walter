@@ -10,7 +10,7 @@ from pygame.locals import *
 from src.const import *
 from src.game_objects.ground import Ground
 from src.game_objects.player import Player
-
+from src.game_objects.goal import Goal
 
 class Game:
     
@@ -49,6 +49,12 @@ class Game:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
                 self.add_entity(ground, "two")
+
+            if i == 6:
+                goal = goal(self, pos=(i * Ground.width + Ground.width / 2,
+                                           DISPLAY_HEIGHT - Ground.height * 4 / 3))
+                self.add_entity(goal, "two")
+
         
         self.run()
     
@@ -97,6 +103,15 @@ class Game:
         
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
+
+    @staticmethod
+    def exit_game(message=EXIT_MESSAGE, log=False):
+        if log:
+            logging.info(message)
+        else:
+            print(message)
+        pygame.quit()
+        sys.exit()
 
 if __name__ == "__main__":
     Game()

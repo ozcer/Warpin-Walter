@@ -7,6 +7,7 @@ START_WINDOW_POS = (100,100)
 
 # logging
 LOG_LEVEL = "NOTSET"
+EXIT_MESSAGE = "The game has exited"
 
 # colors
 WHITE = (255, 255, 255)

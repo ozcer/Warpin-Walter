@@ -30,26 +30,38 @@ class Dynamic(GameObject):
 
         y_adjusted = self.game.camera.adjust_rect(y_projection)
         pygame.draw.rect(self.game.surface, GREEN, y_adjusted)
-        
+        collision_flags = []
         x_collidee = self.detect_solid(x_projection)
         if x_collidee:
-            # if collide from right
-            if x_collidee.rect.centerx > self.rect.centerx:
-                x_projection.right = x_collidee.rect.left
-                self.dx = 0
+            x_collision_flag = x_collidee.collide_logic(self)
+            if x_collision_flag is None:
+                # if collide from right
+                if x_collidee.rect.centerx > self.rect.centerx:
+                    x_projection.right = x_collidee.rect.left
+                    self.dx = 0
+                else:
+                    x_projection.left = x_collidee.rect.right
+                    self.dx = 0
             else:
-                x_projection.left = x_collidee.rect.right
-                self.dx = 0
+                collision_flags.append(x_collision_flag)
 
         y_collidee = self.detect_solid(y_projection)
         if y_collidee:
-            # if collide from bottom
-            if y_collidee.rect.centery > self.rect.centery:
-                y_projection.bottom = y_collidee.rect.top
-                self.dy = 0
+            y_collision_flag = y_collidee.collide_logic(self)
+            if y_collision_flag is None:
+                # if collide from bottom
+                if y_collidee.rect.centery > self.rect.centery:
+                    y_projection.bottom = y_collidee.rect.top
+                    self.dy = 0
+                else:
+                    y_projection.top = y_collidee.rect.bottom
+                    self.dy = 0
             else:
-                y_projection.top = y_collidee.rect.bottom
-                self.dy = 0
+                collision_flags.append(y_collision_flag)
+
+        if "goal" in collision_flags:
+            exit_message = "YOU WIN!"
+            self.game.exit_game(exit_message, log=True)
             
         self.rect.center = x_projection.centerx, y_projection.centery
         self.x, self.y = self.rect.center
