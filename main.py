@@ -25,6 +25,9 @@ class Game:
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')
 
+        self.test_level()
+
+    def test_level(self):
         self.entities = {ALL_ENTITIES: sprite.Group(), WORLD_1: {ALL_ENTITIES: sprite.Group()},
                          WORLD_2: {ALL_ENTITIES: sprite.Group()}, BOTH_WORLDS: {ALL_ENTITIES: sprite.Group()}}
         self.fps_clock = pygame.time.Clock()
@@ -32,7 +35,7 @@ class Game:
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
         self.world = WORLD_1
-        
+
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
         for i in range(7):
@@ -43,22 +46,23 @@ class Game:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
                 self.add_entity(ground, WORLD_2)
-        self.color = PALETTE_D_GREEN
+        self.background_color = PALETTE_D_GREEN
         self.run()
-    
-    def run(self):
-        while True:
-            self.surface.fill(self.color)
-            if pygame.event.peek(pygame.QUIT):
-                pygame.quit()
-                sys.exit()
 
+    def run(self):
+        running = True
+        while running:
+            self.surface.fill(self.background_color)
+            if pygame.event.peek(pygame.QUIT):
+                running = False
             self.events = pygame.event.get()
             self.update_all_sprites()
             self.draw_all_sprites()
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
+        pygame.quit()
+        sys.exit()
 
     def update_all_sprites(self):
         for x in self.entities[ALL_ENTITIES]:
@@ -104,6 +108,11 @@ class Game:
             entity.change_color("Active")
         for entity in self.entities[old_world][ALL_ENTITIES]:
             entity.change_color("Passive")
+        logging.info(f"Warped from {old_world} to {self.world}")
+
+    def reset(self):
+        self.test_level()
+
 
 
 

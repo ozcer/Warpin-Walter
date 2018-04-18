@@ -37,13 +37,16 @@ class Player(Dynamic):
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
         
-        if (keys[pygame.K_SPACE] or keys[pygame.K_z])and self.on_ground():
+        if (keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP] or keys[pygame.K_z])and self.on_ground():
             self.dy -= 10
 
         for event in self.game.events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
+                key = event.key
+                if key == pygame.K_x:
                     self.warp()
+                elif key == pygame.K_r or key == pygame.K_c:
+                    self.reset()
 
     def move(self, direction):
         if direction == "left":
@@ -60,3 +63,6 @@ class Player(Dynamic):
 
     def warp(self):
         self.game.warp_world()
+
+    def reset(self):
+        self.game.reset()
