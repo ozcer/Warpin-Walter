@@ -45,10 +45,19 @@ ALL_SPRITES = "ALL"
 GRAVITY = .5
 
 
-def sign(num):
-    if num > 0:
-        return 1
-    elif num < 0:
-        return -1
-    else:
-        return 0
+def build_row(cls, game, start_pos, next_pos, amount, worlds):
+    """
+    given start position and next relative position
+    build that many items and put them in given worlds
+    :param cls: class to build
+    :param start_pos: (int, int)
+    :param next_pos: (int, int)
+    :param amount: int
+    :param worlds: [str, str...]
+    :return: None
+    """
+    for i in range(amount):
+        for world in worlds:
+            instance = cls(game, pos=(start_pos[0] + i * next_pos[0],
+                                      start_pos[1] + i * next_pos[1]))
+            game.add_entity(instance, world)

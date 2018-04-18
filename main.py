@@ -36,25 +36,12 @@ class Game:
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
         
-        for i in range(7):
-            ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
-                                       DISPLAY_HEIGHT - Ground.height / 3))
-            self.add_entity(ground, "one")
-
-            ground2 = Ground(self, pos=(i * Ground.width + Ground.width / 2,
-                                       DISPLAY_HEIGHT - Ground.height / 3))
-            self.add_entity(ground2, "two")
-            
-            if i == 4:
-                ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
-                                           DISPLAY_HEIGHT - Ground.height * 4 / 3))
-                self.add_entity(ground, "two")
+        self.build_test_level()
 
             if i == 6:
                 goal = goal(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
                 self.add_entity(goal, "two")
-
         
         self.run()
     
@@ -103,6 +90,40 @@ class Game:
         
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
+
+    def build_test_level(self):
+        bottom_left_pos = (0, 500)
+        bottom_right_pos = None
+        width = 13
+
+        # Left guard
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
+                  3,
+                  ["one", "two"])
+        # Floor
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0], bottom_left_pos[1]),
+                  (Ground.height, 0),
+                  13,
+                  ["one", "two"])
+        # Right guard
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0] + (width-1) * Ground.width, bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
+                  3,
+                  ["one", "two"])
+        # World 1 wall
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0] + Ground.width * 5, bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
+                  3,
+                  ["one"])
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
