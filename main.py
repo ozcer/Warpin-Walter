@@ -103,14 +103,14 @@ class Game:
                   self,
                   (bottom_left_pos[0], bottom_left_pos[1]),
                   (Ground.height, 0),
-                  13,
+                  width,
                   ["one", "two"])
         # Right guard
-        build_row(Goal,
+        build_row(Ground,
                   self,
                   (bottom_left_pos[0] + (width-1) * Goal.width, bottom_left_pos[1] - Goal.height),
                   (0, -Goal.height),
-                  1,
+                  3,
                   ["one", "two"])
         # World 1 wall
         build_row(Ground,
@@ -119,6 +119,28 @@ class Game:
                   (0, -Ground.height),
                   3,
                   ["one"])
+        # World 2 walls
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
+                  3,
+                  ["two"])
+
+        build_row(Ground,
+                  self,
+                  (bottom_left_pos[0] + Ground.width * 7, bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
+                  3,
+                  ["two"])
+
+        build_row(Goal,
+                  self,
+                  (bottom_left_pos[0] + (width - 2) * Ground.height,
+                   bottom_left_pos[1] - Ground.height),
+                  (0, 0),
+                  1,
+                  ["one", "two"])
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
@@ -128,6 +150,7 @@ class Game:
             print(message)
         pygame.quit()
         sys.exit()
+
 
 if __name__ == "__main__":
     Game()
