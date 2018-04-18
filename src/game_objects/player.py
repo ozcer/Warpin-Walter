@@ -15,8 +15,8 @@ class Player(Dynamic):
                          pos=pos,
                          image=pygame.Surface((50, 50)),
                          **kwargs)
-        self.color = YELLOW
-        self.image.fill(self.color)
+
+        self.colors = {BOTH_WORLDS: PLAYER_COLOR}
         self.speed = 7
     
     def update(self):
