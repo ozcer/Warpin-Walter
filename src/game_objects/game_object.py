@@ -30,15 +30,3 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
-
-    def set_color(self, world):
-        self.world = world
-        self.color = self.colors[world]
-        self.image.fill(self.color)
-
-    def warp_color(self, state):
-        if self.world == BOTH_WORLDS:
-            self.color = self.colors[BOTH_WORLDS]
-            return
-        self.color = self.colors[state]
-        self.image.fill(self.color)
