@@ -65,7 +65,7 @@ class Dynamic(GameObject):
         both_world_entities = self.game.entities[BOTH_WORLDS][ALL_ENTITIES].sprites()
         total_entities = active_entities + both_world_entities
         for sprite in total_entities:
-            if sprite is not self and sprite.rect.colliderect(rect):
+            if sprite is not self and sprite.rect.colliderect(rect) and sprite.world == self.game.world:
                 return sprite
     
     def apply_gravity(self):

@@ -1,6 +1,8 @@
 import pygame
 from src.const import *
 
+from src.const import *
+
 
 class GameObject(pygame.sprite.Sprite):
     
@@ -23,6 +25,10 @@ class GameObject(pygame.sprite.Sprite):
     
     def draw(self):
         adjusted = self.game.camera.adjust_rect(self.rect)
+        if self.world is not None and self.world != self.game.world:
+            self.image.fill(L_GREY)
+        else:
+            self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
 
     def set_color(self, world):

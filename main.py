@@ -41,7 +41,11 @@ class Game:
         for i in range(7):
             ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                        DISPLAY_HEIGHT - Ground.height / 3))
-            self.add_entity(ground)
+            self.add_entity(ground, "one")
+
+            ground2 = Ground(self, pos=(i * Ground.width + Ground.width / 2,
+                                       DISPLAY_HEIGHT - Ground.height / 3))
+            self.add_entity(ground2, "two")
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
@@ -93,8 +97,7 @@ class Game:
         logging.info(f"{entity} created in {world}")
         
         # Also add to global entity groups
-        self.entities[world][ALL_ENTITIES].add(entity)
-        self.entities[ALL_ENTITIES].add(entity)
+        self.entities[world][ALL_ENTITIES].add(entity)self.entities[ALL_ENTITIES].add(entity)
         entity.set_color(world)
 
     def warp_world(self):
@@ -112,6 +115,7 @@ class Game:
 
     def reset(self):
         self.test_level()
+
 
 if __name__ == "__main__":
     Game()
