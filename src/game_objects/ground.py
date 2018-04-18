@@ -15,7 +15,8 @@ class Ground(GameObject):
                          pos=pos,
                          image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
-        self.colors = {"Active": PALETTE_D_ORANGE, "Passive": PALETTE_L_BLUE, BOTH_WORLDS: PALETTE_L_GREY}
+        self.color = L_BLUE
+        self.image.fill(self.color)
     
     def update(self):
         super().update()

@@ -6,7 +6,6 @@ import sys
 from src.camera import Camera
 
 import pygame
-from pygame import sprite
 from pygame.locals import *
 from src.const import *
 from src.game_objects.ground import Ground
@@ -16,7 +15,7 @@ from src.game_objects.player import Player
 class Game:
     
     def __init__(self):
-        # Initializing Pygame window
+        # Intializing Pygame window
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
         pygame.display.set_caption(CAPTION)
@@ -25,93 +24,79 @@ class Game:
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')
 
-        self.test_level()
-
-    def test_level(self):
-        self.entities = {ALL_ENTITIES: sprite.Group(), WORLD_1: {ALL_ENTITIES: sprite.Group()},
-                         WORLD_2: {ALL_ENTITIES: sprite.Group()}, BOTH_WORLDS: {ALL_ENTITIES: sprite.Group()}}
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
+        
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
-        self.world = WORLD_1
-
+        
+        self.world = "one"
+        
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
+        
         for i in range(7):
             ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                        DISPLAY_HEIGHT - Ground.height / 3))
-            self.add_entity(ground)
+            self.add_entity(ground, "one")
+
+            ground2 = Ground(self, pos=(i * Ground.width + Ground.width / 2,
+                                       DISPLAY_HEIGHT - Ground.height / 3))
+            self.add_entity(ground2, "two")
+            
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
-                self.add_entity(ground, WORLD_2)
-        self.background_color = PALETTE_D_GREEN
+                self.add_entity(ground, "two")
+        
         self.run()
-
+    
     def run(self):
-        running = True
-        while running:
-            self.surface.fill(self.background_color)
+        while True:
+            self.surface.fill(L_GREY)
+
             if pygame.event.peek(pygame.QUIT):
-                running = False
+                pygame.quit()
+                sys.exit()
+
             self.events = pygame.event.get()
+
             self.update_all_sprites()
             self.draw_all_sprites()
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
-        pygame.quit()
-        sys.exit()
 
     def update_all_sprites(self):
-        for x in self.entities[ALL_ENTITIES]:
-            x.update()
+        for sprite in self.entities[ALL_SPRITES]:
+            sprite.update()
     
     def draw_all_sprites(self):
-        current_world = self.world
-        if current_world == WORLD_1:
-            passive_world = WORLD_2
-        else:
-            passive_world = WORLD_1
-        active_entities = self.entities[current_world][ALL_ENTITIES].sprites()
-        active_entities += self.entities[BOTH_WORLDS][ALL_ENTITIES].sprites()
-        active_entities.sort(key=lambda x: x.depth, reverse=True)
-        passive_entities = self.entities[passive_world][ALL_ENTITIES].sprites()
-        passive_entities.sort(key=lambda x: x.depth, reverse=True)
-        total_entities = passive_entities + active_entities
         # Draw based on depth
-        for entity in total_entities:
-            entity.draw()
+        sorted_by_depth = sorted(self.entities[ALL_SPRITES],
+                                 key=lambda sprite: sprite.depth,
+                                 reverse=True)
+        for sprite in sorted_by_depth:
+            if sprite.world != self.world and self.world is not None:
+                sprite.draw()
+        for sprite in sorted_by_depth:
+            if sprite.world == self.world or sprite.world is None:
+                sprite.draw()
     
-    def add_entity(self, entity, world=BOTH_WORLDS):
+    def add_entity(self, entity, world=None):
+        # Tag it with world
+        entity.world = None if world is None else world
+        
         # Add entity to class's sprite group
         class_name = entity.__class__.__name__
-        if class_name not in self.entities[world]:
-            self.entities[world][class_name] = sprite.Group()
-        self.entities[world][class_name].add(entity)
-        logging.info(f"{entity} created in {world}")
+        if class_name not in self.entities:
+            self.entities[class_name] = pygame.sprite.Group()
+        self.entities[class_name].add(entity)
+        logging.info(f"{entity} created")
         
-        # Also add to global entity groups
-        self.entities[world][ALL_ENTITIES].add(entity)
-        self.entities[ALL_ENTITIES].add(entity)
-        entity.set_color(world)
-
-    def warp_world(self):
-        if self.world == WORLD_1:
-            old_world = WORLD_1
-            self.world = WORLD_2
-        else:
-            old_world = WORLD_2
-            self.world = WORLD_1
-        for entity in self.entities[self.world][ALL_ENTITIES]:
-            entity.change_color("Active")
-        for entity in self.entities[old_world][ALL_ENTITIES]:
-            entity.change_color("Passive")
-        logging.info(f"Warped from {old_world} to {self.world}")
-
-    def reset(self):
-        self.test_level()
+        # Also add to global sprite group
+        self.entities[ALL_SPRITES].add(entity)
 
 if __name__ == "__main__":
     Game()
