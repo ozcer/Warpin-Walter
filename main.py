@@ -15,7 +15,7 @@ from src.game_objects.goal import Goal
 class Game:
     
     def __init__(self):
-        # Intializing Pygame window
+        # Initializing Pygame window
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
         pygame.display.set_caption(CAPTION)
@@ -30,18 +30,24 @@ class Game:
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
-        
         self.world = "one"
         
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
         
         self.build_test_level()
+        self.level = self.build_test_level
         
+        self.reset = False
         self.run()
+        while self.reset:
+            self.reset_game()
+            self.build_test_level()
+            self.run()
     
     def run(self):
-        while True:
+        running = True
+        while running:
             self.surface.fill(L_GREY)
 
             if pygame.event.peek(pygame.QUIT):
@@ -55,6 +61,8 @@ class Game:
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
+            if self.reset:
+                break
 
     def update_all_sprites(self):
         for sprite in self.entities[ALL_SPRITES]:
@@ -142,6 +150,13 @@ class Game:
                   1,
                   ["one", "two"])
 
+    def reset_game(self):
+        self.reset = False
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
+        player = Player(self, pos=(200, 200))
+        self.add_entity(player)
+        self.level()
+
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
         if log:
@@ -153,4 +168,4 @@ class Game:
 
 
 if __name__ == "__main__":
-    Game()
+        Game()
