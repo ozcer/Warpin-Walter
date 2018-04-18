@@ -1,17 +1,18 @@
 import pygame
 from src.const import *
-from game_objects.game_object import GameObject
+from src.game_objects.game_object import GameObject
 
 
 class Goal(GameObject):
     width = height = 100
+    color = RED
 
     def __init__(self, *args,
                  pos,
                  **kwargs):
         super().__init__(*args,
                          pos=pos,
-                         image=pygame.Surface((Ground.width, Ground.height)),
+                         image=pygame.Surface((Goal.width, Goal.height)),
                          **kwargs)
 
     def update(self):

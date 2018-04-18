@@ -37,11 +37,6 @@ class Game:
         self.add_entity(player)
         
         self.build_test_level()
-
-            if i == 6:
-                goal = goal(self, pos=(i * Ground.width + Ground.width / 2,
-                                           DISPLAY_HEIGHT - Ground.height * 4 / 3))
-                self.add_entity(goal, "two")
         
         self.run()
     
@@ -111,11 +106,11 @@ class Game:
                   13,
                   ["one", "two"])
         # Right guard
-        build_row(Ground,
+        build_row(Goal,
                   self,
-                  (bottom_left_pos[0] + (width-1) * Ground.width, bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
+                  (bottom_left_pos[0] + (width-1) * Goal.width, bottom_left_pos[1] - Goal.height),
+                  (0, -Goal.height),
+                  1,
                   ["one", "two"])
         # World 1 wall
         build_row(Ground,
