@@ -31,6 +31,7 @@ class Game:
         self.events = pygame.event.get()
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
+        self.world = WORLD_1
         
         player = Player(self, pos=(200, 200))
         self.add_entity(player)
@@ -41,9 +42,8 @@ class Game:
             if i == 4:
                 ground = Ground(self, pos=(i * Ground.width + Ground.width / 2,
                                            DISPLAY_HEIGHT - Ground.height * 4 / 3))
-                self.add_entity(ground)
+                self.add_entity(ground, WORLD_2)
         self.color = PALETTE_D_GREEN
-        self.world = WORLD_1
         self.run()
     
     def run(self):
@@ -65,10 +65,19 @@ class Game:
             x.update()
     
     def draw_all_sprites(self):
+        current_world = self.world
+        if current_world == WORLD_1:
+            passive_world = WORLD_2
+        else:
+            passive_world = WORLD_1
+        active_entities = self.entities[current_world][ALL_ENTITIES].sprites()
+        active_entities += self.entities[BOTH_WORLDS][ALL_ENTITIES].sprites()
+        active_entities.sort(key=lambda x: x.depth, reverse=True)
+        passive_entities = self.entities[passive_world][ALL_ENTITIES].sprites()
+        passive_entities.sort(key=lambda x: x.depth, reverse=True)
+        total_entities = passive_entities + active_entities
         # Draw based on depth
-        for entity in sorted(self.entities[ALL_ENTITIES],
-                             key=lambda entity: entity.depth,
-                             reverse=True):
+        for entity in total_entities:
             entity.draw()
     
     def add_entity(self, entity, world=BOTH_WORLDS):
@@ -83,6 +92,22 @@ class Game:
         self.entities[world][ALL_ENTITIES].add(entity)
         self.entities[ALL_ENTITIES].add(entity)
         entity.set_color(world)
+
+    def warp_world(self):
+        if self.world == WORLD_1:
+            old_world = WORLD_1
+            self.world = WORLD_2
+        else:
+            old_world = WORLD_2
+            self.world = WORLD_1
+        for entity in self.entities[self.world][ALL_ENTITIES]:
+            entity.change_color("Active")
+        for entity in self.entities[old_world][ALL_ENTITIES]:
+            entity.change_color("Passive")
+
+
+
+
 
 if __name__ == "__main__":
     Game()
