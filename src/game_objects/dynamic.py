@@ -66,15 +66,21 @@ class Dynamic(GameObject):
         self.rect.center = x_projection.centerx, y_projection.centery
         self.x, self.y = self.rect.center
     
-    def detect_solid(self, rect):
+    def detect_solid(self, rect, same_world=True):
         """
         given a rect return a colliding solid Sprite or None
         :param rect: Rect
+        :param same_world: Bool
         :return: Sprite or None
         """
-        for sprite in self.game.entities["ALL"]:
-            if sprite is not self and sprite.rect.colliderect(rect) and sprite.world == self.game.world:
-                return sprite
+        if same_world:
+            for sprite in self.game.entities["ALL"]:
+                if sprite is not self and sprite.rect.colliderect(rect) and sprite.world == self.game.world:
+                    return sprite
+        else:
+            for sprite in self.game.entities["ALL"]:
+                if sprite is not self and sprite.rect.colliderect(rect) and sprite.world != self.game.world:
+                    return sprite
     
     def apply_gravity(self):
         self.dy += GRAVITY

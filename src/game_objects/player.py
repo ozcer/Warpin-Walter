@@ -32,6 +32,14 @@ class Player(Dynamic):
         super().draw()
 
     def process_event(self):
+        for event in self.game.events:
+            if event.type == pygame.KEYDOWN:
+                key = event.key
+                if key == pygame.K_x:
+                    if self.warp():
+                        return
+                if key == pygame.K_r or key == pygame.K_c:
+                    self.game.reset = True
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         
@@ -43,14 +51,7 @@ class Player(Dynamic):
         # Jumping
         if (keys[pygame.K_w] or keys[pygame.K_SPACE])and self.on_ground():
             self.dy -= 15
-        # Warping
-        for event in self.game.events:
-            if event.type == pygame.KEYDOWN:
-                key = event.key
-                if key == pygame.K_x:
-                    self.warp()
-                if key == pygame.K_r or key == pygame.K_c:
-                    self.game.reset = True
+
 
     def move(self, direction):
         if direction == "left":
@@ -59,7 +60,13 @@ class Player(Dynamic):
             self.dx = self.speed
     
     def warp(self):
-        self.game.world = "two" if self.game.world == "one" else "one"
+        can_warp = True
+        if self.detect_solid(self.rect.copy(), same_world=False) is not None:
+            can_warp = False
+        if can_warp:
+            self.dx = self.dy = 0
+            self.game.world = "two" if self.game.world == "one" else "one"
+        return can_warp
     
     def on_ground(self):
         detector = self.rect.copy()
