@@ -19,7 +19,8 @@ class GameObject(pygame.sprite.Sprite):
         self.rect.center = self.x, self.y
         
         self.is_solid = is_solid
-
+        self.world = None
+    
     def update(self):
         pass
     
@@ -30,21 +31,33 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
-
+    
     def collide_logic(self, entity):
         return None
     
-    def collide_with(self, collidee, strict=False):
+    def collide_with(self, collidee, **conditions):
         """
         check collision with all instances of a class or specific instance
-        :param collidee: Type(a class) or Sprite
-        :param strict: bool True = type comparision False = isinstance()
-                       for class collision checking only
+        :param collidee: Type(a class) or Sprite(an instance)
+        :param conditions: dict: additional conditions to meet eg. {"rect.w": 100}
         :return: Sprite or None
         """
-        # check with all instance of a class
+        
+        # Check with all instance of a class
         if type(collidee) == type:
-            pass
-        # check for specific instance
+            for sprite in self.game.entities[ALL_SPRITES]:
+                # Check if colliding and isinstance()
+                if self.rect.colliderect(sprite.rect) and isinstance(sprite, collidee):
+                    # Check additional conditions supplied
+                    conditions_met = 0
+                    for condition in conditions:
+                        if getattr(sprite, condition) == conditions[condition]:
+                            conditions_met += 1
+                    if conditions_met == len(conditions):
+                        return sprite
+        
+        # Check for specific instance
         else:
-            pass
+            # Basic rect check
+            if self.rect.colliderect(collidee.rect):
+                return collidee
