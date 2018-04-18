@@ -1,4 +1,5 @@
 import pygame
+from src.const import *
 
 from src.const import *
 
@@ -29,3 +30,21 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
+
+    def set_color(self, world):
+        current_world = self.game.world
+        if world == BOTH_WORLDS:
+            self.color = self.colors[world]
+        elif world == current_world:
+            self.color = self.colors["Active"]
+        else:
+            self.color = self.colors["Passive"]
+        self.world = world
+        self.image.fill(self.color)
+
+    def change_color(self, state):
+        if self.world == BOTH_WORLDS:
+            self.color = self.colors[BOTH_WORLDS]
+            return
+        self.color = self.colors[state]
+        self.image.fill(self.color)
