@@ -33,5 +33,18 @@ class GameObject(pygame.sprite.Sprite):
 
     def collide_logic(self, entity):
         return None
-
-
+    
+    def collide_with(self, collidee, strict=False):
+        """
+        check collision with all instances of a class or specific instance
+        :param collidee: Type(a class) or Sprite
+        :param strict: bool True = type comparision False = isinstance()
+                       for class collision checking only
+        :return: Sprite or None
+        """
+        # check with all instance of a class
+        if type(collidee) == type:
+            pass
+        # check for specific instance
+        else:
+            pass
