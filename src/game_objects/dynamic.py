@@ -60,11 +60,7 @@ class Dynamic(GameObject):
         :param rect: Rect
         :return: Sprite or None
         """
-        current_world = self.game.world
-        active_entities = self.game.entities[current_world][ALL_ENTITIES].sprites()
-        both_world_entities = self.game.entities[BOTH_WORLDS][ALL_ENTITIES].sprites()
-        total_entities = active_entities + both_world_entities
-        for sprite in total_entities:
+        for sprite in self.game.entities["ALL"]:
             if sprite is not self and sprite.rect.colliderect(rect) and sprite.world == self.game.world:
                 return sprite
     
