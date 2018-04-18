@@ -97,8 +97,6 @@ class Game:
         
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
-        
-
 
 if __name__ == "__main__":
     Game()
