@@ -60,3 +60,18 @@ class GameObject(pygame.sprite.Sprite):
             # Basic rect check
             if self.rect.colliderect(collidee.rect):
                 return collidee
+    
+    def detect_solid(self, rect, same_world=True):
+        """
+        given a rect return a colliding solid Sprite or None
+        :param rect: Rect
+        :return: Sprite or None
+        """
+        for sprite in self.game.entities["ALL"]:
+            if sprite.rect.colliderect(rect) and sprite.is_solid and sprite is not self:
+                # If self or collidee in all world, detects
+                if self.world is None or sprite.world is None:
+                    return sprite
+                # if same_world and same world
+                elif not same_world or self.world == sprite.world:
+                    return sprite
