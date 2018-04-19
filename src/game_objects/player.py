@@ -12,11 +12,9 @@ from src.game_objects.ground import Ground
 class Player(Dynamic):
     
     def __init__(self, *args,
-                 pos,
                  **kwargs):
         
         super().__init__(*args,
-                         pos=pos,
                          image=pygame.Surface((50, 50)),
                          **kwargs)
         self.color = YELLOW
