@@ -7,9 +7,9 @@ from src.const import *
 class GameObject(pygame.sprite.Sprite):
     
     def __init__(self, game, *args,
-                 pos, depth=0, image, is_solid=True, **kwargs):
-        super().__init__()
+                 pos, depth=0, image, world=None, is_solid=True, **kwargs):
         
+        super().__init__()
         self.game = game
         self.x, self.y = pos
         self.depth = depth
@@ -19,7 +19,7 @@ class GameObject(pygame.sprite.Sprite):
         self.rect.center = self.x, self.y
         
         self.is_solid = is_solid
-        self.world = None
+        self.world = world
     
     def update(self):
         pass

@@ -62,11 +62,14 @@ class Dynamic(GameObject):
         :return: Sprite or None
         """
         for sprite in self.game.entities["ALL"]:
-            if (sprite.rect.colliderect(rect) and
-                sprite.world == self.game.world and
-                sprite.is_solid and
-                    sprite is not self):
-                return sprite
+            if sprite.rect.colliderect(rect) and sprite.is_solid and sprite is not self:
+                # If self or collidee in all world, detects
+                if self.world is None or sprite.world is None:
+                    return sprite
+                # if same_world and same world
+                elif not same_world or self.world == sprite.world:
+                    return sprite
+                
     
     def apply_gravity(self):
         self.dy += GRAVITY

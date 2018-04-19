@@ -33,7 +33,7 @@ class Game:
         self.world = "one"
         
         player = Player(self, pos=(200, 200))
-        self.add_entity(player)
+        self.add_entity(player, "one")
         
         self.build_test_level()
         self.level = self.build_test_level
@@ -96,7 +96,6 @@ class Game:
 
     def build_test_level(self):
         bottom_left_pos = (0, 500)
-        bottom_right_pos = None
         width = 13
 
         # Left guard

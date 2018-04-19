@@ -62,8 +62,16 @@ class Player(Dynamic):
             self.dx = self.speed
 
     def warp(self):
-        self.game.world = "two" if self.game.world == "one" else "one"
+        # check if going to warp into solid
+        collidee = self.detect_solid(self.rect, same_world=False)
+        if collidee is None:
+            self._warp()
     
+    def _warp(self):
+        target_world = "two" if self.game.world == "one" else "one"
+        self.world = target_world
+        self.game.world = target_world
+        
     def on_ground(self):
         detector = self.rect.copy()
         detector.bottom += 1
