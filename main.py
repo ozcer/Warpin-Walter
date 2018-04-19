@@ -122,13 +122,13 @@ class Game:
                   (0, -Goal.height),
                   3,
                   ["one", "two"])
-        # World 1 wall
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0] + Ground.width * 5, bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
-                  ["one"])
+        # # World 1 wall
+        # build_row(Ground,
+        #           self,
+        #           (bottom_left_pos[0] + Ground.width * 5, bottom_left_pos[1] - Ground.height),
+        #           (0, -Ground.height),
+        #           3,
+        #           ["one"])
         # World 2 walls
         build_row(Ground,
                   self,
@@ -146,7 +146,7 @@ class Game:
                   ["one", "two"])
         
         # Enemy
-        enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
+        enemy = DumbEnemy(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
         self.add_entity(enemy, "one")
         
     def reset_game(self):
