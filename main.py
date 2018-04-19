@@ -48,7 +48,7 @@ class Game:
     def run(self):
         running = True
         while running:
-            self.surface.fill(L_GREY)
+            self.surface.fill(L_OLIVE)
 
             if pygame.event.peek(pygame.QUIT):
                 pygame.quit()

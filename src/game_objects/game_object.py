@@ -20,6 +20,8 @@ class GameObject(pygame.sprite.Sprite):
         
         self.is_solid = is_solid
         self.world = world
+        
+        self.inactive_color = L_GREY
     
     def update(self):
         pass
@@ -27,7 +29,7 @@ class GameObject(pygame.sprite.Sprite):
     def draw(self):
         adjusted = self.game.camera.adjust_rect(self.rect)
         if self.world is not None and self.world != self.game.world:
-            self.image.fill(D_GREY)
+            self.image.fill(self.inactive_color)
         else:
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)

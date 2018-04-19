@@ -17,7 +17,7 @@ class Player(Dynamic):
         super().__init__(*args,
                          image=pygame.Surface((50, 50)),
                          **kwargs)
-        self.color = YELLOW
+        self.color = BLUE
         self.image.fill(self.color)
         self.speed = 7
         self.is_player = True
