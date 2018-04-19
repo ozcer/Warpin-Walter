@@ -23,4 +23,5 @@ Completed:
 * goal
 
 # Day 5
-![Follower Demo](/screenshots/day5-follower.gif =320x240)
+<img src="/screenshots/day5-follower.gif" width="320" height="240" />
+Follower that chases when player gets too close
