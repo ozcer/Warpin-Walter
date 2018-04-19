@@ -22,3 +22,5 @@ Completed:
 * warping
 * goal
 
+# Day 5
+![Follower Demo](/screenshots/day5-follower.gif =320x240)
