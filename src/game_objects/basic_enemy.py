@@ -21,8 +21,13 @@ class BasicEnemy(Enemy):
         self.apply_gravity()
         self.move(self.dir)
         
-        
-        if self.detect_solid()
+        detect_zone = self.rect.copy()
+        if self.dir == "left":
+            detect_zone.centerx -= 1
+        else:
+            detect_zone.centerx += 1
+        if self.detect_solid(detect_zone):
+            self.dir = "right" if self.dir == "left" else "left"
         
     def draw(self):
         super().draw()
