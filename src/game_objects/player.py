@@ -50,7 +50,7 @@ class Player(Dynamic):
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
         # Jumping
-        if (keys[pygame.K_w] or keys[pygame.K_UP])and self.on_ground():
+        if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
             self.dy -= 15
 
     def move(self, direction):

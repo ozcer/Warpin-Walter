@@ -12,7 +12,7 @@ class BasicEnemy(Enemy):
 
         self.color = L_PURPLE
         self.image.fill(self.color)
-        self.speed = 3
+        self.speed = 2
         
         self.dir = "left"
         
