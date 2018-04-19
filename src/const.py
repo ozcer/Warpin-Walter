@@ -1,8 +1,10 @@
 # display
+import math
+
 FPS = 60
 CAPTION = "Project Hijack"
-DISPLAY_WIDTH = 640
-DISPLAY_HEIGHT = 480
+DISPLAY_WIDTH = int(640 * 1.2)
+DISPLAY_HEIGHT = int(480 * 1.2)
 START_WINDOW_POS = (100,100)
 
 # logging
@@ -18,14 +20,16 @@ RED = (255, 0, 0)
 ORANGE = (244, 179, 66)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
-BLUE = (25, 118, 210)
-PURPLE = (85, 26, 139)
+
+PURPLE = (106, 27, 154)
+L_PURPLE = (156, 77, 204)
+D_PURPLE = (56, 0, 107)
 
 OLIVE = (130, 119, 23)
 D_OLIVE = (82, 76, 0)
 L_OLIVE = (180, 166, 71)
 
-
+BLUE = (25, 118, 210)
 L_BLUE = (99, 164, 255)
 D_BLUE = (0, 75, 160)
 
@@ -61,3 +65,7 @@ def build_row(cls, game, start_pos, next_pos, amount, worlds):
             instance = cls(game, pos=(start_pos[0] + i * next_pos[0],
                                       start_pos[1] + i * next_pos[1]))
             game.add_entity(instance, world)
+
+
+def distance(p1, p2):
+    return math.hypot(p2[0] - p1[0], p2[1] - p1[1])

@@ -12,14 +12,12 @@ from src.game_objects.ground import Ground
 class Player(Dynamic):
     
     def __init__(self, *args,
-                 pos,
                  **kwargs):
         
         super().__init__(*args,
-                         pos=pos,
                          image=pygame.Surface((50, 50)),
                          **kwargs)
-        self.color = YELLOW
+        self.color = BLUE
         self.image.fill(self.color)
         self.speed = 7
         self.is_player = True
@@ -52,7 +50,7 @@ class Player(Dynamic):
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
         # Jumping
-        if (keys[pygame.K_w] or keys[pygame.K_UP])and self.on_ground():
+        if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
             self.dy -= 15
 
     def move(self, direction):
