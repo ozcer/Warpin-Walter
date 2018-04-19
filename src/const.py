@@ -1,8 +1,8 @@
 # display
 FPS = 60
 CAPTION = "Project Hijack"
-DISPLAY_WIDTH = 640
-DISPLAY_HEIGHT = 480
+DISPLAY_WIDTH = int(640 * 1.2)
+DISPLAY_HEIGHT = int(480 * 1.2)
 START_WINDOW_POS = (100,100)
 
 # logging
