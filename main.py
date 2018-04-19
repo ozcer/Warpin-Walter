@@ -8,6 +8,8 @@ from src.camera import Camera
 import pygame
 from pygame.locals import *
 from src.const import *
+from src.game_objects.dumb_enemy import DumbEnemy
+from src.game_objects.follower import Follower
 from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 from src.game_objects.goal import Goal
@@ -48,7 +50,7 @@ class Game:
     def run(self):
         running = True
         while running:
-            self.surface.fill(L_GREY)
+            self.surface.fill(L_OLIVE)
 
             if pygame.event.peek(pygame.QUIT):
                 pygame.quit()
@@ -66,7 +68,8 @@ class Game:
 
     def update_all_sprites(self):
         for sprite in self.entities[ALL_SPRITES]:
-            sprite.update()
+            if sprite.world is None or sprite.world == self.world:
+                sprite.update()
     
     def draw_all_sprites(self):
         # Draw based on depth
@@ -141,7 +144,11 @@ class Game:
                   (0, 0),
                   1,
                   ["one", "two"])
-
+        
+        # Enemy
+        enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
+        self.add_entity(enemy, "one")
+        
     def reset_game(self):
         self.reset = False
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}

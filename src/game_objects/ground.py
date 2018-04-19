@@ -15,7 +15,7 @@ class Ground(GameObject):
                          pos=pos,
                          image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
-        self.color = L_BLUE
+        self.color = D_GREY
         self.image.fill(self.color)
     
     def update(self):
