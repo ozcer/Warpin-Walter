@@ -22,6 +22,8 @@ class GameObject(pygame.sprite.Sprite):
         self.world = world
         
         self.inactive_color = L_GREY
+        
+        self.font = pygame.font.SysFont('Arial', 30)
     
     def update(self):
         pass
@@ -91,3 +93,27 @@ class GameObject(pygame.sprite.Sprite):
                     closest = sprite
                     shortest_dist = curr_dist
         return closest
+    
+    def render_text(self, text, pos=(0, 0), color=BLACK):
+        """
+        given position relative to self, blit text
+        :param text: Str
+        :param pos: (int, int) *note this is relative to self
+        :param color: (int, int, int) rgb
+        :return: None
+        """
+        textsurface = self.font.render(text, False, color)
+        text_rect = textsurface.get_rect()
+        
+        # Center Text
+        centered_text_pos = pos[0]-text_rect.w/2, pos[1]-text_rect.h/2
+        
+        # Absolute pos from relative to self
+        absolute_pos = (self.x + centered_text_pos[0], self.y + centered_text_pos[1])
+        
+        # Adjust for camera
+        camera_adjusted_pos = self.game.camera.adjust_point(absolute_pos)
+        self.game.surface.blit(textsurface, camera_adjusted_pos)
+    
+    def __str__(self):
+        return f"{self.__class__.__name__} at {self.x, self.y}"

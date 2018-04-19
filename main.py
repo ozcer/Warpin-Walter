@@ -13,6 +13,8 @@ from src.game_objects.follower import Follower
 from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 from src.game_objects.goal import Goal
+from src.game_objects.warp_consumable import WarpConsumable
+
 
 class Game:
     
@@ -20,12 +22,13 @@ class Game:
         # Initializing Pygame window
         os.environ['SDL_VIDEO_CENTERED'] = '1'
         pygame.init()
+        
         pygame.display.set_caption(CAPTION)
         self.surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), 0, 32)
         logging.basicConfig(level=LOG_LEVEL,
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')
-
+        
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
         
@@ -149,6 +152,9 @@ class Game:
         # Enemy
         enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
         self.add_entity(enemy, "one")
+
+        warp = WarpConsumable(self, pos=(700, 200))
+        self.add_entity(warp)
         
     def reset_game(self):
         self.reset = False

@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 from src.game_objects.dynamic import Dynamic
 from src.game_objects.ground import Ground
+from src.game_objects.warp_consumable import WarpConsumable
 
 
 class Player(Dynamic):
@@ -21,6 +22,8 @@ class Player(Dynamic):
         self.image.fill(self.color)
         self.speed = 7
         self.is_player = True
+        
+        self.warp_charges = 3
     
     def update(self):
         super().update()
@@ -28,10 +31,15 @@ class Player(Dynamic):
         self.process_input()
         self.game.camera.rect.center = self.x, self.y
         self.apply_gravity()
+        
+        collidee = self.collide_with(WarpConsumable)
+        if collidee:
+            self.consume(collidee)
 
     def draw(self):
         super().draw()
-
+        self.render_text(f"{self.warp_charges}")
+        
     def process_input(self):
         for event in self.game.events:
             if event.type == pygame.KEYDOWN:
@@ -62,7 +70,8 @@ class Player(Dynamic):
     def warp(self):
         # check if going to warp into solid
         collidee = self.detect_solid(self.rect, same_world=False)
-        if collidee is None:
+        if collidee is None and self.warp_charges > 0:
+            self.warp_charges -= 1
             self._warp()
     
     def _warp(self):
@@ -70,9 +79,13 @@ class Player(Dynamic):
         self.world = target_world
         self.game.world = target_world
         
+    def consume(self, consumable):
+        consumable.get_consumed(self)
+    
     def on_ground(self):
         detector = self.rect.copy()
         detector.bottom += 1
         if self.detect_solid(detector):
             return True
         return False
+

@@ -17,7 +17,6 @@ class Follower(Enemy):
         
         self.seek_range = 300
         
-        
     def update(self):
         super().update()
         self.apply_gravity()

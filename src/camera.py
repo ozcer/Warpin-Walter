@@ -18,3 +18,15 @@ class Camera():
         adjusted = pygame.Rect(left, top, width, height)
         
         return adjusted
+
+    def adjust_point(self, p):
+        """
+        given point, return adjusted point offset by camera
+        :param p: (int, int)
+        :return: (int, int)
+        """
+        x = p[0] - self.rect.topleft[0]
+        y = p[1] - self.rect.topleft[1]
+        
+        return x, y
+
