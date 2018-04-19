@@ -4,7 +4,7 @@ from src.const import *
 from src.game_objects.enemy import Enemy
 
 
-class BasicEnemy(Enemy):
+class DumbEnemy(Enemy):
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
                          image=pygame.Surface((50, 50)),

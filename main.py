@@ -8,7 +8,7 @@ from src.camera import Camera
 import pygame
 from pygame.locals import *
 from src.const import *
-from src.game_objects.basic_enemy import BasicEnemy
+from src.game_objects.dumb_enemy import DumbEnemy
 from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 from src.game_objects.goal import Goal
@@ -145,7 +145,7 @@ class Game:
                   ["one", "two"])
         
         # Enemy
-        enemy = BasicEnemy(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
+        enemy = DumbEnemy(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
         self.add_entity(enemy, "one")
         
     def reset_game(self):
