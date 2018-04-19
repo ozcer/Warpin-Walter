@@ -32,9 +32,6 @@ class GameObject(pygame.sprite.Sprite):
             self.image.fill(self.color)
         self.game.surface.blit(self.image, adjusted)
     
-    def collide_logic(self, entity):
-        return None
-    
     def collide_with(self, collidee, **conditions):
         """
         check collision with all instances of a class or specific instance
