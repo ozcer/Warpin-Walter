@@ -129,18 +129,11 @@ class Game:
         # World 2 walls
         build_row(Ground,
                   self,
-                  (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height),
+                  (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
                   (0, -Ground.height),
                   3,
                   ["two"])
-
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0] + Ground.width * 7, bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
-                  ["two"])
-
+        # Goal
         build_row(Goal,
                   self,
                   (bottom_left_pos[0] + (width - 2) * Ground.height,
