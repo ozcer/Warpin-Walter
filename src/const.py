@@ -1,4 +1,6 @@
 # display
+import math
+
 FPS = 60
 CAPTION = "Project Hijack"
 DISPLAY_WIDTH = int(640 * 1.2)
@@ -63,3 +65,7 @@ def build_row(cls, game, start_pos, next_pos, amount, worlds):
             instance = cls(game, pos=(start_pos[0] + i * next_pos[0],
                                       start_pos[1] + i * next_pos[1]))
             game.add_entity(instance, world)
+
+
+def distance(p1, p2):
+    return math.hypot(p2[0] - p1[0], p2[1] - p1[1])

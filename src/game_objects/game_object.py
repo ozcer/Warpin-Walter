@@ -75,3 +75,19 @@ class GameObject(pygame.sprite.Sprite):
                 # if same_world and same world
                 elif not same_world or self.world == sprite.world:
                     return sprite
+    
+    def find_closest(self, cls):
+        """
+        return the the closest instance of a class or None if not found
+        :param cls: Type (a class)
+        :return: Sprite or None
+        """
+        closest = None
+        shortest_dist = None
+        for sprite in self.game.entities[ALL_SPRITES]:
+            if isinstance(sprite, cls):
+                curr_dist = distance((self.x, self.y), (sprite.x, sprite.y))
+                if shortest_dist is None or curr_dist < shortest_dist:
+                    closest = sprite
+                    shortest_dist = curr_dist
+        return closest
