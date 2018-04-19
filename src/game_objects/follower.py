@@ -15,7 +15,7 @@ class Follower(Enemy):
         self.image.fill(self.color)
         self.speed = 3
         
-        self.seek_range = 200
+        self.seek_range = 300
         
         
     def update(self):
@@ -29,8 +29,10 @@ class Follower(Enemy):
     
     def seek(self):
         target = self.find_closest(Player)
-        # If found target and within 200 units
-        if target is not None and distance((target.x, target.y), (self.x, self.y)) < self.seek_range:
+        # If Player not found or too far
+        if target is None or distance((target.x, target.y), (self.x, self.y)) > self.seek_range:
+            self.dx = 0
+        else:
             # Target on left
             if target.x < self.x:
                 self.move("left")

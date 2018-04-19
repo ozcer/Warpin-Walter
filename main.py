@@ -26,16 +26,12 @@ class Game:
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')
 
-        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
         self.world = "one"
-        
-        player = Player(self, pos=(200, 200))
-        self.add_entity(player, "one")
         
         self.build_test_level()
         self.level = self.build_test_level
@@ -98,6 +94,11 @@ class Game:
         self.entities[ALL_SPRITES].add(entity)
 
     def build_test_level(self):
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
+    
+        player = Player(self, pos=(200, 200))
+        self.add_entity(player, "one")
+        
         bottom_left_pos = (0, 500)
         width = 13
 
@@ -146,7 +147,7 @@ class Game:
                   ["one", "two"])
         
         # Enemy
-        enemy = DumbEnemy(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
+        enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
         self.add_entity(enemy, "one")
         
     def reset_game(self):
