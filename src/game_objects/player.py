@@ -1,9 +1,12 @@
+import logging
+
 import pygame
 
 from src.const import *
 import pygame
 from pygame.locals import *
 from src.game_objects.dynamic import Dynamic
+from src.game_objects.ground import Ground
 
 
 class Player(Dynamic):
@@ -24,18 +27,18 @@ class Player(Dynamic):
     def update(self):
         super().update()
         self.dx = 0
-        self.process_event()
+        self.process_input()
         self.game.camera.rect.center = self.x, self.y
         self.apply_gravity()
 
     def draw(self):
         super().draw()
 
-    def process_event(self):
+    def process_input(self):
         for event in self.game.events:
             if event.type == pygame.KEYDOWN:
                 key = event.key
-                if key == pygame.K_x:
+                if key == pygame.K_SPACE:
                     if self.warp():
                         return
                 if key == pygame.K_r or key == pygame.K_c:
@@ -49,25 +52,26 @@ class Player(Dynamic):
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.move("left")
         # Jumping
-        if (keys[pygame.K_w] or keys[pygame.K_SPACE])and self.on_ground():
+        if (keys[pygame.K_w] or keys[pygame.K_UP])and self.on_ground():
             self.dy -= 15
-
 
     def move(self, direction):
         if direction == "left":
             self.dx = -self.speed
         if direction == "right":
             self.dx = self.speed
-    
+
     def warp(self):
-        can_warp = True
-        if self.detect_solid(self.rect.copy(), same_world=False) is not None:
-            can_warp = False
-        if can_warp:
-            self.dx = self.dy = 0
-            self.game.world = "two" if self.game.world == "one" else "one"
-        return can_warp
+        # check if going to warp into solid
+        collidee = self.detect_solid(self.rect, same_world=False)
+        if collidee is None:
+            self._warp()
     
+    def _warp(self):
+        target_world = "two" if self.game.world == "one" else "one"
+        self.world = target_world
+        self.game.world = target_world
+        
     def on_ground(self):
         detector = self.rect.copy()
         detector.bottom += 1
