@@ -23,5 +23,14 @@ Completed:
 * goal
 
 # Day 5
-<img src="/screenshots/day5-follower.gif" width="320" height="240" />
-Follower that chases when player gets too close
+* <img src="/screenshots/day5-dumb.gif" width="320" height="240" />
+
+  Simple enemy akin to Goombas from Mario that change direction on contact with wall
+  
+
+* <img src="/screenshots/day5-follower.gif" width="320" height="240" />
+
+  Follower that chases when player gets too close. Also demostrates freezing of enemies when traveling to an alternate world
+  
+
+Plant o lock down on mechanics tomorrow or the day after in order to start making progress on graphics and level design
