@@ -14,7 +14,7 @@ EXIT_MESSAGE = "The game has exited"
 # colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-D_GREY = (40, 40, 40)
+D_GREY = (70, 70, 70)
 L_GREY = (100, 100, 100)
 RED = (255, 0, 0)
 ORANGE = (244, 179, 66)

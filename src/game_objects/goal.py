@@ -29,4 +29,3 @@ class Goal(Consumable):
         super().get_consumed(consumer)
         consumer.won = True
         self.kill()
-

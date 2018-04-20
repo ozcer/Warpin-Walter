@@ -29,7 +29,7 @@ class Game:
         self.events = pygame.event.get()
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
-        self.camera = Camera(screen)
+        self.camera = Camera(self, screen)
 
         self.world = "one"
         self.build_level(test_level)
@@ -70,6 +70,7 @@ class Game:
         for sprite in sorted_by_depth:
             if sprite.world == self.world or sprite.world is None:
                 sprite.draw()
+        self.camera.draw_ui()
     
     def add_entity(self, entity, world=None):
         # Tag it with world
