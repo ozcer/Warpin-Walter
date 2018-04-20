@@ -1,8 +1,8 @@
 import pygame
 
 from src.const import *
-from src.game_objects.enemy import Enemy
-from src.game_objects.player import Player
+from src.game_objects.dynamic.enemy import Enemy
+from src.game_objects.dynamic.player import Player
 
 
 class Follower(Enemy):

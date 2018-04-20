@@ -1,7 +1,7 @@
 import pygame
 
 from src.const import *
-from src.game_objects.enemy import Enemy
+from src.game_objects.dynamic.enemy import Enemy
 
 
 class DumbEnemy(Enemy):

@@ -2,14 +2,13 @@ import logging
 import os
 import random
 import sys
+import pygame
 
 from src.camera import Camera
 
-import pygame
 from pygame.locals import *
 from src.const import *
-from src.game_objects.levels import *
-
+from src.levels import *
 
 
 class Game:

@@ -1,4 +1,4 @@
-from src.game_objects.dynamic import Dynamic
+from src.game_objects.dynamic.dynamic import Dynamic
 
 
 class Enemy(Dynamic):

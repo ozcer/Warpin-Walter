@@ -1,11 +1,11 @@
-# display
 import math
 
+# Display
 FPS = 60
 CAPTION = "Project Hijack"
 DISPLAY_WIDTH = int(640 * 1.2)
 DISPLAY_HEIGHT = int(480 * 1.2)
-START_WINDOW_POS = (100,100)
+START_WINDOW_POS = (100, 100)
 
 # logging
 LOG_LEVEL = "NOTSET"

@@ -3,7 +3,7 @@ import logging
 from math import cos, sin
 
 from src.const import *
-from src.game_objects.player import Player
+from src.game_objects.dynamic.player import Player
 
 
 class Camera:

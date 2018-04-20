@@ -2,7 +2,6 @@ import logging
 
 from src.game_objects.game_object import GameObject
 
-
 from src.const import *
 
 

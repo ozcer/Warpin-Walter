@@ -1,14 +1,14 @@
 import logging
-
 import pygame
 
 from src.const import *
 import pygame
 from pygame.locals import *
 
-from src.game_objects.consumable import Consumable
-from src.game_objects.dynamic import Dynamic
-from src.game_objects.enemy import Enemy
+from src.game_objects.interactible.consumable import Consumable
+from src.game_objects.dynamic.dynamic import Dynamic
+from src.game_objects.dynamic.enemy import Enemy
+
 
 class Player(Dynamic):
     
@@ -66,7 +66,7 @@ class Player(Dynamic):
                     self.game.reset_level()
 
                 # TODO super hacky, don't do as I do, do as I say
-                import src.game_objects.levels as levels
+                import src.levels as levels
                 if key == K_p:
                     if self.game.level == levels.test_level:
                         self.game.build_level(levels.two_dumbs)
@@ -88,9 +88,11 @@ class Player(Dynamic):
     def move(self, direction):
         if direction == "left":
             self.x_dir = -1
+            max_speed = -self.speed
             self.dx = -self.speed
         if direction == "right":
             self.x_dir = 1
+            max_speed = -self.speed
             self.dx = self.speed
 
     def warp(self):

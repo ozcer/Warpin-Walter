@@ -1,7 +1,7 @@
 import pygame
 
 from src.const import *
-from src.game_objects.consumable import Consumable
+from src.game_objects.interactible.consumable import Consumable
 
 
 class WarpConsumable(Consumable):

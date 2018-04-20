@@ -1,8 +1,6 @@
 import pygame
 from src.const import *
-from src.game_objects.consumable import Consumable
-from src.game_objects.game_object import GameObject
-from src.game_objects.player import Player
+from src.game_objects.interactible.consumable import Consumable
 
 
 class Goal(Consumable):

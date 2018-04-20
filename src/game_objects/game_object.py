@@ -1,8 +1,6 @@
 import pygame
 from src.const import *
 
-from src.const import *
-
 
 class GameObject(pygame.sprite.Sprite):
     
