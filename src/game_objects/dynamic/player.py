@@ -34,6 +34,7 @@ class Player(Dynamic):
         super().update()
         if self.on_ground():
             self.dx = 0
+            self.stunned = False
         else:
             self.dx += -sign(self.dx) * .2
         self.process_input()
@@ -114,7 +115,7 @@ class Player(Dynamic):
     # talk shit
     def get_hit(self, dmg=0):
         self.dy = -6
-        self.dx = -self.x_dir * 5
+        self.dx = -self.x_dir * 9
         self.x_dir = -self.x_dir
         self.stunned = True
         self.hp -= dmg

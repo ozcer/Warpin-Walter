@@ -88,9 +88,10 @@ class Game:
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
     
+    
     def build_level(self, level):
         self.level = level
-        level(self)
+        self.level(self)
     
     def reset_level(self):
         self.level(self)
