@@ -99,7 +99,7 @@ class Game:
         self.build_level(next_level)
     
     def reset_level(self):
-        self.level(self)
+        self.build_level(self.level)
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
