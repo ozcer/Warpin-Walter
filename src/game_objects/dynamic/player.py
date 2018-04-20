@@ -70,10 +70,7 @@ class Player(Dynamic):
                 # TODO super hacky, don't do as I do, do as I say
                 import src.levels as levels
                 if key == K_p:
-                    if self.game.level == levels.test_level:
-                        self.game.build_level(levels.two_dumbs)
-                    else:
-                        self.game.build_level(levels.test_level)
+                    self.game.build_next_level()
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         

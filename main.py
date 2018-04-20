@@ -8,7 +8,7 @@ from src.camera import Camera
 
 from pygame.locals import *
 from src.const import *
-from src.levels import *
+from src.levels.levels import LEVELS
 
 
 class Game:
@@ -31,8 +31,8 @@ class Game:
         self.camera = Camera(self, screen)
         
         self.background_color = None
-        self.world = "one"
-        self.build_level(test_level)
+        self.levels = iter(LEVELS)
+        self.build_next_level()
         self.run()
 
     def run(self):
@@ -88,10 +88,15 @@ class Game:
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
     
-    
     def build_level(self, level):
+        self.world = "one"
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.level = level
         self.level(self)
+    
+    def build_next_level(self):
+        next_level = next(self.levels)
+        self.build_level(next_level)
     
     def reset_level(self):
         self.level(self)
