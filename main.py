@@ -30,7 +30,8 @@ class Game:
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(self, screen)
-
+        
+        self.background_color = None
         self.world = "one"
         self.build_level(test_level)
         self.run()
@@ -38,10 +39,12 @@ class Game:
     def run(self):
         running = True
         while running:
-            self.surface.fill(L_OLIVE)
+            self.background_color = L_OLIVE if self.world == "one" else WHITE
+            
+            self.surface.fill(self.background_color)
             # TODO temp hack to update camera, prolly should systemize
             self.camera.update()
-            
+            self.surface.fill(self.background_color)
             if pygame.event.peek(pygame.QUIT):
                 pygame.quit()
                 sys.exit()

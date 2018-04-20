@@ -48,7 +48,6 @@ ALL_SPRITES = "ALL"
 
 GRAVITY = .5
 
-
 def build_row(cls, game, start_pos, next_pos, amount, worlds):
     """
     given start position and next relative position
