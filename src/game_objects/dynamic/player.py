@@ -68,7 +68,6 @@ class Player(Dynamic):
                     self.game.reset_level()
 
                 # TODO super hacky, don't do as I do, do as I say
-                import src.levels as levels
                 if key == K_p:
                     self.game.build_next_level()
         # Checking pressed keys

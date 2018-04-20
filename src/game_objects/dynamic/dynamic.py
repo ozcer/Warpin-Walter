@@ -26,11 +26,12 @@ class Dynamic(GameObject):
     
         x_projection.centerx = self.x + self.dx
         y_projection.centery = self.y + self.dy
-        x_adjusted = self.game.camera.adjust_rect(x_projection)
-        pygame.draw.rect(self.game.surface, RED, x_adjusted)
-    
-        y_adjusted = self.game.camera.adjust_rect(y_projection)
-        pygame.draw.rect(self.game.surface, GREEN, y_adjusted)
+        
+        # x_adjusted = self.game.camera.adjust_rect(x_projection)
+        # pygame.draw.rect(self.game.surface, RED, x_adjusted)
+        #
+        # y_adjusted = self.game.camera.adjust_rect(y_projection)
+        # pygame.draw.rect(self.game.surface, GREEN, y_adjusted)
     
         x_collidee = self.detect_solid(x_projection)
         if x_collidee:
