@@ -1,4 +1,5 @@
 import logging
+import itertools
 import pygame
 
 from src.const import *
@@ -12,15 +13,15 @@ from src.game_objects.dynamic.enemy import Enemy
 
 class Player(Dynamic):
     
+    images = {"run": load_image_folder("../gfx/player/run")}
+    
     def __init__(self, *args,
                  **kwargs):
         
         super().__init__(*args,
-                         image=pygame.Surface((50, 50)),
+                         image=pygame.Surface((46, 68)),
                          **kwargs)
-        self.color = BLUE
-        self.image.fill(self.color)
-        self.speed = 7
+        self.speed = 6
         self.is_player = True
         self.x_dir = 1
         
@@ -30,8 +31,19 @@ class Player(Dynamic):
         self.stunned = False
         self.hp = 100
         
+        self.set_image("run")
+        self.ticks_per_frame = 5
+        self._image_ticks = self.ticks_per_frame
+        
     def update(self):
         super().update()
+        # stay on one image for several ticks so you don't fffast!
+        if self._image_ticks > 0:
+            self._image_ticks -= 1
+        else:
+            self.image = self._images.__next__()
+            self._image_ticks = self.ticks_per_frame
+        
         if self.on_ground():
             self.dx = 0
             self.stunned = False
@@ -44,20 +56,20 @@ class Player(Dynamic):
         if collidee:
             self.consume(collidee)
 
-        collidee = find_closest(self, Enemy)
-        if collidee and collidee.world == self.world:
-            if self.rect.top > collidee.rect.bottom or self.rect.bottom > collidee.rect.top:
-                if collidee.rect.right == self.rect.left or collidee.rect.left == self.rect.right:
-                    self.get_hit(10)
+        if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
+            self.get_hit(10)
 
     def draw(self):
         super().draw()
-        self.render_text(f"{self.warp_charges}")
+        # self.render_text(f"{self.warp_charges}")
         self.render_text(f"{self.hp}", pos=(0, -40))
         
         if self.won:
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
-        
+    
+    def set_image(self, image_name):
+        self._images = itertools.cycle(Player.images[image_name])
+
     def process_input(self):
         for event in self.game.events:
             if event.type == KEYDOWN:
@@ -86,11 +98,9 @@ class Player(Dynamic):
     def move(self, direction):
         if direction == "left":
             self.x_dir = -1
-            max_speed = -self.speed
             self.dx = -self.speed
         if direction == "right":
             self.x_dir = 1
-            max_speed = -self.speed
             self.dx = self.speed
 
     def warp(self):
@@ -115,7 +125,7 @@ class Player(Dynamic):
         self.x_dir = -self.x_dir
         self.stunned = True
         self.hp -= dmg
-        
+    
     def on_ground(self):
         detector = self.rect.copy()
         detector.bottom += 1

@@ -27,12 +27,20 @@ class GameObject(pygame.sprite.Sprite):
         pass
     
     def draw(self):
-        adjusted = self.game.camera.adjust_rect(self.rect)
         if self.world is not None and self.world != self.game.world:
-            self.image.fill(self.inactive_color)
+            self.draw_inactive()
         else:
-            self.image.fill(self.color)
-        self.game.surface.blit(self.image, adjusted)
+            self.draw_active()
+    
+    def draw_active(self):
+        adjusted = self.game.camera.adjust_rect(self.rect)
+        scaled_image = pygame.transform.scale(self.image, adjusted.size)
+        if hasattr(self, "x_dir"):
+            scaled_image = pygame.transform.flip(scaled_image, self.x_dir==-1, 0)
+        self.game.surface.blit(scaled_image, adjusted)
+    
+    def draw_inactive(self):
+        self.image.fill(self.color)
     
     def collide_with(self, collidee, **conditions):
         """
@@ -61,6 +69,35 @@ class GameObject(pygame.sprite.Sprite):
             if self.rect.colliderect(collidee.rect):
                 return collidee
     
+    def contact_with(self, cls, side):
+        """
+        given class and side
+        :param cls: Type
+        :param side: "top", "right", "bottom", "left"
+        :return: sprite or None
+        """
+        collidee = find_closest(self, cls)
+        # Check same world
+        if collidee and collidee.world == self.world:
+            # Horizontal contact
+            if side == "left" or side == "right":
+                if self.rect.top > collidee.rect.bottom or self.rect.bottom > collidee.rect.top:
+                    # Left contact
+                    if collidee.rect.left == self.rect.right and side == "left":
+                        return collidee
+                    # Right contact
+                    elif collidee.rect.right == self.rect.left and side == "right":
+                        return collidee
+            elif side == "top" or side == "bottom":
+                if self.rect.left > collidee.rect.right or self.rect.right > collidee.rect.left:
+                    # Top contact
+                    if collidee.rect.bottom == self.rect.top and side == "top":
+                        return collidee
+                    # Bottom contact
+                    elif collidee.rect.top == self.rect.bottom and side == "bottom":
+                        return collidee
+            else:
+                raise ValueError(f"Invalid side {side}")
     def detect_solid(self, rect, same_world=True):
         """
         given a rect return a colliding solid Sprite or None

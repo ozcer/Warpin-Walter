@@ -1,4 +1,6 @@
 import math
+import os
+import pygame
 
 # Display
 FPS = 60
@@ -81,6 +83,15 @@ def find_closest(self, cls):
                 shortest_dist = curr_dist
     return closest
 
+
+def load_image_folder(path):
+    cwd = os.path.dirname(__file__)
+    relative_path = os.path.join(cwd, path)
+    res = []
+    for file in os.listdir(relative_path):
+        _path = os.path.join(relative_path, file)
+        res.append(pygame.image.load(_path))
+    return res
 
 def distance(p1, p2):
     """
