@@ -7,10 +7,11 @@ from src.game_objects.goal import Goal
 from src.game_objects.ground import Ground
 from src.game_objects.player import Player
 from src.game_objects.warp_consumable import WarpConsumable
+from src.game_objects.warp_switch import WarpSwitch
 
 
 def test_level(game):
-
+    game.world = "one"
     game.entities = {ALL_SPRITES: pygame.sprite.Group()}
     player = Player(game, pos=(200, 200))
     game.add_entity(player, "one")
@@ -64,6 +65,7 @@ def test_level(game):
 
 
 def two_dumbs(game):
+    game.world = "one"
     game.entities = {ALL_SPRITES: pygame.sprite.Group()}
     player = Player(game, pos=(200, 200))
     game.add_entity(player, "one")
@@ -83,8 +85,14 @@ def two_dumbs(game):
               game,
               (bottom_left_pos[0], bottom_left_pos[1]),
               (Ground.height, 0),
-              width,
+              width-1,
               ["one", "two"])
+    switch_ground = Ground(game, pos=(400, 200))
+    game.add_entity(switch_ground, "one")
+
+    switch = WarpSwitch(game, pos=(100, 200), ground=switch_ground)
+    game.add_entity(switch)
+    
     # Right guard
     build_row(Ground,
               game,

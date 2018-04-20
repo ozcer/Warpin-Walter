@@ -27,10 +27,7 @@ class WarpConsumable(Consumable):
         
     def get_consumed(self, consumer):
         super().get_consumed(consumer)
-        if hasattr(consumer, "warp_charges"):
-            consumer.warp_charges += 1
-        else:
-            consumer.warp_charges = 1
+        consumer.warp_charges += 1
         
         self.kill()
 
