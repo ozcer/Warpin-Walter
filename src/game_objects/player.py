@@ -5,6 +5,8 @@ import pygame
 from src.const import *
 import pygame
 from pygame.locals import *
+
+from src.game_objects.consumable import Consumable
 from src.game_objects.dynamic import Dynamic
 from src.game_objects.ground import Ground
 from src.game_objects.warp_consumable import WarpConsumable
@@ -24,6 +26,7 @@ class Player(Dynamic):
         self.is_player = True
         
         self.warp_charges = 3
+        self.won = False
     
     def update(self):
         super().update()
@@ -32,13 +35,16 @@ class Player(Dynamic):
         self.game.camera.rect.center = self.x, self.y
         self.apply_gravity()
         
-        collidee = self.collide_with(WarpConsumable)
+        collidee = self.collide_with(Consumable)
         if collidee:
             self.consume(collidee)
 
     def draw(self):
         super().draw()
         self.render_text(f"{self.warp_charges}")
+        
+        if self.won:
+            self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
         
     def process_input(self):
         for event in self.game.events:

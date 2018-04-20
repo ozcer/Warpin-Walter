@@ -122,18 +122,11 @@ class Game:
         # Right guard
         build_row(Ground,
                   self,
-                  (bottom_left_pos[0] + (width-1) * Goal.width, bottom_left_pos[1] - Goal.height),
-                  (0, -Goal.height),
+                  (bottom_left_pos[0] + (width-1) * Ground.width, bottom_left_pos[1] - Ground.height),
+                  (0, -Ground.height),
                   3,
                   ["one", "two"])
-        # # World 1 wall
-        # build_row(Ground,
-        #           self,
-        #           (bottom_left_pos[0] + Ground.width * 5, bottom_left_pos[1] - Ground.height),
-        #           (0, -Ground.height),
-        #           3,
-        #           ["one"])
-        # World 2 walls
+        
         build_row(Ground,
                   self,
                   (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),

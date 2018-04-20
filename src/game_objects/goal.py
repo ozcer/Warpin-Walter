@@ -1,11 +1,13 @@
 import pygame
 from src.const import *
+from src.game_objects.consumable import Consumable
 from src.game_objects.game_object import GameObject
 from src.game_objects.player import Player
 
 
-class Goal(GameObject):
-    width = height = 100
+class Goal(Consumable):
+    width = 25
+    height = 100
     color = RED
 
     def __init__(self, *args,
@@ -19,9 +21,12 @@ class Goal(GameObject):
 
     def update(self):
         super().update()
-        if self.collide_with(Player, world=self.world):
-            print("you won")
 
     def draw(self):
         super().draw()
+    
+    def get_consumed(self, consumer):
+        super().get_consumed(consumer)
+        consumer.won = True
+        self.kill()
 

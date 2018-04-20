@@ -5,6 +5,11 @@ class Camera():
     
     def __init__(self, rect):
         self.rect = rect
+        self.follow_target = None
+        self.speed = .5
+        
+    def follow(self, target):
+        self.follow_target = target
     
     def adjust_rect(self, raw_rect):
         """
