@@ -4,14 +4,14 @@ from src.const import *
 from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.follower import Follower
 from src.game_objects.interactible.goal import Goal
-from src.game_objects.terrain.ground import Ground
+from src.game_objects.terrain.platform import Platform as Ground
 from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.warp_consumable import WarpConsumable
 from src.game_objects.interactible.warp_switch import WarpSwitch
 
 
 def level_1(game):
-    player = Player(game, pos=(200, 200))
+    player = Player(game, pos=(75, 400))
     game.add_entity(player, "one")
     game.camera.follow(player)
     bottom_left_pos = (0, 500)
@@ -22,7 +22,7 @@ def level_1(game):
               game,
               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              3,
+              8,
               ["one", "two"])
     # Floor
     build_row(Ground,
@@ -60,3 +60,4 @@ def level_1(game):
 
     warp = WarpConsumable(game, pos=(700, 200))
     game.add_entity(warp)
+    return "Test Name"

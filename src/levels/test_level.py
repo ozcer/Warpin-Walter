@@ -58,3 +58,4 @@ def test_level(game):
 
     warp = WarpConsumable(game, pos=(700, 200))
     game.add_entity(warp)
+    return "Test level"
