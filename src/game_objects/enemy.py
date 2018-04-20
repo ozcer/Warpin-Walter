@@ -7,6 +7,6 @@ class Enemy(Dynamic):
     
     def update(self):
         super().update()
-    
+        
     def draw(self):
         super().draw()

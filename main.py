@@ -32,7 +32,7 @@ class Game:
         self.camera = Camera(screen)
 
         self.world = "one"
-        self.build_level(two_dumbs)
+        self.build_level(test_level)
         self.run()
 
     def run(self):

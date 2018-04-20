@@ -13,9 +13,9 @@ class Follower(Enemy):
         
         self.color = D_PURPLE
         self.image.fill(self.color)
-        self.speed = 3
+        self.speed = 4
         
-        self.seek_range = 300
+        self.seek_range = 500
         
     def update(self):
         super().update()
@@ -27,7 +27,7 @@ class Follower(Enemy):
         super().draw()
     
     def seek(self):
-        target = self.find_closest(Player)
+        target = find_closest(self, Player)
         # If Player not found or too far or super close
         if (target is None
                 or distance((target.x, target.y), (self.x, self.y)) > self.seek_range

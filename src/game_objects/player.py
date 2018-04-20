@@ -8,6 +8,7 @@ from pygame.locals import *
 
 from src.game_objects.consumable import Consumable
 from src.game_objects.dynamic import Dynamic
+from src.game_objects.enemy import Enemy
 
 
 class Player(Dynamic):
@@ -22,13 +23,19 @@ class Player(Dynamic):
         self.image.fill(self.color)
         self.speed = 7
         self.is_player = True
+        self.x_dir = 1
         
         self.warp_charges = 3
         self.won = False
-    
+        
+        self.stunned = False
+        self.hp = 100
+        
     def update(self):
         super().update()
-        self.dx = 0
+        if self.on_ground():
+            self.dx = 0
+            self.stunned = False
         self.process_input()
         self.apply_gravity()
         
@@ -36,38 +43,49 @@ class Player(Dynamic):
         if collidee:
             self.consume(collidee)
 
+        collidee = find_closest(self, Enemy)
+        if collidee and collidee.world == self.world:
+            if self.rect.top > collidee.rect.bottom or self.rect.bottom > collidee.rect.top:
+                if collidee.rect.right == self.rect.left or collidee.rect.left == self.rect.right:
+                    self.get_hit(10)
+
     def draw(self):
         super().draw()
         self.render_text(f"{self.warp_charges}")
+        self.render_text(f"{self.hp}", pos=(0, -40))
         
         if self.won:
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
         
     def process_input(self):
         for event in self.game.events:
-            if event.type == pygame.KEYDOWN:
+            if event.type == KEYDOWN:
                 key = event.key
                 if key == pygame.K_SPACE:
-                    if self.warp():
-                        return
-                if key == pygame.K_r or key == pygame.K_c:
+                    self.warp()
+                if key == K_r or key == K_c:
                     self.game.reset_level()
+                if key == K_p:
+                    self.get_hit()
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         
-        # Left and right
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            self.move("right")
-        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            self.move("left")
-        # Jumping
-        if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
-            self.dy -= 15
-
+        if not self.stunned:
+            # Left and right
+            if keys[K_RIGHT] or keys[K_d]:
+                self.move("right")
+            elif keys[K_LEFT] or keys[K_a]:
+                self.move("left")
+            # Jumping
+            if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
+                self.dy -= 15
+    
     def move(self, direction):
         if direction == "left":
+            self.x_dir = -1
             self.dx = -self.speed
         if direction == "right":
+            self.x_dir = 1
             self.dx = self.speed
 
     def warp(self):
@@ -85,6 +103,14 @@ class Player(Dynamic):
     def consume(self, consumable):
         consumable.get_consumed(self)
     
+    # talk shit
+    def get_hit(self, dmg=0):
+        self.dy = -6
+        self.dx = -self.x_dir * 5
+        self.x_dir = -self.x_dir
+        self.stunned = True
+        self.hp -= dmg
+        
     def on_ground(self):
         detector = self.rect.copy()
         detector.bottom += 1

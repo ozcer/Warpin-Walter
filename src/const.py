@@ -66,6 +66,22 @@ def build_row(cls, game, start_pos, next_pos, amount, worlds):
                                       start_pos[1] + i * next_pos[1]))
             game.add_entity(instance, world)
 
+def find_closest(self, cls):
+    """
+    return the the closest instance of a class or None if not found
+    :param cls: Type (a class)
+    :return: Sprite or None
+    """
+    closest = None
+    shortest_dist = None
+    for sprite in self.game.entities[ALL_SPRITES]:
+        if isinstance(sprite, cls):
+            curr_dist = distance((self.x, self.y), (sprite.x, sprite.y))
+            if shortest_dist is None or curr_dist < shortest_dist:
+                closest = sprite
+                shortest_dist = curr_dist
+    return closest
+
 
 def distance(p1, p2):
     """
