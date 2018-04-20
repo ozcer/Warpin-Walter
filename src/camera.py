@@ -20,7 +20,7 @@ class Camera:
         self.follow_target = target
     
     def update(self):
-        self.rect.center = self.x, self.y
+        self.rect.center = self.x, self.y - 50
         if self.follow_target:
             self.x, self.y = self.follow_target.x, self.follow_target.y
 
