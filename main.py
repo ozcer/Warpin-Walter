@@ -8,12 +8,8 @@ from src.camera import Camera
 import pygame
 from pygame.locals import *
 from src.const import *
-from src.game_objects.dumb_enemy import DumbEnemy
-from src.game_objects.follower import Follower
-from src.game_objects.ground import Ground
-from src.game_objects.player import Player
-from src.game_objects.goal import Goal
-from src.game_objects.warp_consumable import WarpConsumable
+from src.game_objects.levels import test_level
+
 
 
 class Game:
@@ -36,8 +32,7 @@ class Game:
         self.camera = Camera(screen)
 
         self.world = "one"
-        self.level = self.build_test_level
-        self.build_test_level()
+        self.build_level(test_level)
         self.run()
 
     def run(self):
@@ -89,61 +84,13 @@ class Game:
         
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
-
-    def build_test_level(self):
-        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
-        player = Player(self, pos=(200, 200))
-        self.add_entity(player, "one")
-        self.camera.follow(player)
-        bottom_left_pos = (0, 500)
-        width = 13
     
-        # Left guard
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
-                  ["one", "two"])
-        # Floor
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0], bottom_left_pos[1]),
-                  (Ground.height, 0),
-                  width,
-                  ["one", "two"])
-        # Right guard
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
-                  ["one", "two"])
-    
-        build_row(Ground,
-                  self,
-                  (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
-                  (0, -Ground.height),
-                  3,
-                  ["two"])
-        # Goal
-        build_row(Goal,
-                  self,
-                  (bottom_left_pos[0] + (width - 2) * Ground.height,
-                   bottom_left_pos[1] - Ground.height),
-                  (0, 0),
-                  1,
-                  ["one", "two"])
-    
-        # Enemy
-        enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
-        self.add_entity(enemy, "one")
-    
-        warp = WarpConsumable(self, pos=(700, 200))
-        self.add_entity(warp)
+    def build_level(self, level):
+        self.level = level
+        level(self)
     
     def reset_level(self):
-        self.level()
+        self.level(self)
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
