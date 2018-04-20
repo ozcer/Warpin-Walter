@@ -8,7 +8,7 @@ from src.camera import Camera
 import pygame
 from pygame.locals import *
 from src.const import *
-from src.game_objects.levels import test_level
+from src.game_objects.levels import *
 
 
 
@@ -32,7 +32,7 @@ class Game:
         self.camera = Camera(screen)
 
         self.world = "one"
-        self.build_level(test_level)
+        self.build_level(two_dumbs)
         self.run()
 
     def run(self):
