@@ -16,7 +16,8 @@ class Goal(Consumable):
                          image=pygame.Surface((Goal.width, Goal.height)),
                          is_solid=False,
                          **kwargs)
-
+        self.color = Goal.color
+        
     def update(self):
         super().update()
 

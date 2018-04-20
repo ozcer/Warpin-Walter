@@ -13,7 +13,10 @@ from src.game_objects.dynamic.enemy import Enemy
 
 class Player(Dynamic):
     
-    images = {"run": load_image_folder("../gfx/player/run")}
+    images = {"run": load_image_folder("../gfx/player/run"),
+              "idle": load_image_folder("../gfx/player/idle"),
+              "fall": load_image_folder("../gfx/player/fall"),
+              "jump": load_image_folder("../gfx/player/jump")}
     
     def __init__(self, *args,
                  **kwargs):
@@ -31,7 +34,7 @@ class Player(Dynamic):
         self.stunned = False
         self.hp = 100
         
-        self.set_image("run")
+        self.set_image("idle")
         self.ticks_per_frame = 5
         self._image_ticks = self.ticks_per_frame
         
@@ -58,7 +61,18 @@ class Player(Dynamic):
 
         if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
             self.get_hit(10)
-
+        
+        if self.on_ground():
+            if self.dx == 0:
+                self.set_image("idle")
+            else:
+                self.set_image("run")
+        else:
+            if self.dy <= 0:
+                self.set_image("jump")
+            else:
+                self.set_image("fall")
+        
     def draw(self):
         super().draw()
         # self.render_text(f"{self.warp_charges}")
@@ -68,7 +82,9 @@ class Player(Dynamic):
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
     
     def set_image(self, image_name):
-        self._images = itertools.cycle(Player.images[image_name])
+        if not hasattr(self, "image_name") or image_name != self.image_name:
+            self.image_name = image_name
+            self._images = itertools.cycle(Player.images[image_name])
 
     def process_input(self):
         for event in self.game.events:
@@ -121,8 +137,8 @@ class Player(Dynamic):
     # talk shit
     def get_hit(self, dmg=0):
         self.dy = -6
-        self.dx = -self.x_dir * 9
         self.x_dir = -self.x_dir
+        self.dx = -self.x_dir * 9
         self.stunned = True
         self.hp -= dmg
     
