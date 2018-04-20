@@ -32,6 +32,7 @@ class Follower(Enemy):
         if target is None or distance((target.x, target.y), (self.x, self.y)) > self.seek_range:
             self.dx = 0
         else:
+            self.render_text("!!!", pos=(0, -50), color=RED)
             # Target on left
             if target.x < self.x:
                 self.move("left")
