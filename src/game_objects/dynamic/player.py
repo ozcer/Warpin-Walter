@@ -34,7 +34,8 @@ class Player(Dynamic):
         super().update()
         if self.on_ground():
             self.dx = 0
-            self.stunned = False
+        else:
+            self.dx += -sign(self.dx) * .2
         self.process_input()
         self.apply_gravity()
         
