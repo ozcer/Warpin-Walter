@@ -10,7 +10,6 @@ from src.game_objects.consumable import Consumable
 from src.game_objects.dynamic import Dynamic
 from src.game_objects.enemy import Enemy
 
-
 class Player(Dynamic):
     
     def __init__(self, *args,
@@ -25,7 +24,7 @@ class Player(Dynamic):
         self.is_player = True
         self.x_dir = 1
         
-        self.warp_charges = 3
+        self.warp_charges = 99
         self.won = False
         
         self.stunned = False
@@ -65,8 +64,14 @@ class Player(Dynamic):
                     self.warp()
                 if key == K_r or key == K_c:
                     self.game.reset_level()
+
+                # TODO super hacky, don't do as I do, do as I say
+                import src.game_objects.levels as levels
                 if key == K_p:
-                    self.get_hit()
+                    if self.game.level == levels.test_level:
+                        self.game.build_level(levels.two_dumbs)
+                    else:
+                        self.game.build_level(levels.test_level)
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         
