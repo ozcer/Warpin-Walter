@@ -8,8 +8,6 @@ from pygame.locals import *
 
 from src.game_objects.consumable import Consumable
 from src.game_objects.dynamic import Dynamic
-from src.game_objects.ground import Ground
-from src.game_objects.warp_consumable import WarpConsumable
 
 
 class Player(Dynamic):
@@ -53,7 +51,7 @@ class Player(Dynamic):
                     if self.warp():
                         return
                 if key == pygame.K_r or key == pygame.K_c:
-                    self.game.reset = True
+                    self.game.reset_level()
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         

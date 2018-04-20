@@ -28,7 +28,7 @@ class Game:
         logging.basicConfig(level=LOG_LEVEL,
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')
-        
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
         
@@ -36,17 +36,10 @@ class Game:
         self.camera = Camera(screen)
 
         self.world = "one"
-        
-        self.build_test_level()
         self.level = self.build_test_level
-        
-        self.reset = False
+        self.build_test_level()
         self.run()
-        while self.reset:
-            self.reset_game()
-            self.build_test_level()
-            self.run()
-    
+
     def run(self):
         running = True
         while running:
@@ -65,8 +58,6 @@ class Game:
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
-            if self.reset:
-                break
 
     def update_all_sprites(self):
         for sprite in self.entities[ALL_SPRITES]:
@@ -106,7 +97,7 @@ class Game:
         self.camera.follow(player)
         bottom_left_pos = (0, 500)
         width = 13
-
+    
         # Left guard
         build_row(Ground,
                   self,
@@ -124,11 +115,11 @@ class Game:
         # Right guard
         build_row(Ground,
                   self,
-                  (bottom_left_pos[0] + (width-1) * Ground.width, bottom_left_pos[1] - Ground.height),
+                  (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
                   (0, -Ground.height),
                   3,
                   ["one", "two"])
-        
+    
         build_row(Ground,
                   self,
                   (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
@@ -143,19 +134,15 @@ class Game:
                   (0, 0),
                   1,
                   ["one", "two"])
-        
+    
         # Enemy
         enemy = Follower(self, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
         self.add_entity(enemy, "one")
-
+    
         warp = WarpConsumable(self, pos=(700, 200))
         self.add_entity(warp)
-        
-    def reset_game(self):
-        self.reset = False
-        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
-        player = Player(self, pos=(200, 200))
-        self.add_entity(player)
+    
+    def reset_level(self):
         self.level()
 
     @staticmethod

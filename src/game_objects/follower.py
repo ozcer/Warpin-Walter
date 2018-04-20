@@ -28,8 +28,10 @@ class Follower(Enemy):
     
     def seek(self):
         target = self.find_closest(Player)
-        # If Player not found or too far
-        if target is None or distance((target.x, target.y), (self.x, self.y)) > self.seek_range:
+        # If Player not found or too far or super close
+        if (target is None
+                or distance((target.x, target.y), (self.x, self.y)) > self.seek_range
+                or abs(self.x - target.x) < 2):
             self.dx = 0
         else:
             self.render_text("!!!", pos=(0, -50), color=RED)
