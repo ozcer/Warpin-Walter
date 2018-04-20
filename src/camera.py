@@ -1,15 +1,24 @@
 import pygame
+from math import cos, sin
+
+from src.const import *
 
 
 class Camera():
     
     def __init__(self, rect):
         self.rect = rect
+        self.x, self.y = self.rect.center
         self.follow_target = None
-        self.speed = .5
         
     def follow(self, target):
         self.follow_target = target
+    
+    def update(self):
+        self.rect.center = self.x, self.y
+        if self.follow_target:
+            self.x, self.y = self.follow_target.x, self.follow_target.y
+        
     
     def adjust_rect(self, raw_rect):
         """

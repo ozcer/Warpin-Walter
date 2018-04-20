@@ -32,7 +32,6 @@ class Player(Dynamic):
         super().update()
         self.dx = 0
         self.process_input()
-        self.game.camera.rect.center = self.x, self.y
         self.apply_gravity()
         
         collidee = self.collide_with(Consumable)

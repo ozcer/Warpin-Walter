@@ -68,4 +68,23 @@ def build_row(cls, game, start_pos, next_pos, amount, worlds):
 
 
 def distance(p1, p2):
+    """
+    get distance between two points
+    """
     return math.hypot(p2[0] - p1[0], p2[1] - p1[1])
+
+
+def angle(p1, p2):
+    """
+    get angle between two points
+    """
+    x_dist = p2[0] - p1[0]
+    y_dist = p2[1] - p1[1]
+    return math.atan2(-y_dist, x_dist) % (2 * math.pi)
+
+
+def sign(n):
+    """
+    get the sign of a number
+    """
+    return (n > 0) - (n < 0)

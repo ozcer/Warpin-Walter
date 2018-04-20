@@ -34,6 +34,7 @@ class Game:
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(screen)
+
         self.world = "one"
         
         self.build_test_level()
@@ -50,7 +51,9 @@ class Game:
         running = True
         while running:
             self.surface.fill(L_OLIVE)
-
+            # TODO temp hack to update camera, prolly should systemize
+            self.camera.update()
+            
             if pygame.event.peek(pygame.QUIT):
                 pygame.quit()
                 sys.exit()
@@ -98,10 +101,9 @@ class Game:
 
     def build_test_level(self):
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
-    
         player = Player(self, pos=(200, 200))
         self.add_entity(player, "one")
-        
+        self.camera.follow(player)
         bottom_left_pos = (0, 500)
         width = 13
 
