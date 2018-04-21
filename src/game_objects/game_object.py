@@ -38,6 +38,8 @@ class GameObject(pygame.sprite.Sprite):
         else:
             try:
                 self.image = next(self._images)
+                self._frame_index += 1
+
             except Exception as e:
                 logging.debug(e)
                 
@@ -64,6 +66,7 @@ class GameObject(pygame.sprite.Sprite):
             if not hasattr(self, "image_name") or image_name != self.image_name:
                 self.image_name = image_name
                 self._images = itertools.cycle(self.__class__.images[image_name])
+                self._frame_index = 0
         except Exception as e:
             logging.debug(e)
 
@@ -182,5 +185,12 @@ class GameObject(pygame.sprite.Sprite):
         camera_adjusted_pos = self.game.camera.adjust_point(absolute_pos)
         self.game.surface.blit(textsurface, camera_adjusted_pos)
     
+    def _animation_done_hook(self):
+        print(f"{self} done ani")
+    
+    def _on_last_frame(self):
+        total_frames = len(self.__class__.images[self.image_name])
+        return self._frame_index % total_frames == total_frames -1
+
     def __str__(self):
         return f"{self.__class__.__name__} at {self.x, self.y}"

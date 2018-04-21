@@ -6,6 +6,7 @@ from src.const import *
 import pygame
 from pygame.locals import *
 
+from src.game_objects.effects.warping_effect import WarpingEffect
 from src.game_objects.interactible.consumable import Consumable
 from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.dynamic.enemy import Enemy
@@ -132,6 +133,10 @@ class Player(Dynamic):
             return True
     
     def _warp(self):
+        # Make warp effect
+        effect = WarpingEffect(self.game, pos=(self.x, self.y))
+        self.game.add_entity(effect)
+        
         target_world = "two" if self.game.world == "one" else "one"
         self.world = target_world
         self.game.change_world()
