@@ -38,7 +38,7 @@ class Game:
     def run(self):
         running = True
         while running:
-            self.background_color = MAROON if self.world == "one" else WHITE
+            self.background_color = MAROON if self.world == "one" else D_GREY
 
             # TODO temp hack to update camera, prolly should systemize
             self.camera.update()
