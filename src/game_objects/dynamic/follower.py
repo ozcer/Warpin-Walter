@@ -6,6 +6,11 @@ from src.game_objects.dynamic.player import Player
 
 
 class Follower(Enemy):
+    
+    images = {"idle": load_image_folder("../gfx/slime/idle"),
+              "move": load_image_folder("../gfx/slime/move"),
+              }
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
                          image=pygame.Surface((50, 50)),
@@ -15,13 +20,20 @@ class Follower(Enemy):
         self.image.fill(self.color)
         self.speed = 4
         
-        self.seek_range = 500
+        self.seek_range = 400
+        self.ticks_per_frame = 5
+        self.set_image("idle")
         
     def update(self):
         super().update()
         self.apply_gravity()
         
         self.seek()
+        
+        if self.dx != 0 and self.dy != 0:
+            self.set_image("move")
+        else:
+            self.set_image("idle")
         
     def draw(self):
         super().draw()
@@ -43,6 +55,8 @@ class Follower(Enemy):
 
     def move(self, direction):
         if direction == "left":
+            self.x_dir = 1
             self.dx = -self.speed
         if direction == "right":
+            self.x_dir = -1
             self.dx = self.speed

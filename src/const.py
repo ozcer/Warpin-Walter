@@ -1,6 +1,7 @@
 import math
 import os
 import pygame
+import logging
 
 # Display
 FPS = 60
@@ -10,8 +11,8 @@ DISPLAY_HEIGHT = int(480 * 1.2)
 START_WINDOW_POS = (100, 100)
 
 # logging
-LOG_LEVEL = "NOTSET"
-EXIT_MESSAGE = "The game has exited"
+LOG_LEVEL = 30
+EXIT_MESSAGE = "WARNING"
 
 # colors
 WHITE = (255, 255, 255)

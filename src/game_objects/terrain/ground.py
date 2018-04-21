@@ -18,7 +18,6 @@ class Ground(GameObject):
                          **kwargs)
         
         self.set_image("static")
-        
     
     def update(self):
         super().update()

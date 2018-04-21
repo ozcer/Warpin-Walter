@@ -58,7 +58,7 @@ class Game:
 
     def update_all_sprites(self):
         for sprite in self.entities[ALL_SPRITES]:
-            if sprite.world is None or sprite.world == self.world:
+            if self.is_active(sprite):
                 sprite.update()
     
     def draw_all_sprites(self):
@@ -67,12 +67,15 @@ class Game:
                                  key=lambda sprite: sprite.depth,
                                  reverse=True)
         for sprite in sorted_by_depth:
-            if sprite.world != self.world and self.world is not None:
+            if not self.is_active(sprite):
                 sprite.draw()
         for sprite in sorted_by_depth:
-            if sprite.world == self.world or sprite.world is None:
+            if self.is_active(sprite):
                 sprite.draw()
         self.camera.draw_ui()
+    
+    def is_active(self, sprite):
+        return sprite.world == self.world or sprite.world is None
     
     def add_entity(self, entity, world=None):
         # Tag it with world

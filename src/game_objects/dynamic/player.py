@@ -74,7 +74,7 @@ class Player(Dynamic):
         
         if self.won:
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
-
+        
     def process_input(self):
         for event in self.game.events:
             if event.type == KEYDOWN:

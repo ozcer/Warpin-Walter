@@ -5,6 +5,7 @@ import pygame
 from src.const import *
 
 
+
 class GameObject(pygame.sprite.Sprite):
     
     def __init__(self, game, *args,
@@ -37,7 +38,7 @@ class GameObject(pygame.sprite.Sprite):
             try:
                 self.image = next(self._images)
             except Exception as e:
-                logging.error(e)
+                logging.debug(e)
                 
             self._image_ticks = self.ticks_per_frame
     
@@ -55,15 +56,37 @@ class GameObject(pygame.sprite.Sprite):
         self.game.surface.blit(scaled_image, adjusted)
     
     def draw_inactive(self):
-        self.image.fill(L_GREY)
-    
+        self.overlay_color(L_GREY)
+        
     def set_image(self, image_name):
         try:
             if not hasattr(self, "image_name") or image_name != self.image_name:
                 self.image_name = image_name
                 self._images = itertools.cycle(self.__class__.images[image_name])
         except Exception as e:
-            logging.error(e)
+            logging.debug(e)
+
+    def overlay_color(self, color, alpha=255):
+        adjusted = self.game.camera.adjust_rect(self.rect)
+        scaled_image = pygame.transform.scale(self.image, adjusted.size)
+        if hasattr(self, "x_dir"):
+            scaled_image = pygame.transform.flip(scaled_image, self.x_dir == -1, 0)
+        
+        mask = pygame.mask.from_surface(scaled_image)
+        outline = mask.outline()
+        if not outline:
+            outline = [(0,0),
+                       (self.rect.w, 0),
+                       (self.rect.w, self.rect.h),
+                       (0, self.rect.h),
+                       (0, 0)]
+
+        mask_surf = pygame.Surface(adjusted.size)
+        pygame.draw.polygon(mask_surf, color, outline, 0)
+        mask_surf.set_colorkey((0, 0, 0))
+        mask_surf.set_alpha(alpha)
+        
+        self.game.surface.blit(mask_surf, adjusted)
     
     def collide_with(self, collidee, **conditions):
         """
