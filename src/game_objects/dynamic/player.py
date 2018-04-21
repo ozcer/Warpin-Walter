@@ -37,6 +37,8 @@ class Player(Dynamic):
         self.set_image("idle")
         self.ticks_per_frame = 5
         
+        self.won = False
+        
 
     def update(self):
         super().update()
@@ -55,6 +57,9 @@ class Player(Dynamic):
 
         if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
             self.get_hit(10)
+        
+        if self.won:
+            self.game.build_next_level()
         
         if self.on_ground():
             if self.dx == 0:
