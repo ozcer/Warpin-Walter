@@ -29,6 +29,10 @@ class Player(Dynamic):
         self.speed = 6
         self.is_player = True
         self.x_dir = 1
+        self.max_dy = -12
+        self.max_jump = 15
+        self.jump_timer = 0
+        self.apex = True
         
         self.warp_charges = warp_charges
         self.won = False
@@ -44,13 +48,19 @@ class Player(Dynamic):
     def update(self):
         super().update()
         
+        if isinstance(self.jump_timer, int):
+            if self.jump_timer > 0:
+                pass
+            else:
+                self.apply_gravity()
         if self.on_ground():
             self.dx = 0
+            self.jump_timer = -1
             self.stunned = False
         else:
-            self.dx += -sign(self.dx) * .2
+            self.dx += -sign(self.dx) * .25
         self.process_input()
-        self.apply_gravity()
+
         
         collidee = self.collide_with(Consumable)
         if collidee:
@@ -109,10 +119,9 @@ class Player(Dynamic):
                     self.warp()
                 if key == K_r or key == K_c:
                     self.game.reset_level()
-
-                # TODO super hacky, don't do as I do, do as I say
                 if key == K_p:
                     self.game.build_next_level()
+
         # Checking pressed keys
         keys = pygame.key.get_pressed()
         
@@ -123,8 +132,30 @@ class Player(Dynamic):
             elif keys[K_LEFT] or keys[K_a]:
                 self.move("left")
             # Jumping
-            if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
-                self.dy -= 15
+            if keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP]:
+                self.jump_timer -= 1
+                if self.on_ground():
+                    self.jump_timer = self.max_jump
+                    self.dy += self.max_dy
+                if not self.on_ground() and self.jump_timer > 6:
+                    self.apply_gravity(0.4)
+                elif not self.on_ground() and self.jump_timer > 3:
+                    self.apply_gravity(0.45)
+                elif not self.on_ground() and self.jump_timer == 0:
+                    self.apply_gravity(0.5)
+
+            elif not self.on_ground() and self.jump_timer > 6:
+                self.apply_gravity(1.2)
+            elif not self.on_ground() and self.jump_timer > 5:
+                self.apply_gravity(1.1)
+            elif not self.on_ground() and self.jump_timer > 4:
+                self.apply_gravity(1.05)
+            elif not self.on_ground() and self.jump_timer > 3:
+                self.apply_gravity(1.025)
+            elif not self.on_ground() and self.jump_timer >= 0:
+                self.apply_gravity(1)
+
+
 
     def move(self, direction):
         if direction == "left":

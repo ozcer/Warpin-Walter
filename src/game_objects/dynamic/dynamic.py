@@ -57,5 +57,5 @@ class Dynamic(GameObject):
         self.x, self.y = self.rect.center
                 
     
-    def apply_gravity(self):
-        self.dy += GRAVITY
+    def apply_gravity(self, factor=1):
+        self.dy += GRAVITY * factor

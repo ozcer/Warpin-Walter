@@ -6,7 +6,7 @@ from src.game_objects.game_object import GameObject
 
 class KillField(GameObject):
     width, height = 100, 100
-    color = RED
+    color = BLUE
 
     def __init__(self, *args,
                  pos,
