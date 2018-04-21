@@ -39,8 +39,7 @@ class Game:
         running = True
         while running:
             self.background_color = MAROON if self.world == "one" else WHITE
-            
-            self.surface.fill(self.background_color)
+
             # TODO temp hack to update camera, prolly should systemize
             self.camera.update()
             self.surface.fill(self.background_color)
@@ -103,6 +102,9 @@ class Game:
     
     def reset_level(self):
         self.build_level(self.level)
+
+    def change_world(self):
+        self.world = "one" if self.world == "two" else "two"
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
