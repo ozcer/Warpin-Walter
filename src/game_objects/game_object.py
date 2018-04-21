@@ -144,6 +144,7 @@ class GameObject(pygame.sprite.Sprite):
                         return collidee
             else:
                 raise ValueError(f"Invalid side {side}")
+
     def detect_solid(self, rect, same_world=True):
         """
         given a rect return a colliding solid Sprite or None
