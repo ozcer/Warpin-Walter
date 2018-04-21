@@ -63,7 +63,7 @@ class GameObject(pygame.sprite.Sprite):
         try:
             if not hasattr(self, "image_name") or image_name != self.image_name:
                 self.image_name = image_name
-            self._images = itertools.cycle(self.__class__.images[image_name])
+                self._images = itertools.cycle(self.__class__.images[image_name])
         except Exception as e:
             logging.debug(e)
 
