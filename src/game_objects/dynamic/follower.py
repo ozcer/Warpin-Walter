@@ -19,6 +19,7 @@ class Follower(Enemy):
         self.color = D_PURPLE
         self.image.fill(self.color)
         self.speed = 4
+        self.hp = 1
         
         self.seek_range = 400
         self.ticks_per_frame = 5

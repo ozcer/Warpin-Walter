@@ -53,8 +53,11 @@ class Player(Dynamic):
         if collidee:
             self.consume(collidee)
 
+        crushed_enemy = self.contact_with(Enemy, "bottom")
         if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
             self.get_hit(10)
+        if crushed_enemy:
+            crushed_enemy.get_hit(1)
         
         if self.on_ground():
             if self.dx == 0:
