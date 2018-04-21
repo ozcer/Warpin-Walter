@@ -226,7 +226,7 @@ def level_4(game):
     # Left guard
     _build_row(Ground,
                game,
-               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+               (bottom_left_pos[0] - Ground.width * 7, bottom_left_pos[1] - Ground.height),
                (0, -Ground.height),
                3,
                None)
@@ -237,10 +237,10 @@ def level_4(game):
     switch_ground_2 = Ground(game, pos=(ground_x, 300))
     switch_ground_3 = Ground(game, pos=(ground_x, 400))
     switch_ground = [switch_ground_1, switch_ground_2, switch_ground_3]
-    switch_1 = WarpSwitch(game, pos=(100, 160), ground=switch_ground)
+    switch_1 = WarpSwitch(game, pos=(-600, 160), ground=switch_ground)
     switch_2 = WarpSwitch(game, pos=(600, 160), ground=switch_ground)
     for ground in switch_ground:
-        game.add_entity(ground, "two")
+        game.add_entity(ground, "one")
     game.add_entity(switch_1, "one")
     game.add_entity(switch_2, "two")
     # Floor
@@ -251,12 +251,20 @@ def level_4(game):
                width,
                None)
 
+    # More floor
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] - Ground.width * 7, bottom_left_pos[1]),
+               (Ground.height, 0),
+               width,
+               None)
+
     _build_row(Ground,
                game,
                (bottom_left_pos[0] + Ground.width * 7, bottom_left_pos[1] - Ground.height),
                (0, -Ground.height),
                3,
-              "one")
+               "one")
     # Goal
     _build_row(Goal,
                game,
