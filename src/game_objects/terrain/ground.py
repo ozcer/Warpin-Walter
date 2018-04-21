@@ -5,6 +5,7 @@ from src.game_objects.game_object import GameObject
 
 
 class Ground(GameObject):
+    images = {"static": load_image_folder("../gfx/enviro/steel_block"),}
     
     width, height = 100, 100
     
@@ -15,8 +16,9 @@ class Ground(GameObject):
                          pos=pos,
                          image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
-        self.color = D_GREY
-        self.image.fill(self.color)
+        
+        self.set_image("static")
+        
     
     def update(self):
         super().update()

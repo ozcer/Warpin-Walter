@@ -1,8 +1,10 @@
 import pygame
 
 from src.const import *
+from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.follower import Follower
 from src.game_objects.interactible.goal import Goal
+from src.game_objects.interactible.warp_switch import WarpSwitch
 from src.game_objects.terrain.ground import Ground
 from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.warp_consumable import WarpConsumable
