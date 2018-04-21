@@ -10,7 +10,7 @@ from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.warp_consumable import WarpConsumable
 
 
-def test_level(game):
+def level_2(game):
     player = Player(game, pos=(200, 200))
     game.add_entity(player, "one")
     game.camera.follow(player)
@@ -60,10 +60,10 @@ def test_level(game):
 
     warp = WarpConsumable(game, pos=(700, 200))
     game.add_entity(warp)
-    return "Test level"
+    return "Bee"
 
 
-def level_1(game):
+def level_3(game):
     player = Player(game, pos=(75, 400), warp_charges=1)
     game.add_entity(player, "one")
     game.camera.follow(player)
@@ -89,7 +89,7 @@ def level_1(game):
               game,
               (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height * 2),
               (Ground.width, 0),
-              width,
+              width - 3,
               None)
 
     # Ceiling false block
@@ -105,7 +105,7 @@ def level_1(game):
               game,
               (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              2,
+              5,
               None)
 
     build_row(Ground,
@@ -127,13 +127,13 @@ def level_1(game):
     enemy = Follower(game, pos=(bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height))
     game.add_entity(enemy, "one")
 
-    warp = WarpConsumable(game, pos=(700, 200))
+    warp = WarpConsumable(game, pos=(500, 200))
     game.add_entity(warp)
-    return "Test Name"
+    return "Look ahead, think behind."
 
 
-def two_dumbs(game):
-    player = Player(game, pos=(200, 200))
+def level_4(game):
+    player = Player(game, pos=(200, 200), warp_charges=1)
     game.add_entity(player, "one")
     game.camera.follow(player)
     bottom_left_pos = (0, 500)
@@ -153,23 +153,19 @@ def two_dumbs(game):
               (Ground.height, 0),
               width - 1,
               None)
-    switch_ground = Ground(game, pos=(400, 200))
-    game.add_entity(switch_ground, "one")
 
-    switch = WarpSwitch(game, pos=(100, 200), ground=switch_ground)
-    game.add_entity(switch)
-
-    # Right guard
-    build_row(Ground,
+    # Stack of enemies
+    build_row(DumbEnemy,
               game,
-              (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
+              (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              3,
-              None)
+              8,
+              "one")
 
+    # Blocking pillar
     build_row(Ground,
               game,
-              (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
+              (bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
               3,
               "two")
@@ -182,21 +178,56 @@ def two_dumbs(game):
               1,
               None)
 
-    # Enemy
-    enemy = DumbEnemy(game, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
-    game.add_entity(enemy, "one")
-
-    enemy = DumbEnemy(game, pos=(bottom_left_pos[0] + Ground.width * 10, bottom_left_pos[1] - Ground.height))
-    game.add_entity(enemy, "one")
-
-    enemy = DumbEnemy(game, pos=(bottom_left_pos[0] + Ground.width * 11, bottom_left_pos[1] - 2 * Ground.height))
-    game.add_entity(enemy, "one")
-
-    enemy = DumbEnemy(game, pos=(bottom_left_pos[0] + Ground.width * 11, bottom_left_pos[1] - Ground.height))
-    game.add_entity(enemy, "one")
-
-    warp = WarpConsumable(game, pos=(700, 200))
-    game.add_entity(warp)
+    return "Just keep moving!"
 
 
-LEVELS = [level_1, test_level, two_dumbs]
+def level_5(game):
+    player = Player(game, pos=(200, 0), warp_charges=1)
+    game.add_entity(player, "one")
+    game.camera.follow(player)
+    bottom_left_pos = (0, 10000)
+    width = 30
+
+    # Left guard
+    build_row(Ground,
+              game,
+              (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+              (0, -Ground.height),
+              3,
+              None)
+    # Floor
+    build_row(Ground,
+              game,
+              (bottom_left_pos[0], bottom_left_pos[1]),
+              (Ground.height, 0),
+              width - 1,
+              None)
+
+    # Stack of enemies
+    build_row(DumbEnemy,
+              game,
+              (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
+              (0, -Ground.height),
+              8,
+              "one")
+
+    # Blocking pillar
+    build_row(Ground,
+              game,
+              (bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height),
+              (0, -Ground.height),
+              3,
+              "two")
+    # Goal
+    build_row(Goal,
+              game,
+              (bottom_left_pos[0] + (width - 2) * Ground.height,
+               bottom_left_pos[1] - Ground.height),
+              (0, 0),
+              1,
+              None)
+
+    return "The Oscar special."
+
+
+LEVELS = [level_2, level_3, level_4, level_5]

@@ -34,7 +34,7 @@ class Player(Dynamic):
         self.won = False
         
         self.stunned = False
-        self.hp = 100
+        self.hp = 1
         
         self.set_image("idle")
         self.ticks_per_frame = 5
@@ -97,8 +97,6 @@ class Player(Dynamic):
         
     def draw(self):
         super().draw()
-        # self.render_text(f"{self.warp_charges}")
-        self.render_text(f"{self.hp}", pos=(0, -40))
         
         if self.won:
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
