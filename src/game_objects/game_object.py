@@ -1,3 +1,6 @@
+import logging
+
+import itertools
 import pygame
 from src.const import *
 
@@ -22,9 +25,21 @@ class GameObject(pygame.sprite.Sprite):
         self.inactive_color = L_GREY
         
         self.font = pygame.font.SysFont('Arial', 30)
-    
+
+        self.ticks_per_frame = 1
+        self._image_ticks = self.ticks_per_frame
+        
     def update(self):
-        pass
+        # stay on one image for several ticks so you don't fffast!
+        if self._image_ticks > 0:
+            self._image_ticks -= 1
+        else:
+            try:
+                self.image = next(self._images)
+            except Exception as e:
+                logging.error(e)
+                
+            self._image_ticks = self.ticks_per_frame
     
     def draw(self):
         if self.world is not None and self.world != self.game.world:
@@ -40,7 +55,15 @@ class GameObject(pygame.sprite.Sprite):
         self.game.surface.blit(scaled_image, adjusted)
     
     def draw_inactive(self):
-        self.image.fill(self.color)
+        self.image.fill(L_GREY)
+    
+    def set_image(self, image_name):
+        try:
+            if not hasattr(self, "image_name") or image_name != self.image_name:
+                self.image_name = image_name
+                self._images = itertools.cycle(self.__class__.images[image_name])
+        except Exception as e:
+            logging.error(e)
     
     def collide_with(self, collidee, **conditions):
         """

@@ -36,16 +36,10 @@ class Player(Dynamic):
         
         self.set_image("idle")
         self.ticks_per_frame = 5
-        self._image_ticks = self.ticks_per_frame
         
+
     def update(self):
         super().update()
-        # stay on one image for several ticks so you don't fffast!
-        if self._image_ticks > 0:
-            self._image_ticks -= 1
-        else:
-            self.image = self._images.__next__()
-            self._image_ticks = self.ticks_per_frame
         
         if self.on_ground():
             self.dx = 0
@@ -80,11 +74,6 @@ class Player(Dynamic):
         
         if self.won:
             self.render_text("YOU WON", pos=(0, -50), color=YELLOW)
-    
-    def set_image(self, image_name):
-        if not hasattr(self, "image_name") or image_name != self.image_name:
-            self.image_name = image_name
-            self._images = itertools.cycle(Player.images[image_name])
 
     def process_input(self):
         for event in self.game.events:
