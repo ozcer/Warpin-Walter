@@ -20,7 +20,6 @@ class Camera:
         self.follow_target = target
     
     def update(self):
-        
         self.rect.center = self.x, self.y - 50
         if self.follow_target:
             self.x, self.y = self.follow_target.x, self.follow_target.y
@@ -67,5 +66,3 @@ class Camera:
         self.game.surface.blit(warp_surface, (0, 30))
         self.game.surface.blit(world_num_surface, (world_x, 1))
         self.game.surface.blit(warp_num_surface, (warp_x, 30))
-
-
