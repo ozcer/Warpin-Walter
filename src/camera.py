@@ -20,6 +20,7 @@ class Camera:
         self.follow_target = target
     
     def update(self):
+        
         self.rect.center = self.x, self.y - 50
         if self.follow_target:
             self.x, self.y = self.follow_target.x, self.follow_target.y
@@ -47,10 +48,9 @@ class Camera:
         return x, y
 
     def draw_ui(self):
-        if not hasattr(self, "player"):
-            self.get_player()
-
-        warp_charges = self.player.warp_charges
+        player = find_closest(self, Player)
+        
+        warp_charges = player.warp_charges
         world = 2 if self.game.world == "two" else 1
         warp_text = f"WARPS: "
         world_text = f"WORLD: "
@@ -68,18 +68,4 @@ class Camera:
         self.game.surface.blit(world_num_surface, (world_x, 1))
         self.game.surface.blit(warp_num_surface, (warp_x, 30))
 
-    def get_player(self):
-        """
-        Gets the player if we do not already have one, raises an error if there is no player
-        :return Player:
-        """
-        player_class = Player.__class__.__name__
-        if isinstance(self.follow_target, Player):
-            self.player = self.follow_target
-        elif len(self.game.entites[player_class]) == 1:
-            self.player = self.game.entities[player_class][0]
-        elif len(self.game.entites[player_class]) == 1:
-            self.player = self.game.entities[player_class][0]
-            logging.info("Cannot be certain that this is actually the correct player.")
-        else:
-            raise AssertionError
+
