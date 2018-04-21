@@ -101,11 +101,12 @@ def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False
     :return: (int, int) last position
     """
     for row in range(dimensions[1]):
-        y = start_pos[1] + row * cls.height
+        dy = row * cls.height
         if yreverse:
-            y = -y
-        pos = start_pos[0], y
+            dy = -dy
+        pos = start_pos[0], start_pos[1] + dy
         build_row(cls, game, pos, dimensions[0], xreverse, world, **kwargs)
+    return get_end_pos(cls, start_pos, dimensions, xreverse=xreverse, yreverse=yreverse)
 
 
 def get_end_pos(cls, start_pos, dimensions, xreverse=False, yreverse=False):
@@ -118,9 +119,9 @@ def get_end_pos(cls, start_pos, dimensions, xreverse=False, yreverse=False):
     :param yreverse: bool
     :return: (int, int)
     """
-    dx = dimensions[0] * cls.width
+    dx = (dimensions[0] - 1) * cls.width
     if xreverse: dx = -dx
-    dy = dimensions[1] * cls.height
+    dy = (dimensions[1] -1 ) * cls.height
     if yreverse: dy = -dy
     
     end_pos = start_pos[0] + dx, start_pos[1] + dy

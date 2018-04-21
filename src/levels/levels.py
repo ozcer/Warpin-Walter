@@ -15,7 +15,7 @@ from src.game_objects.terrain.platform import Platform
 
 
 
-def oscar_tutorial1(game):
+def oscar_tutorial_1(game):
     player = Player(game, pos=(200, 900), warp_charges=0)
     game.add_entity(player, "one")
     game.camera.follow(player)
@@ -44,14 +44,62 @@ def oscar_tutorial1(game):
     build_column(Ground, game, block_pos, room_height, reverse=True, world="one")
     
     # warp charge
-    pos = get_end_pos(Ground, block_pos, (2, room_height-3), xreverse=True, yreverse=True)
+    pos = get_end_pos(Ground, block_pos, (3, room_height-2), xreverse=True, yreverse=True)
     charge = WarpConsumable(game, pos=pos)
     game.add_entity(charge)
 
     # goal
-    pos = get_end_pos(Ground, bottom_right_pos, (1, 1), xreverse=True, yreverse=True)
+    pos = get_end_pos(Ground, bottom_right_pos, (2, 2), xreverse=True, yreverse=True)
     goal = Goal(game, pos=pos)
     game.add_entity(goal)
+
+
+def oscar_tutorial_2(game):
+    player = Player(game, pos=(200, 900), warp_charges=0)
+    game.add_entity(player, "one")
+    game.camera.follow(player)
+    bottom_left_pos = (0, 1000)
+    room_width = 20
+    room_height = 5
+    
+    # Floor
+    bottom_right_pos = build_row(Ground, game, bottom_left_pos, room_width)
+    
+    # Left Guard
+    top_left_pos = build_column(Ground, game, bottom_left_pos, room_height, reverse=True)
+    # Right Guard
+    build_column(Ground, game, bottom_right_pos, room_height, reverse=True)
+    
+    # Ceiling
+    top_right_pos = build_row(Ground, game, top_left_pos, room_width)
+    
+    # Background
+    build_array(BackgroundBlock, game, top_left_pos, (room_width, room_height), world="three")
+    
+    
+    # Ennemy
+    spawn_pos = get_end_pos(Ground, bottom_left_pos, (8, 2), yreverse=True)
+    enemy = DumbEnemy(game, pos=spawn_pos)
+    game.add_entity(enemy, "one")
+    
+    
+    # Low ceiling
+    _pos = get_end_pos(Ground, top_right_pos, (2, 2), xreverse=True)
+    end_pos = build_array(Ground, game, _pos, (room_width-8, 2), xreverse=True)
+
+    # warp charge
+    pos = get_end_pos(Ground, end_pos, (2, 2))
+    charge = WarpConsumable(game, pos=pos)
+    game.add_entity(charge)
+    
+    # goal
+    pos = get_end_pos(Ground, bottom_right_pos, (2, 2), xreverse=True, yreverse=True)
+    goal = Goal(game, pos=pos)
+    game.add_entity(goal)
+    
+    # 2nd enemy
+    enemy = DumbEnemy(game, pos=pos)
+    game.add_entity(enemy, "one")
     
 def level_1(game):
     player = Player(game, pos=(200, 9500), warp_charges=0)
@@ -349,4 +397,4 @@ def level_5(game):
     return "The Oscar special."
 
 
-LEVELS = [oscar_tutorial1, level_1, level_2, level_3, level_4, level_5]
+LEVELS = [oscar_tutorial_1, oscar_tutorial_2, level_1, level_2, level_3, level_4, level_5]
