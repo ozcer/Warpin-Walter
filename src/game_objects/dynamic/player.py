@@ -47,7 +47,10 @@ class Player(Dynamic):
 
     def update(self):
         super().update()
-        
+
+        ##############
+        # physics
+        ##############
         if isinstance(self.jump_timer, int):
             if self.jump_timer > 0:
                 pass
@@ -60,11 +63,10 @@ class Player(Dynamic):
         else:
             self.dx += -sign(self.dx) * .25
         self.process_input()
-
-        collidee = self.collide_with(Consumable)
-        if collidee:
-            self.consume(collidee)
-
+        
+        ##############
+        # COLLISION
+        ##############
         kill_top = self.contact_with(KillField, "top")
         kill_bot = self.contact_with(KillField, "bottom")
         if kill_top:
@@ -87,10 +89,19 @@ class Player(Dynamic):
                 self.get_stunned("right")
         if crushed_enemy:
             crushed_enemy.get_hit(1)
-        
+
+        collidee = self.collide_with(Consumable)
+        if collidee:
+            self.consume(collidee)
+        ##############
+        # winning
+        ##############
         if self.won:
             self.game.build_next_level()
-        
+
+        ##############
+        # Sprite
+        ##############
         if self.on_ground():
             if self.dx == 0:
                 self.set_image("idle")
@@ -132,17 +143,7 @@ class Player(Dynamic):
                 self.move("left")
             # Jumping
             if keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP]:
-                self.jump_timer -= 1
-                if self.on_ground():
-                    self.jump_timer = self.max_jump
-                    self.dy += self.max_dy
-                if not self.on_ground() and self.jump_timer > 6:
-                    self.apply_gravity(0.4)
-                elif not self.on_ground() and self.jump_timer > 3:
-                    self.apply_gravity(0.45)
-                elif not self.on_ground() and self.jump_timer == 0:
-                    self.apply_gravity(0.5)
-
+                self.jump()
             elif not self.on_ground() and self.jump_timer > 6:
                 self.apply_gravity(1.2)
             elif not self.on_ground() and self.jump_timer > 5:
@@ -154,8 +155,6 @@ class Player(Dynamic):
             elif not self.on_ground() and self.jump_timer >= 0:
                 self.apply_gravity(1)
 
-
-
     def move(self, direction):
         if direction == "left":
             self.x_dir = -1
@@ -163,7 +162,19 @@ class Player(Dynamic):
         if direction == "right":
             self.x_dir = 1
             self.dx = self.speed
-
+    
+    def jump(self):
+        self.jump_timer -= 1
+        if self.on_ground():
+            self.jump_timer = self.max_jump
+            self.dy += self.max_dy
+        if not self.on_ground() and self.jump_timer > 6:
+            self.apply_gravity(0.4)
+        elif not self.on_ground() and self.jump_timer > 3:
+            self.apply_gravity(0.45)
+        elif not self.on_ground() and self.jump_timer == 0:
+            self.apply_gravity(0.5)
+    
     def warp(self):
         # check if going to warp into solid
         collidee = self.detect_solid(self.rect, same_world=False)
@@ -171,6 +182,14 @@ class Player(Dynamic):
             self.warp_charges -= 1
             self._warp()
             return True
+        else:
+            if self.warp_charges <= 0:
+                # TODO
+                pass
+            elif collidee:
+                collidee.flash_color(RED, alpha=155, period=5)
+                
+            self.game.sfxs.play("error")
     
     def _warp(self):
         # Make warp effect
@@ -180,7 +199,7 @@ class Player(Dynamic):
         target_world = "two" if self.game.world == "one" else "one"
         self.world = target_world
         self.game.change_world()
-        
+    
     def consume(self, consumable):
         consumable.get_consumed(self)
     
@@ -195,7 +214,6 @@ class Player(Dynamic):
             self.dx = -10
         else:
             self.dx = 10
-
     
     def on_ground(self):
         detector = self.rect.copy()

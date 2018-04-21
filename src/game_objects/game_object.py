@@ -49,6 +49,12 @@ class GameObject(pygame.sprite.Sprite):
             self.draw_inactive()
         else:
             self.draw_active()
+        
+        # Flashing
+        if hasattr(self, "_flash_timer") and self._flash_timer > 0:
+            if self._flash_timer % (2 * self._flash_period) in range(self._flash_period):
+                self.overlay_color(self._flash_color, alpha=self._flash_alpha)
+            self._flash_timer -= 1
     
     def draw_active(self):
         adjusted = self.game.camera.adjust_rect(self.rect)
@@ -91,6 +97,12 @@ class GameObject(pygame.sprite.Sprite):
         mask_surf.set_alpha(alpha)
         
         self.game.surface.blit(mask_surf, adjusted)
+    
+    def flash_color(self, color, ticks=10, period=3, alpha=255):
+        self._flash_color = color
+        self._flash_timer = ticks
+        self._flash_period = period
+        self._flash_alpha = alpha
     
     def collide_with(self, collidee, **conditions):
         """
