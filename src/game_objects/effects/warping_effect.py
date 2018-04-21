@@ -8,7 +8,7 @@ class WarpingEffect(Effect):
     
     def __init__(self, *args, **kwargs):
         image = pygame.Surface((100, 100))
-        super().__init__(*args, image=image, is_solid=False, **kwargs)
+        super().__init__(*args, image=image, is_solid=False, depth=1, **kwargs)
         
         self.set_image("static")
         

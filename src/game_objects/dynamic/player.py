@@ -61,7 +61,6 @@ class Player(Dynamic):
             self.dx += -sign(self.dx) * .25
         self.process_input()
 
-        
         collidee = self.collide_with(Consumable)
         if collidee:
             self.consume(collidee)

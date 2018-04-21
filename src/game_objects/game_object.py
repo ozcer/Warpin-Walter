@@ -16,7 +16,6 @@ class GameObject(pygame.sprite.Sprite):
         self.x, self.y = pos
         self.depth = depth
         self.image = image
-        self.asset = image
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.rect.center = self.x, self.y
@@ -66,6 +65,7 @@ class GameObject(pygame.sprite.Sprite):
             if not hasattr(self, "image_name") or image_name != self.image_name:
                 self.image_name = image_name
                 self._images = itertools.cycle(self.__class__.images[image_name])
+                self.image = next(self._images)
                 self._frame_index = 0
         except Exception as e:
             logging.debug(e)
