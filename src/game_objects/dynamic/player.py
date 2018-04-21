@@ -117,7 +117,6 @@ class Player(Dynamic):
     
     def _warp(self):
         target_world = "two" if self.game.world == "one" else "one"
-        self.world = target_world
         self.game.world = target_world
         
     def consume(self, consumable):
