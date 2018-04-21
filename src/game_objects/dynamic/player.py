@@ -58,10 +58,8 @@ class Player(Dynamic):
         else:
             self.dx += -sign(self.dx) * .25
 
-        from src.game_objects.terrain.ground import Ground
-        # if self.contact_with(Ground, "top"):
-        #     self.dy = 0
-        self.process_input()
+        if not self.game.paused:
+            self.process_input()
         
         ##############
         # COLLISION

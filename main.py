@@ -57,8 +57,8 @@ class Game:
 
             self.events = pygame.event.get()
             
-            if not self.paused:
-                self.update_all_sprites()
+            
+            self.update_all_sprites()
             self.draw_all_sprites()
 
             for event in self.events:
