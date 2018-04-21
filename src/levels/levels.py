@@ -64,18 +64,18 @@ def test_level(game):
 
 
 def level_1(game):
-    player = Player(game, pos=(75, 400))
+    player = Player(game, pos=(75, 400), warp_charges=1)
     game.add_entity(player, "one")
     game.camera.follow(player)
     bottom_left_pos = (0, 500)
-    width = 13
+    width = 8
 
     # Left guard
     build_row(Ground,
               game,
               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              8,
+              5,
               None)
     # Floor
     build_row(Ground,
@@ -84,19 +84,35 @@ def level_1(game):
               (Ground.height, 0),
               width,
               None)
+    # Ceiling
+    build_row(Ground,
+              game,
+              (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height * 2),
+              (Ground.width, 0),
+              width,
+              None)
+
+    # Ceiling false block
+    build_row(Ground,
+              game,
+              (bottom_left_pos[0], bottom_left_pos[1] - Ground.width * 2),
+              (Ground.height, 0),
+              width,
+              "one")
+
     # Right guard
     build_row(Ground,
               game,
               (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              3,
+              2,
               None)
 
     build_row(Ground,
               game,
-              (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
+              (bottom_left_pos[0] + Ground.width * (width - 3), bottom_left_pos[1] - Ground.height),
               (0, -Ground.height),
-              3,
+              2,
               "two")
     # Goal
     build_row(Goal,
@@ -108,7 +124,7 @@ def level_1(game):
               None)
 
     # Enemy
-    enemy = Follower(game, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
+    enemy = Follower(game, pos=(bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height))
     game.add_entity(enemy, "one")
 
     warp = WarpConsumable(game, pos=(700, 200))

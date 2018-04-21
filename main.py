@@ -78,7 +78,9 @@ class Game:
     
     def add_entity(self, entity, world=None):
         # Tag it with world
-        entity.world = None if world is None else world
+        if world is None:
+            self.both_world_entities.add(entity)
+        entity.world = "one" if world is None else world
         
         # Add entity to class's sprite group
         class_name = entity.__class__.__name__
@@ -93,6 +95,7 @@ class Game:
     def build_level(self, level):
         self.world = "one"
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
+        self.both_world_entities = pygame.sprite.Group()
         self.level = level
         self.level(self)
     
@@ -105,6 +108,8 @@ class Game:
 
     def change_world(self):
         self.world = "one" if self.world == "two" else "two"
+        for entity in self.both_world_entities:
+            entity.world = self.world
 
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):

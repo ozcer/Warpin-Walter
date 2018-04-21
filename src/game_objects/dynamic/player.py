@@ -10,6 +10,7 @@ from src.game_objects.effects.warping_effect import WarpingEffect
 from src.game_objects.interactible.consumable import Consumable
 from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.dynamic.enemy import Enemy
+from src.game_objects.terrain.kill_field import KillField
 
 
 class Player(Dynamic):
@@ -20,7 +21,7 @@ class Player(Dynamic):
               "jump": load_image_folder("../gfx/player/jump")}
     
     def __init__(self, *args,
-                 **kwargs):
+                 warp_charges=99, **kwargs):
         
         super().__init__(*args,
                          image=pygame.Surface((46, 68)),
@@ -29,7 +30,7 @@ class Player(Dynamic):
         self.is_player = True
         self.x_dir = 1
         
-        self.warp_charges = 99
+        self.warp_charges = warp_charges
         self.won = False
         
         self.stunned = False
@@ -39,7 +40,6 @@ class Player(Dynamic):
         self.ticks_per_frame = 5
         
         self.won = False
-        
 
     def update(self):
         super().update()
@@ -56,13 +56,26 @@ class Player(Dynamic):
         if collidee:
             self.consume(collidee)
 
+        kill_top = self.contact_with(KillField, "top")
+        kill_bot = self.contact_with(KillField, "bottom")
+        if kill_top:
+            self.hp = 0
+        elif kill_bot:
+            self.hp = 0
+
         crushed_enemy = self.contact_with(Enemy, "bottom")
-        if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
+        if self.contact_with(Enemy, "left"):
             if not self.warp():
-                self.get_stunned()
+                self.get_stunned("left")
                 self.get_hit(10)
             else:
-                self.get_stunned()
+                self.get_stunned("left")
+        elif self.contact_with(Enemy, "right"):
+            if not self.warp():
+                self.get_stunned("right")
+                self.get_hit(10)
+            else:
+                self.get_stunned("right")
         if crushed_enemy:
             crushed_enemy.get_hit(1)
         
@@ -79,6 +92,8 @@ class Player(Dynamic):
                 self.set_image("jump")
             else:
                 self.set_image("fall")
+        if self.hp <= 0:
+            self.game.reset_level()
         
     def draw(self):
         super().draw()
@@ -113,9 +128,6 @@ class Player(Dynamic):
             if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
                 self.dy -= 15
 
-        if self.hp <= 0:
-            self.game.reset_level()
-    
     def move(self, direction):
         if direction == "left":
             self.x_dir = -1
@@ -148,11 +160,14 @@ class Player(Dynamic):
     def get_hit(self, dmg=0):
         self.hp -= dmg
 
-    def get_stunned(self):
+    def get_stunned(self, direction):
         self.dy = -6
-        self.x_dir = self.x_dir
-        self.dx = -self.x_dir * 9
         self.stunned = True
+        if direction == "left":
+            self.dx = -20
+        else:
+            self.dx = 20
+
     
     def on_ground(self):
         detector = self.rect.copy()
