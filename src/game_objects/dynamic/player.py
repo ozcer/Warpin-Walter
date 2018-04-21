@@ -29,9 +29,8 @@ class Player(Dynamic):
         self.speed = 6
         self.is_player = True
         self.x_dir = 1
-        self.max_dy = -12
-        self.max_jump = 15
-        self.jump_timer = 0
+        self.jump_power = 15
+
         self.apex = True
         
         self.warp_charges = warp_charges
@@ -51,17 +50,17 @@ class Player(Dynamic):
         ##############
         # physics
         ##############
-        if isinstance(self.jump_timer, int):
-            if self.jump_timer > 0:
-                pass
-            else:
-                self.apply_gravity()
+        self.apply_gravity()
         if self.on_ground():
             self.dx = 0
             self.jump_timer = -1
             self.stunned = False
         else:
             self.dx += -sign(self.dx) * .25
+
+        from src.game_objects.terrain.ground import Ground
+        # if self.contact_with(Ground, "top"):
+        #     self.dy = 0
         self.process_input()
         
         ##############
@@ -144,16 +143,6 @@ class Player(Dynamic):
             # Jumping
             if keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP]:
                 self.jump()
-            elif not self.on_ground() and self.jump_timer > 6:
-                self.apply_gravity(1.2)
-            elif not self.on_ground() and self.jump_timer > 5:
-                self.apply_gravity(1.1)
-            elif not self.on_ground() and self.jump_timer > 4:
-                self.apply_gravity(1.05)
-            elif not self.on_ground() and self.jump_timer > 3:
-                self.apply_gravity(1.025)
-            elif not self.on_ground() and self.jump_timer >= 0:
-                self.apply_gravity(1)
 
     def move(self, direction):
         if direction == "left":
@@ -167,16 +156,9 @@ class Player(Dynamic):
         self.jump_timer -= 1
         if self.on_ground():
             self._jump()
-        if not self.on_ground() and self.jump_timer > 6:
-            self.apply_gravity(0.4)
-        elif not self.on_ground() and self.jump_timer > 3:
-            self.apply_gravity(0.45)
-        elif not self.on_ground() and self.jump_timer == 0:
-            self.apply_gravity(0.5)
     
     def _jump(self):
-        self.jump_timer = self.max_jump
-        self.dy += self.max_dy
+        self.dy -= self.jump_power
     
     def warp(self):
         # check if going to warp into solid
