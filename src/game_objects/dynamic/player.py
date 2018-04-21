@@ -51,6 +51,7 @@ class Player(Dynamic):
         # physics
         ##############
         self.apply_gravity()
+            
         if self.on_ground():
             self.dx = 0
             self.jump_timer = -1
@@ -111,6 +112,13 @@ class Player(Dynamic):
                 self.set_image("fall")
         if self.hp <= 0:
             self.game.reset_level()
+        
+        if self.game.level("name") == "menu background":
+            
+            if self.y > 1000:
+                self._warp()
+                self.y = 0
+                self.dy = 0
         
     def draw(self):
         super().draw()

@@ -14,6 +14,13 @@ from src.game_objects.interactible.warp_consumable import WarpConsumable
 from src.game_objects.terrain.platform import Platform
 
 
+def menu_background(game):
+    if game == "name":
+        return "menu background"
+    player = Player(game, pos=(0, 0), warp_charges=0)
+    game.add_entity(player, "one")
+    game.camera.follow(player)
+
 # Done 1
 def level_1(game):
     if game == "name":
@@ -496,4 +503,4 @@ def level_5(game):
     game.add_entity(warp)
 
 
-LEVELS = [level_1, level_2, level_3, level_4, level_5, level_6, level_7]
+LEVELS = [menu_background, level_1, level_2, level_3, level_4, level_5, level_6, level_7]

@@ -87,6 +87,8 @@ class Camera:
             x = self.menu_rect.centerx
             dy = self.menu_rect.h / (len(self.menu_options) + 1)
             for index, option in enumerate(self.menu_options):
+                if option == "Play" and not self.game.level("name") == "menu background":
+                    option = "Resume"
                 option_surface = self.font.render(option, False, BLACK)
                 _rect = option_surface.get_rect()
                 _rect.center = x, self.menu_rect.top + (index +1 )* dy
@@ -112,9 +114,9 @@ class Camera:
                     elif key == K_RETURN:
                         if self.selection_index == 0:
                             self.game.paused = False
+                            if self.game.level("name") == "menu background":
+                                self.game.build_next_level()
                         elif self.selection_index == 1:
                             self.game.exit_game("Goodbye")
                         
                     self.selection_index = self.selection_index % len(self.menu_options)
-                    
-                    
