@@ -5,8 +5,9 @@ from src.game_objects.game_object import GameObject
 
 
 class Platform(GameObject):
-    width, height = 100, 50
-
+    width, height = 162, 34
+    images = {"static": load_image_folder("../gfx/enviro/steel_platform")}
+    
     def __init__(self, *args,
                  pos,
                  **kwargs):
@@ -14,9 +15,8 @@ class Platform(GameObject):
                          pos=pos,
                          image=pygame.Surface((Platform.width, Platform.height)),
                          **kwargs)
-        self.color = D_GREY
-        self.image.fill(self.color)
-
+        self.set_image("static")
+        
     def update(self):
         super().update()
 

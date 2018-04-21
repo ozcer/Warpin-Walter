@@ -9,6 +9,7 @@ from src.game_objects.terrain.ground import Ground
 from src.game_objects.terrain.kill_field import KillField
 from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.warp_consumable import WarpConsumable
+from src.game_objects.terrain.platform import Platform
 
 
 def level_1(game):
@@ -19,31 +20,24 @@ def level_1(game):
     width = 20
 
     # Secret platform
-    build_row(Ground,
+    build_row(Platform,
               game,
-              (bottom_left_pos[0] - Ground.width * 4,
-               bottom_left_pos[1] - Ground.width * 2),
-              (Ground.height, 0),
+              (bottom_left_pos[0] - Platform.width * 3,
+               bottom_left_pos[1] - Platform.height * 7),
+              (Platform.width, 0),
               3,
               None)
     warp = WarpConsumable(game, pos=(bottom_left_pos[0] - Ground.width * 4, bottom_left_pos[1] - Ground.width * 3))
     game.add_entity(warp)
 
     # Platform 1
-    build_row(Ground,
+    build_row(Platform,
               game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Ground.width * 4),
-              (Ground.height, 0),
-              3,
+              (bottom_left_pos[0], bottom_left_pos[1] - Platform.height * 13),
+              (Platform.width, 0),
+              5,
               None)
 
-    # Platform 2
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * 4, bottom_left_pos[1] - Ground.width * 4),
-              (Ground.height, 0),
-              3,
-              None)
 
     # Platform 2 false extension
     build_row(Ground,
