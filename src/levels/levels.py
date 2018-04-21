@@ -14,7 +14,6 @@ from src.game_objects.interactible.warp_consumable import WarpConsumable
 from src.game_objects.terrain.platform import Platform
 
 
-
 def oscar_tutorial_1(game):
     player = Player(game, pos=(200, 900), warp_charges=0)
     game.add_entity(player, "one")

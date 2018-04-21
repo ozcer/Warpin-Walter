@@ -2,6 +2,8 @@ import pygame
 import logging
 from math import cos, sin
 
+from pygame.locals import *
+
 from src.const import *
 from src.game_objects.dynamic.player import Player
 
@@ -15,6 +17,11 @@ class Camera:
         self.follow_target = None
         self.font = pygame.font.Font('src//font//font.otf', 30)
         #self.font.set_bold(True)
+        
+        self.menu_surface = pygame.Surface((200, 150))
+        self.menu_rect = self.menu_surface.get_rect()
+        self.menu_options = ["Play", "Quit"]
+        self.selection_index = 0
         
     def follow(self, target):
         self.follow_target = target
@@ -66,3 +73,48 @@ class Camera:
         self.game.surface.blit(warp_surface, (0, 30))
         self.game.surface.blit(world_num_surface, (world_x, 1))
         self.game.surface.blit(warp_num_surface, (warp_x, 30))
+
+        if self.game.paused:
+            self.menu_rect.center = DISPLAY_WIDTH/2 , DISPLAY_HEIGHT/2 - 150
+            self.menu_surface.fill(D_BLUE)
+
+            #menu_surface.set_colorkey((0, 0, 0))
+            self.menu_surface.set_alpha(155)
+            
+            self.game.surface.blit(self.menu_surface, self.menu_rect)
+            
+            # draw options
+            x = self.menu_rect.centerx
+            dy = self.menu_rect.h / (len(self.menu_options) + 1)
+            for index, option in enumerate(self.menu_options):
+                option_surface = self.font.render(option, False, BLACK)
+                _rect = option_surface.get_rect()
+                _rect.center = x, self.menu_rect.top + (index +1 )* dy
+                
+                if index == self.selection_index:
+                    # selected background
+                    bg_surf = pygame.Surface((150, 40))
+                    bg_rect = bg_surf.get_rect()
+                    bg_rect.center = x, self.menu_rect.top + (index +1 ) * dy
+                    bg_surf.fill(L_GREY)
+                    bg_surf.set_alpha(155)
+    
+                    self.game.surface.blit(bg_surf, bg_rect)
+                self.game.surface.blit(option_surface, _rect)
+            
+            for event in self.game.events:
+                if event.type == KEYDOWN:
+                    key = event.key
+                    if key == K_w:
+                        self.selection_index -= 1
+                    elif key == K_s:
+                        self.selection_index -= 1
+                    elif key == K_SPACE:
+                        if self.selection_index == 0:
+                            self.game.paused = False
+                        elif self.selection_index == 1:
+                            self.game.exit_game("Goodbye")
+                        
+                    self.selection_index = self.selection_index % len(self.menu_options)
+                    
+                    

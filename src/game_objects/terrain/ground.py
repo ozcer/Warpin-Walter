@@ -9,11 +9,8 @@ class Ground(GameObject):
     
     width, height = 100, 100
     
-    def __init__(self, *args,
-                 pos,
-                 **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args,
-                         pos=pos,
                          image=pygame.Surface((Ground.width, Ground.height)),
                          **kwargs)
         

@@ -153,7 +153,6 @@ class Player(Dynamic):
             self.dx = self.speed
     
     def jump(self):
-        self.jump_timer -= 1
         if self.on_ground():
             self._jump()
     

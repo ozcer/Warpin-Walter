@@ -39,11 +39,13 @@ class Game:
         self.background_color = None
         self.levels = iter(LEVELS)
         self.build_next_level()
+
+        self.paused = True
         self.run()
 
     def run(self):
-        running = True
-        while running:
+        
+        while True:
             self.background_color = MAROON if self.world == "one" else D_GREY
 
             # TODO temp hack to update camera, prolly should systemize
@@ -54,13 +56,20 @@ class Game:
                 sys.exit()
 
             self.events = pygame.event.get()
-
-            self.update_all_sprites()
+            
+            if not self.paused:
+                self.update_all_sprites()
             self.draw_all_sprites()
+
+            for event in self.events:
+                if event.type == KEYDOWN:
+                    key = event.key
+                    if key == pygame.K_ESCAPE:
+                        self.paused = not self.paused
 
             pygame.display.update()
             self.fps_clock.tick(FPS)
-
+            
     def update_all_sprites(self):
         for sprite in self.entities[ALL_SPRITES]:
             if self.is_active(sprite):
@@ -98,6 +107,9 @@ class Game:
         # Also add to global sprite group
         self.entities[ALL_SPRITES].add(entity)
     
+    def draw_menu(self):
+        self.menu.draw()
+        
     def build_level(self, level):
         self.world = "one"
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
