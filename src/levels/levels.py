@@ -179,3 +179,6 @@ def two_dumbs(game):
 
     warp = WarpConsumable(game, pos=(700, 200))
     game.add_entity(warp)
+
+
+LEVELS = [level_1, test_level, two_dumbs]
