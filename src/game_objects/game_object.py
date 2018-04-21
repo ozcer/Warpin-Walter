@@ -64,7 +64,7 @@ class GameObject(pygame.sprite.Sprite):
         self.game.surface.blit(scaled_image, adjusted)
     
     def draw_inactive(self):
-        self.overlay_color(L_GREY)
+        self.overlay_color(self.inactive_color)
         
     def set_image(self, image_name):
         try:

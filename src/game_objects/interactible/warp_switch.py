@@ -7,7 +7,7 @@ from src.game_objects.interactible.consumable import Consumable
 class WarpSwitch(Consumable):
     width = 50
     height = 50
-    color = RED
+    color = PALETTE_D_BLUE
 
     def __init__(self, *args,
                  pos, ground,
@@ -20,11 +20,12 @@ class WarpSwitch(Consumable):
         self.color = self.__class__.color
         self.image.fill(self.color)
         self.ground = ground
-        self.ground.color = self.color
-        if self.ground.world is None:
-            self.ground.world = "one"
-        self.max_timer = 50
-        self.timer = self.max_timer
+        for ground in self.ground:
+            ground.inactive_color = PALETTE_L_GREY
+        self.max_timer = 30
+        self.timer = 0
+        self.depth = 1
+        self.killable = True
 
     def update(self):
         super().update()
@@ -34,8 +35,10 @@ class WarpSwitch(Consumable):
 
     def get_consumed(self, consumer):
         super().get_consumed(consumer)
-        if self.timer == 0:
-            self.ground.world = "one" if self.ground.world == "two" else "two"
-            self.kill()
-        else:
+        print(self.depth)
+        if self.timer == 0 and self.world == self.game.world:
+            for ground in self.ground:
+                ground.world = "one" if ground.world == "two" else "two"
+            self.timer = self.max_timer
+        elif self.timer > 0:
             self.timer -= 1

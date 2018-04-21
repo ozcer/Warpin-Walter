@@ -41,7 +41,7 @@ class Player(Dynamic):
         
         self.set_image("idle")
         self.ticks_per_frame = 5
-        
+        self.depth = 0
         self.won = False
 
     def update(self):
@@ -77,13 +77,13 @@ class Player(Dynamic):
         if self.contact_with(Enemy, "left"):
             if not self.warp():
                 self.get_stunned("left")
-                self.get_hit(10)
+                self.get_hit(1)
             else:
                 self.get_stunned("left")
         elif self.contact_with(Enemy, "right"):
             if not self.warp():
                 self.get_stunned("right")
-                self.get_hit(10)
+                self.get_hit(1)
             else:
                 self.get_stunned("right")
         if crushed_enemy:
