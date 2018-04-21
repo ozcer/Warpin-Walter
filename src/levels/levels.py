@@ -66,7 +66,7 @@ def level_1(game):
 # DONE 2
 def level_2(game):
     if game == "name":
-        return "This hallway ain't big enough for the both of us"
+        return "This hallway ain't big enough for the both of us."
     player = Player(game, pos=(200, 900), warp_charges=0)
     game.add_entity(player, "one")
     game.camera.follow(player)

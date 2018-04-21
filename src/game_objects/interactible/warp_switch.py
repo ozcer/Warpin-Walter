@@ -25,7 +25,6 @@ class WarpSwitch(Consumable):
         self.max_timer = 30
         self.timer = 0
         self.depth = 1
-        self.killable = True
 
     def update(self):
         super().update()

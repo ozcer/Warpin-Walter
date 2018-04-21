@@ -2,6 +2,7 @@ import logging
 import os
 import random
 import sys
+import time
 import pygame
 
 from src.camera import Camera
@@ -35,6 +36,7 @@ class Game:
         
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(self, screen)
+        self.font = pygame.font.Font('src//font//font.otf', 30)
         
         self.background_color = None
         self.levels = iter(LEVELS)
@@ -115,6 +117,13 @@ class Game:
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.both_world_entities = pygame.sprite.Group()
         self.level = level
+        level_name = self.level("name")
+        if not level_name == "menu background":
+            level_surface = self.font.render(level_name, False, WHITE)
+            self.surface.fill(BLACK)
+            self.surface.blit(level_surface, (0, 0))
+            pygame.display.update()
+            time.sleep(2)
         self.level(self)
     
     def build_next_level(self):
