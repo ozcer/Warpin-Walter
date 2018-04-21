@@ -105,11 +105,11 @@ class Camera:
             for event in self.game.events:
                 if event.type == KEYDOWN:
                     key = event.key
-                    if key == K_w:
+                    if key == K_UP:
                         self.selection_index -= 1
-                    elif key == K_s:
+                    elif key == K_DOWN:
                         self.selection_index -= 1
-                    elif key == K_SPACE:
+                    elif key == K_RETURN:
                         if self.selection_index == 0:
                             self.game.paused = False
                         elif self.selection_index == 1:
