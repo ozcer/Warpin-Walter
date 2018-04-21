@@ -115,7 +115,7 @@ class GameObject(pygame.sprite.Sprite):
             # Basic rect check
             if self.rect.colliderect(collidee.rect):
                 return collidee
-    
+
     def contact_with(self, cls, side):
         """
         given class and side
