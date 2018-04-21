@@ -52,7 +52,7 @@ ALL_SPRITES = "ALL"
 GRAVITY = .55
 
 
-def build_row(cls, game, start_pos, next_pos, amount, world=None):
+def _build_row(cls, game, start_pos, next_pos, amount, world=None):
     """
     given start position and next relative position
     build that many items and put them in given worlds
@@ -64,9 +64,28 @@ def build_row(cls, game, start_pos, next_pos, amount, world=None):
     :return: None
     """
     for i in range(amount):
-        instance = cls(game, pos=(start_pos[0] + i * next_pos[0],
-                                  start_pos[1] + i * next_pos[1]))
+        pos = (start_pos[0] + i * next_pos[0],
+               start_pos[1] + i * next_pos[1])
+        instance = cls(game, pos=pos)
         game.add_entity(instance, world)
+        
+        # Return last position
+        if i == amount - 1:
+            return pos
+
+
+def build_row(cls, game, start_pos, amount, reverse=False, world=None):
+    next_x = cls.width if not reverse else -cls.width
+    next_pos = (next_x, 0)
+    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world)
+    return last_pos
+
+
+def build_column(cls, game, start_pos, amount, reverse=False, world=None):
+    next_y = cls.height if not reverse else -cls.height
+    next_pos = (0, next_y)
+    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world)
+    return last_pos
 
 def find_closest(self, cls):
     """

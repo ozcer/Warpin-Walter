@@ -166,14 +166,17 @@ class Player(Dynamic):
     def jump(self):
         self.jump_timer -= 1
         if self.on_ground():
-            self.jump_timer = self.max_jump
-            self.dy += self.max_dy
+            self._jump()
         if not self.on_ground() and self.jump_timer > 6:
             self.apply_gravity(0.4)
         elif not self.on_ground() and self.jump_timer > 3:
             self.apply_gravity(0.45)
         elif not self.on_ground() and self.jump_timer == 0:
             self.apply_gravity(0.5)
+    
+    def _jump(self):
+        self.jump_timer = self.max_jump
+        self.dy += self.max_dy
     
     def warp(self):
         # check if going to warp into solid

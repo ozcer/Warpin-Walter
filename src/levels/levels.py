@@ -1,6 +1,7 @@
 import pygame
 
 from src.const import *
+from src.const import _build_row
 from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.follower import Follower
 from src.game_objects.interactible.goal import Goal
@@ -12,6 +13,27 @@ from src.game_objects.interactible.warp_consumable import WarpConsumable
 from src.game_objects.terrain.platform import Platform
 
 
+
+def oscar_level(game):
+    player = Player(game, pos=(200, 900), warp_charges=10)
+    game.add_entity(player, "one")
+    game.camera.follow(player)
+    bottom_left_pos = (0, 1000)
+    room_width = 14
+    room_height = 5
+    
+    
+    # Floor
+    bottom_right_pos = build_row(Ground, game, bottom_left_pos, room_width)
+    
+    # Left Guard
+    top_left_pos = build_column(Ground, game, bottom_left_pos, room_height, reverse=True)
+    # Right Guard
+    build_column(Ground, game, bottom_right_pos, room_height, reverse=True)
+    
+    # Ceiling
+    top_right_pos = build_row(Ground, game, top_left_pos, room_width)
+
 def level_1(game):
     player = Player(game, pos=(200, 9500), warp_charges=0)
     game.add_entity(player, "one")
@@ -20,50 +42,50 @@ def level_1(game):
     width = 20
 
     # Secret platform
-    build_row(Platform,
-              game,
-              (bottom_left_pos[0] - Platform.width * 3,
+    _build_row(Platform,
+               game,
+               (bottom_left_pos[0] - Platform.width * 3,
                bottom_left_pos[1] - Platform.height * 7),
-              (Platform.width, 0),
-              3,
-              None)
+               (Platform.width, 0),
+               3,
+               None)
     warp = WarpConsumable(game, pos=(bottom_left_pos[0] - Ground.width * 4, bottom_left_pos[1] - Ground.width * 3))
     game.add_entity(warp)
 
     # Platform 1
-    build_row(Platform,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Platform.height * 13),
-              (Platform.width, 0),
-              5,
-              None)
+    _build_row(Platform,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1] - Platform.height * 13),
+               (Platform.width, 0),
+               5,
+               None)
 
 
     # Platform 2 false extension
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.height * 7, bottom_left_pos[1] - Ground.width * 4),
-              (Ground.height, Ground.height),
-              3,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.height * 7, bottom_left_pos[1] - Ground.width * 4),
+               (Ground.height, Ground.height),
+               3,
               "two")
 
     # Platform 3 "one" 1
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.height * 9, bottom_left_pos[1] - Ground.width * 5),
-              (Ground.height, 0),
-              2,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.height * 9, bottom_left_pos[1] - Ground.width * 5),
+               (Ground.height, 0),
+               2,
+               None)
 
 
     # Goal
-    build_row(Goal,
-              game,
-              (bottom_left_pos[0] + (width - 2) * Ground.height,
+    _build_row(Goal,
+               game,
+               (bottom_left_pos[0] + (width - 2) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, 0),
-              1,
-              None)
+               (0, 0),
+               1,
+               None)
 
 
 def level_2(game):
@@ -74,41 +96,41 @@ def level_2(game):
     width = 13
 
     # Left guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              3,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               3,
+               None)
     # Floor
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1]),
-              (Ground.height, 0),
-              width,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1]),
+               (Ground.height, 0),
+               width,
+               None)
     # Right guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              3,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               3,
+               None)
 
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              3,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.width * 8, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               3,
               "two")
     # Goal
-    build_row(Goal,
-              game,
-              (bottom_left_pos[0] + (width - 2) * Ground.height,
+    _build_row(Goal,
+               game,
+               (bottom_left_pos[0] + (width - 2) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, 0),
-              1,
-              None)
+               (0, 0),
+               1,
+               None)
 
     # Enemy
     enemy = Follower(game, pos=(bottom_left_pos[0] + Ground.width * 9, bottom_left_pos[1] - Ground.height))
@@ -127,57 +149,57 @@ def level_3(game):
     width = 8
 
     # Left guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              5,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               5,
+               None)
     # Floor
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1]),
-              (Ground.height, 0),
-              width,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1]),
+               (Ground.height, 0),
+               width,
+               None)
     # Ceiling
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height * 2),
-              (Ground.width, 0),
-              width - 3,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.width * 3, bottom_left_pos[1] - Ground.height * 2),
+               (Ground.width, 0),
+               width - 3,
+               None)
 
     # Ceiling false block
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Ground.width * 2),
-              (Ground.height, 0),
-              width,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1] - Ground.width * 2),
+               (Ground.height, 0),
+               width,
               "one")
 
     # Right guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              5,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + (width - 1) * Ground.width, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               5,
+               None)
 
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * (width - 3), bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              2,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.width * (width - 3), bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               2,
               "two")
     # Goal
-    build_row(Goal,
-              game,
-              (bottom_left_pos[0] + (width - 2) * Ground.height,
+    _build_row(Goal,
+               game,
+               (bottom_left_pos[0] + (width - 2) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, 0),
-              1,
-              None)
+               (0, 0),
+               1,
+               None)
 
     # Enemy
     enemy = Follower(game, pos=(bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height))
@@ -196,43 +218,43 @@ def level_4(game):
     width = 13
 
     # Left guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              3,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               3,
+               None)
     # Floor
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0], bottom_left_pos[1]),
-              (Ground.height, 0),
-              width - 1,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0], bottom_left_pos[1]),
+               (Ground.height, 0),
+               width - 1,
+               None)
 
     # Stack of enemies
-    build_row(DumbEnemy,
-              game,
-              (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              8,
+    _build_row(DumbEnemy,
+               game,
+               (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               8,
               "one")
 
     # Blocking pillar
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              3,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.width * 6, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               3,
               "two")
     # Goal
-    build_row(Goal,
-              game,
-              (bottom_left_pos[0] + (width - 2) * Ground.height,
+    _build_row(Goal,
+               game,
+               (bottom_left_pos[0] + (width - 2) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, 0),
-              1,
-              None)
+               (0, 0),
+               1,
+               None)
 
     return "Just keep moving!"
 
@@ -246,60 +268,60 @@ def level_5(game):
     backtrack = 15
 
     # Left guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] - backtrack * Ground.width, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              15,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] - backtrack * Ground.width, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               15,
+               None)
     # Floor
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] - backtrack * Ground.width, bottom_left_pos[1]),
-              (Ground.height, 0),
-              width + backtrack,
-              None)
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] - backtrack * Ground.width, bottom_left_pos[1]),
+               (Ground.height, 0),
+               width + backtrack,
+               None)
 
     # Stack of enemies
-    build_row(DumbEnemy,
-              game,
-              (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              8,
+    _build_row(DumbEnemy,
+               game,
+               (bottom_left_pos[0] + (width - 4) * Ground.width, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               8,
               "one")
 
     # Hinting block
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + Ground.width * 1.9, bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              1,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + Ground.width * 1.9, bottom_left_pos[1] - Ground.height),
+               (0, -Ground.height),
+               1,
               "two")
     # Goal
-    build_row(Goal,
-              game,
-              (bottom_left_pos[0] + (width - 3) * Ground.height,
+    _build_row(Goal,
+               game,
+               (bottom_left_pos[0] + (width - 3) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, 0),
-              1,
-              None)
+               (0, 0),
+               1,
+               None)
 
     # Right guard
-    build_row(Ground,
-              game,
-              (bottom_left_pos[0] + (width - 2) * Ground.height,
+    _build_row(Ground,
+               game,
+               (bottom_left_pos[0] + (width - 2) * Ground.height,
                bottom_left_pos[1] - Ground.height),
-              (0, -Ground.height),
-              15,
-              None)
+               (0, -Ground.height),
+               15,
+               None)
 
     # Kill field
-    build_row(KillField,
-              game,
-              (bottom_left_pos[0] - 20000, bottom_left_pos[1] + 300),
-              (KillField.width, 0),
-              20,
-              None)
+    _build_row(KillField,
+               game,
+               (bottom_left_pos[0] - 20000, bottom_left_pos[1] + 300),
+               (KillField.width, 0),
+               20,
+               None)
 
     warp = WarpConsumable(game, pos=(bottom_left_pos[0] - (backtrack * Ground.width) + 100,
                                      bottom_left_pos[1] - 100))
@@ -308,4 +330,4 @@ def level_5(game):
     return "The Oscar special."
 
 
-LEVELS = [level_1, level_2, level_3, level_4, level_5]
+LEVELS = [oscar_level, level_1, level_2, level_3, level_4, level_5]
