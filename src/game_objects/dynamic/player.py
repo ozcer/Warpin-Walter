@@ -57,7 +57,11 @@ class Player(Dynamic):
 
         crushed_enemy = self.contact_with(Enemy, "bottom")
         if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "right"):
-            self.get_hit(10)
+            if not self.warp():
+                self.get_stunned()
+                self.get_hit(10)
+            else:
+                self.get_stunned()
         if crushed_enemy:
             crushed_enemy.get_hit(1)
         
@@ -107,6 +111,9 @@ class Player(Dynamic):
             # Jumping
             if (keys[pygame.K_w] or keys[pygame.K_x] or keys[pygame.K_UP])and self.on_ground():
                 self.dy -= 15
+
+        if self.hp <= 0:
+            self.game.reset_level()
     
     def move(self, direction):
         if direction == "left":
@@ -122,6 +129,7 @@ class Player(Dynamic):
         if collidee is None and self.warp_charges > 0:
             self.warp_charges -= 1
             self._warp()
+            return True
     
     def _warp(self):
         target_world = "two" if self.game.world == "one" else "one"
@@ -133,11 +141,13 @@ class Player(Dynamic):
     
     # talk shit
     def get_hit(self, dmg=0):
+        self.hp -= dmg
+
+    def get_stunned(self):
         self.dy = -6
-        self.x_dir = -self.x_dir
+        self.x_dir = self.x_dir
         self.dx = -self.x_dir * 9
         self.stunned = True
-        self.hp -= dmg
     
     def on_ground(self):
         detector = self.rect.copy()
