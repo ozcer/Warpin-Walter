@@ -52,7 +52,7 @@ ALL_SPRITES = "ALL"
 GRAVITY = .55
 
 
-def _build_row(cls, game, start_pos, next_pos, amount, world=None):
+def _build_row(cls, game, start_pos, next_pos, amount, world=None, **kwargs):
     """
     given start position and next relative position
     build that many items and put them in given worlds
@@ -66,7 +66,7 @@ def _build_row(cls, game, start_pos, next_pos, amount, world=None):
     for i in range(amount):
         pos = (start_pos[0] + i * next_pos[0],
                start_pos[1] + i * next_pos[1])
-        instance = cls(game, pos=pos)
+        instance = cls(game, pos=pos, **kwargs)
         game.add_entity(instance, world)
         
         # Return last position
@@ -74,20 +74,21 @@ def _build_row(cls, game, start_pos, next_pos, amount, world=None):
             return pos
 
 
-def build_row(cls, game, start_pos, amount, reverse=False, world=None):
+def build_row(cls, game, start_pos, amount, reverse=False, world=None, **kwargs):
     next_x = cls.width if not reverse else -cls.width
     next_pos = (next_x, 0)
-    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world)
+    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world, **kwargs)
     return last_pos
 
 
-def build_column(cls, game, start_pos, amount, reverse=False, world=None):
+def build_column(cls, game, start_pos, amount, reverse=False, world=None, **kwargs):
     next_y = cls.height if not reverse else -cls.height
     next_pos = (0, next_y)
-    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world)
+    last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world, **kwargs)
     return last_pos
 
-def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False, world=None):
+
+def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False, world=None, **kwargs):
     """
     build an array of objects
     :param cls: Type
@@ -104,8 +105,28 @@ def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False
         if yreverse:
             y = -y
         pos = start_pos[0], y
-        build_row(cls, game, pos, dimensions[0], xreverse, world)
-        
+        build_row(cls, game, pos, dimensions[0], xreverse, world, **kwargs)
+
+
+def get_end_pos(cls, start_pos, dimensions, xreverse=False, yreverse=False):
+    """
+    calculate the end position if were to build an array of items
+    :param cls: Type
+    :param start_pos: (int, int)
+    :param dimensions: (int, int)
+    :param xreverse: bool
+    :param yreverse: bool
+    :return: (int, int)
+    """
+    dx = dimensions[0] * cls.width
+    if xreverse: dx = -dx
+    dy = dimensions[1] * cls.height
+    if yreverse: dy = -dy
+    
+    end_pos = start_pos[0] + dx, start_pos[1] + dy
+    return end_pos
+    
+    
 
 def find_closest(self, cls):
     """

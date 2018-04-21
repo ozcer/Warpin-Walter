@@ -26,3 +26,6 @@ class BackgroundBlock(GameObject):
     
     def draw(self):
         super().draw()
+    
+    def draw_inactive(self):
+        self.draw_active()

@@ -15,17 +15,19 @@ from src.game_objects.terrain.platform import Platform
 
 
 
-def oscar_level(game):
-    player = Player(game, pos=(200, 900), warp_charges=10)
+def oscar_tutorial1(game):
+    player = Player(game, pos=(200, 900), warp_charges=0)
     game.add_entity(player, "one")
     game.camera.follow(player)
     bottom_left_pos = (0, 1000)
-    room_width = 14
+    room_width = 12
     room_height = 5
     
+    block_at = 7
     
     # Floor
-    bottom_right_pos = build_row(Ground, game, bottom_left_pos, room_width)
+    block_pos = build_row(Ground, game, bottom_left_pos, block_at)
+    bottom_right_pos = build_row(Ground, game, block_pos, room_width - block_at + 1)
     
     # Left Guard
     top_left_pos = build_column(Ground, game, bottom_left_pos, room_height, reverse=True)
@@ -35,7 +37,21 @@ def oscar_level(game):
     # Ceiling
     top_right_pos = build_row(Ground, game, top_left_pos, room_width)
     
-    build_array(BackgroundBlock, game, top_left_pos, (room_width, room_height))
+    # Background
+    build_array(BackgroundBlock, game, top_left_pos, (room_width, room_height), world="three")
+    
+    # blockade
+    build_column(Ground, game, block_pos, room_height, reverse=True, world="one")
+    
+    # warp charge
+    pos = get_end_pos(Ground, block_pos, (2, room_height-3), xreverse=True, yreverse=True)
+    charge = WarpConsumable(game, pos=pos)
+    game.add_entity(charge)
+
+    # goal
+    pos = get_end_pos(Ground, bottom_right_pos, (1, 1), xreverse=True, yreverse=True)
+    goal = Goal(game, pos=pos)
+    game.add_entity(goal)
     
 def level_1(game):
     player = Player(game, pos=(200, 9500), warp_charges=0)
@@ -333,4 +349,4 @@ def level_5(game):
     return "The Oscar special."
 
 
-LEVELS = [oscar_level, level_1, level_2, level_3, level_4, level_5]
+LEVELS = [oscar_tutorial1, level_1, level_2, level_3, level_4, level_5]
