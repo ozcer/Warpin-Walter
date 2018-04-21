@@ -6,6 +6,7 @@ from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.follower import Follower
 from src.game_objects.interactible.goal import Goal
 from src.game_objects.interactible.warp_switch import WarpSwitch
+from src.game_objects.terrain.background_block import BackgroundBlock
 from src.game_objects.terrain.ground import Ground
 from src.game_objects.terrain.kill_field import KillField
 from src.game_objects.dynamic.player import Player
@@ -33,7 +34,9 @@ def oscar_level(game):
     
     # Ceiling
     top_right_pos = build_row(Ground, game, top_left_pos, room_width)
-
+    
+    build_array(BackgroundBlock, game, top_left_pos, (room_width, room_height))
+    
 def level_1(game):
     player = Player(game, pos=(200, 9500), warp_charges=0)
     game.add_entity(player, "one")

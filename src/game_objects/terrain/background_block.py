@@ -16,6 +16,7 @@ class BackgroundBlock(GameObject):
                          pos=pos,
                          image=pygame.Surface((BackgroundBlock.width, BackgroundBlock.height)),
                          is_solid=False,
+                         depth=1,
                          **kwargs)
         
         self.set_image("dark_steel")

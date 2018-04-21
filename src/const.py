@@ -87,6 +87,26 @@ def build_column(cls, game, start_pos, amount, reverse=False, world=None):
     last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world)
     return last_pos
 
+def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False, world=None):
+    """
+    build an array of objects
+    :param cls: Type
+    :param game: Game
+    :param start_pos: (int, int)
+    :param dimensions:  (int, int) width x height
+    :param xreverse: builds leftward
+    :param yreverse: builds upward
+    :param world: str or None
+    :return: (int, int) last position
+    """
+    for row in range(dimensions[1]):
+        y = start_pos[1] + row * cls.height
+        if yreverse:
+            y = -y
+        pos = start_pos[0], y
+        build_row(cls, game, pos, dimensions[0], xreverse, world)
+        
+
 def find_closest(self, cls):
     """
     return the the closest instance of a class or None if not found
