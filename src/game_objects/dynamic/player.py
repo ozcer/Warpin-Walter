@@ -166,9 +166,9 @@ class Player(Dynamic):
         self.dy = -6
         self.stunned = True
         if direction == "left":
-            self.dx = -20
+            self.dx = -10
         else:
-            self.dx = 20
+            self.dx = 10
 
     
     def on_ground(self):
