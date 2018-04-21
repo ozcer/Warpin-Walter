@@ -16,6 +16,7 @@ class GameObject(pygame.sprite.Sprite):
         self.x, self.y = pos
         self.depth = depth
         self.image = image
+        self.asset = image
         self.rect = self.image.get_rect()
         self.rect = self.image.get_rect()
         self.rect.center = self.x, self.y
@@ -52,7 +53,7 @@ class GameObject(pygame.sprite.Sprite):
         adjusted = self.game.camera.adjust_rect(self.rect)
         scaled_image = pygame.transform.scale(self.image, adjusted.size)
         if hasattr(self, "x_dir"):
-            scaled_image = pygame.transform.flip(scaled_image, self.x_dir==-1, 0)
+            scaled_image = pygame.transform.flip(scaled_image, self.x_dir == -1, 0)
         self.game.surface.blit(scaled_image, adjusted)
     
     def draw_inactive(self):
@@ -62,7 +63,7 @@ class GameObject(pygame.sprite.Sprite):
         try:
             if not hasattr(self, "image_name") or image_name != self.image_name:
                 self.image_name = image_name
-                self._images = itertools.cycle(self.__class__.images[image_name])
+            self._images = itertools.cycle(self.__class__.images[image_name])
         except Exception as e:
             logging.debug(e)
 

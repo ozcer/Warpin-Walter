@@ -5,7 +5,7 @@ from src.game_objects.game_object import GameObject
 
 
 class Ground(GameObject):
-    images = {"static": load_image_folder("../gfx/enviro/steel_block"),}
+    images = {"static": load_image_folder("../gfx/enviro/steel_block")}
     
     width, height = 100, 100
     

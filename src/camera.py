@@ -47,10 +47,9 @@ class Camera:
         return x, y
 
     def draw_ui(self):
-        if not hasattr(self, "player"):
-            self.get_player()
+        player = self.get_player()
 
-        warp_charges = self.player.warp_charges
+        warp_charges = player.warp_charges
         world = 2 if self.game.world == "two" else 1
         warp_text = f"WARPS: "
         world_text = f"WORLD: "
@@ -75,11 +74,11 @@ class Camera:
         """
         player_class = Player.__class__.__name__
         if isinstance(self.follow_target, Player):
-            self.player = self.follow_target
+            return self.follow_target
         elif len(self.game.entites[player_class]) == 1:
-            self.player = self.game.entities[player_class][0]
+            return self.game.entities[player_class][0]
         elif len(self.game.entites[player_class]) == 1:
-            self.player = self.game.entities[player_class][0]
             logging.info("Cannot be certain that this is actually the correct player.")
+            return self.game.entities[player_class][0]
         else:
             raise AssertionError
