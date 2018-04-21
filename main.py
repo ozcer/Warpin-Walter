@@ -9,6 +9,7 @@ from src.camera import Camera
 from pygame.locals import *
 from src.const import *
 from src.levels.levels import LEVELS
+from src.sound_manager import SoundManager
 
 
 class Game:
@@ -16,7 +17,12 @@ class Game:
     def __init__(self):
         # Initializing Pygame window
         os.environ['SDL_VIDEO_CENTERED'] = '1'
+
+        pygame.mixer.pre_init(44100, 16, 2, 4096)
+        pygame.mixer.init()
         pygame.init()
+        
+        self.sfxs = SoundManager()
         
         pygame.display.set_caption(CAPTION)
         self.surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), 0, 32)

@@ -94,6 +94,8 @@ def load_image_folder(path):
         res.append(pygame.image.load(_path))
     return res
 
+
+
 def distance(p1, p2):
     """
     get distance between two points

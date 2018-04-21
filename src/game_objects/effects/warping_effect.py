@@ -1,5 +1,5 @@
 from src.const import *
-from src.game_objects.effects.Effect import Effect
+from src.game_objects.effects.effect import Effect
 
 
 class WarpingEffect(Effect):

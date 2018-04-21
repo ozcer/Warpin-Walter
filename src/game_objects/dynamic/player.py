@@ -153,6 +153,8 @@ class Player(Dynamic):
         self.world = target_world
         self.game.change_world()
         
+        self.game.sfxs.play("warp")
+        
     def consume(self, consumable):
         consumable.get_consumed(self)
     
