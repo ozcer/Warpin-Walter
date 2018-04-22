@@ -1,5 +1,4 @@
 # Warpin' Walter
-# Final
 
 <img src="/screenshots/menu.gif" width="320" height="240" />    <img src="/screenshots/gameplay.gif" width="320" height="240" />
 
