@@ -56,23 +56,26 @@ class Camera:
     def draw_ui(self):
         player = find_closest(self, Player)
         
-        warp_charges = player.warp_charges
-        world = 2 if self.game.world == "two" else 1
-        warp_text = f"WARPS: "
-        world_text = f"WORLD: "
-        warp_color = L_BLUE if warp_charges > 0 else RED
-        world_color = RED if world == 1 else BLACK
-        warp_surface = self.font.render(warp_text, False, BLACK)
-        world_surface = self.font.render(world_text, False, BLACK)
-        warp_num_surface = self.font.render(str(warp_charges), False, warp_color)
-        world_num_surface = self.font.render(str(world), False, world_color)
-        world_x = 125
-        warp_x = 120
-
-        self.game.surface.blit(world_surface, (0, 0))
-        self.game.surface.blit(warp_surface, (0, 30))
-        self.game.surface.blit(world_num_surface, (world_x, 1))
-        self.game.surface.blit(warp_num_surface, (warp_x, 30))
+        if self.game.level("name") != "menu background":
+            warp_charges = player.warp_charges
+            world = 2 if self.game.world == "two" else 1
+            warp_text = f"WARPS: "
+            world_text = f"LEVEL: "
+            warp_color = L_BLUE if warp_charges > 0 else RED
+            world_color = RED if world == 1 else BLACK
+            warp_surface = self.font.render(warp_text, False, BLACK)
+            world_surface = self.font.render(world_text, False, BLACK)
+            warp_num_surface = self.font.render(str(warp_charges), False, warp_color)
+            world_num_surface = self.font.render(str(self.game.level("name")), False, world_color)
+            xmargin = 20
+            ymargin = 20
+            world_x = 95 + xmargin
+            warp_x = 120 + xmargin
+    
+            self.game.surface.blit(world_surface, (xmargin, ymargin))
+            self.game.surface.blit(warp_surface, (xmargin, 30 + ymargin))
+            self.game.surface.blit(world_num_surface, (world_x, 1 + ymargin))
+            self.game.surface.blit(warp_num_surface, (warp_x, 30 + ymargin))
 
         if self.game.paused:
             self.menu_rect.center = DISPLAY_WIDTH/2 , DISPLAY_HEIGHT/2 - 150
