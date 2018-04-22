@@ -68,13 +68,13 @@ class Camera:
             warp_num_surface = self.font.render(str(warp_charges), False, warp_color)
             world_num_surface = self.font.render(str(self.game.level("name")), False, world_color)
             xmargin = 20
-            ymargin = 20
+            ymargin = -20
             world_x = 95 + xmargin
             warp_x = 120 + xmargin
     
-            self.game.surface.blit(world_surface, (xmargin, ymargin))
+            # self.game.surface.blit(world_surface, (xmargin, ymargin))
             self.game.surface.blit(warp_surface, (xmargin, 30 + ymargin))
-            self.game.surface.blit(world_num_surface, (world_x, 1 + ymargin))
+            # self.game.surface.blit(world_num_surface, (world_x, 1 + ymargin))
             self.game.surface.blit(warp_num_surface, (warp_x, 30 + ymargin))
 
         if self.game.paused:
