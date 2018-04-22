@@ -1,10 +1,10 @@
-# Warpin' Walter by Oscar Lin and Anas Elmi
+# Warpin' Walter
 # Final
 
 <img src="/screenshots/menu.gif" width="320" height="240" />    <img src="/screenshots/gameplay.gif" width="320" height="240" />
 
 Walter's been cursed, but can he be cured?
-Guide him through two frayed realities by warping through any obstacle before you. 
+Guide him through two frayed realities by warping through any obstacle before you. PyWeek April 2018 entry by Oscar Lin and Anas Elmi
 
 ## Requirements:
 ```
