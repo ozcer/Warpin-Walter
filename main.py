@@ -3,6 +3,8 @@ import os
 import random
 import sys
 import time
+
+import itertools
 import pygame
 
 from src.camera import Camera
@@ -39,7 +41,7 @@ class Game:
         self.font = pygame.font.Font('src//font//font.otf', 30)
         
         self.background_color = None
-        self.levels = iter(LEVELS)
+        self.levels = itertools.cycle(LEVELS)
         self.build_next_level()
 
         self.paused = True
@@ -129,6 +131,7 @@ class Game:
     def build_next_level(self):
         next_level = next(self.levels)
         self.build_level(next_level)
+        
     
     def reset_level(self):
         self.build_level(self.level)

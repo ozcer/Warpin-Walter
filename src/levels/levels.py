@@ -20,6 +20,7 @@ def menu_background(game):
     player = Player(game, pos=(0, 0), warp_charges=0)
     game.add_entity(player, "one")
     game.camera.follow(player)
+    game.paused = True
 
 # Done 1
 def level_1(game):
