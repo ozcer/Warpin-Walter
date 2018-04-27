@@ -56,6 +56,18 @@ class Camera:
     def draw_ui(self):
         player = find_closest(self, Player)
         
+        fps = int(self.game.fps_clock.get_fps())
+        if fps >= 58:
+            color = GREEN
+        elif fps >= 53:
+            color = ORANGE
+        else:
+            color = RED
+        fps_surface = self.font.render(str(fps), True, color)
+        fps_rect = fps_surface.get_rect()
+        fps_rect.topright = (DISPLAY_WIDTH, 0)
+        self.game.surface.blit(fps_surface, fps_rect)
+        
         if self.game.level("name") != "menu background":
             warp_charges = player.warp_charges
             world = 2 if self.game.world == "two" else 1
