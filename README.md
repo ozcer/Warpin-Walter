@@ -23,12 +23,12 @@ $ python3.6 ./main.py
 
 Thank you Pyweek for organizing this event. The theme was two worlds.
 # Assets used:
-https://fontlibrary.org/en
-https://opengameart.org/content/interface-beeps
-https://opengameart.org/content/teleport
-https://jesse-m.itch.io/jungle-pack
-https://opengameart.org/content/sci-fi-platform-tiles
-https://rvros.itch.io/pixel-art-animated-slime
+* https://fontlibrary.org/en
+* error sfx https://opengameart.org/content/interface-beeps
+* teleport sfx https://opengameart.org/content/teleport
+* player gfx https://jesse-m.itch.io/jungle-pack
+* environment gfx https://opengameart.org/content/sci-fi-platform-tiles
+* enemy gfx https://rvros.itch.io/pixel-art-animated-slime
 
 
 # Progression
