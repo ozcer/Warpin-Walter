@@ -5,15 +5,13 @@ import sys
 import time
 
 import itertools
-import pygame
 
-from src.camera import Camera
+
 
 from pygame.locals import *
 from src.const import *
-from src.levels.levels import LEVELS
-from src.sound_manager import SoundManager
 
+from src.sound_manager import SoundManager
 
 class Game:
     
@@ -29,6 +27,12 @@ class Game:
         
         pygame.display.set_caption(CAPTION)
         self.surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), 0, 32)
+        
+        # Import here to avoid
+        # pygame.error: cannot convert without pygame.display initialized
+        from src.camera import Camera
+        from src.levels.levels import LEVELS
+        
         logging.basicConfig(level=LOG_LEVEL,
                             datefmt='%m/%d/%Y %I:%M:%S%p',
                             format='%(asctime)s %(message)s')

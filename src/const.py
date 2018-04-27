@@ -150,9 +150,12 @@ def load_image_folder(path):
     cwd = os.path.dirname(__file__)
     relative_path = os.path.join(cwd, path)
     res = []
-    for file in os.listdir(relative_path):
-        _path = os.path.join(relative_path, file)
-        res.append(pygame.image.load(_path))
+    try:
+        for file in os.listdir(relative_path):
+            _path = os.path.join(relative_path, file)
+            res.append(pygame.image.load(_path).convert_alpha())
+    except pygame.error as msg:
+       raise type(msg)(str(msg) + " (try importing after initialization) ")
     return res
 
 
