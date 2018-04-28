@@ -1,6 +1,7 @@
-
+import logging
 
 from pygame.locals import *
+
 from src.const import *
 from src.level.main_menu import MainMenu
 

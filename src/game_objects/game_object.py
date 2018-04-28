@@ -1,9 +1,7 @@
+import itertools
 import logging
 
-import itertools
-import pygame
 from src.const import *
-
 
 
 class GameObject(pygame.sprite.Sprite):

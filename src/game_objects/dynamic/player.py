@@ -1,15 +1,11 @@
-import logging
-import itertools
-import pygame
-
-from src.const import *
 import pygame
 from pygame.locals import *
 
-from src.game_objects.effects.warping_effect import WarpingEffect
-from src.game_objects.interactible.consumable import Consumable
+from src.const import *
 from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.dynamic.enemy import Enemy
+from src.game_objects.effects.warping_effect import WarpingEffect
+from src.game_objects.interactible.consumable import Consumable
 from src.game_objects.terrain.kill_field import KillField
 from src.level.main_menu import MainMenu
 

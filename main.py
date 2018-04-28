@@ -1,10 +1,11 @@
+import logging
 import sys
 import time
+
 from pygame.locals import *
 
 from src.const import *
 from src.level.main_menu import MainMenu
-
 from src.sound_manager import SoundManager
 
 

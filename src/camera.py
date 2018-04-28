@@ -1,9 +1,3 @@
-import pygame
-import logging
-from math import cos, sin
-
-from pygame.locals import *
-
 from src.const import *
 from src.game_objects.dynamic.player import Player
 from src.menu import Menu

@@ -1,7 +1,7 @@
 import math
 import os
+
 import pygame
-import logging
 
 # Display
 FPS = 60

@@ -1,5 +1,3 @@
-import pygame
-
 from src.const import *
 from src.game_objects.game_object import GameObject
 

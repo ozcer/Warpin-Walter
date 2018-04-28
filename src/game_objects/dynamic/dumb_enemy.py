@@ -1,5 +1,3 @@
-import pygame
-
 from src.const import *
 from src.game_objects.dynamic.enemy import Enemy
 

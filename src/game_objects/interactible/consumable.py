@@ -1,8 +1,7 @@
 import logging
 
-from src.game_objects.game_object import GameObject
-
 from src.const import *
+from src.game_objects.game_object import GameObject
 
 
 class Consumable(GameObject):
