@@ -1,6 +1,7 @@
 import logging
 import sys
 import time
+import itertools
 
 from pygame.locals import *
 
@@ -45,7 +46,7 @@ class Game:
         self.sfxs = SoundManager()
         
         self.background_color = None
-        self.levels = iter(levels)
+        self.levels = itertools.cycle(levels)
         self.build_next_level()
 
         self.paused = True
