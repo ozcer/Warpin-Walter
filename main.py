@@ -6,8 +6,6 @@ import time
 
 import itertools
 
-
-
 from pygame.locals import *
 from src.const import *
 
