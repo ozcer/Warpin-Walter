@@ -18,10 +18,10 @@ class TutorialOne(Level):
         self.game.add_entity(player, "one")
         self.game.camera.follow(player)
         bottom_left_pos = (0, 1000)
-        room_width = 12
-        room_height = 5
+        room_width = 15
+        room_height = 6
     
-        block_at = 7
+        block_at = 8
     
         # Floor
         block_pos = build_row(Ground, self.game, bottom_left_pos, block_at)
@@ -42,7 +42,7 @@ class TutorialOne(Level):
         build_column(Ground, self.game, block_pos, room_height, reverse=True, world="one")
     
         # warp charge
-        pos = get_end_pos(Ground, block_pos, (3, room_height - 2), xreverse=True, yreverse=True)
+        pos = get_end_pos(Ground, block_pos, (3, 4), xreverse=True, yreverse=True)
         charge = WarpConsumable(self.game, pos=pos)
         self.game.add_entity(charge)
     

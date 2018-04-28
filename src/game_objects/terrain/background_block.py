@@ -5,7 +5,7 @@ from src.game_objects.game_object import GameObject
 class BackgroundBlock(GameObject):
     images = {"dark_steel": load_image_folder("../gfx/enviro/dark_steel_block")}
     
-    width, height = 100, 100
+    width, height = 75, 75
     
     def __init__(self, *args,
                  pos,
