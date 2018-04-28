@@ -3,7 +3,7 @@
 <img src="/screenshots/menu.gif" width="320" height="240" />    <img src="/screenshots/gameplay.gif" width="320" height="240" />
 
 Walter's been cursed, but can he be cured?
-Guide him through two frayed realities by warping through any obstacle before you. PyWeek April 2018 entry by Oscar Lin and Anas Elmi
+Guide him through two frayed realities by warping through any obstacle before you. PyWeek April 2018 entry by Oscar Lin and Anas Elmi. Thank you PyWeek for organizing this event. The theme was two worlds.
 
 ## Requirements:
 ```
@@ -21,18 +21,17 @@ $ python3.6 ./main.py
 * R to restart
 * Escape to pause
 
-Thank you Pyweek for organizing this event. The theme was two worlds.
 # Assets used:
-* https://fontlibrary.org/en
 * error sfx https://opengameart.org/content/interface-beeps
 * teleport sfx https://opengameart.org/content/teleport
 * player gfx https://jesse-m.itch.io/jungle-pack
+* warp charge https://kronbits.itch.io/matriax-free-assets
 * environment gfx https://opengameart.org/content/sci-fi-platform-tiles
 * enemy gfx https://rvros.itch.io/pixel-art-animated-slime
+* font https://fontlibrary.org/en
 
 
 # Progression
-
 ## Day 1-3
 ![](/screenshots/day3-1.png)
 ![](/screenshots/day3-2.png)
