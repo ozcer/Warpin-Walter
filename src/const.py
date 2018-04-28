@@ -51,6 +51,7 @@ ALL_SPRITES = "ALL"
 
 GRAVITY = .55
 
+BLOCK_DIM = 75, 75
 
 def _build_row(cls, game, start_pos, next_pos, amount, world=None, **kwargs):
     """
@@ -159,6 +160,15 @@ def load_image_folder(path):
     return res
 
 
+def solid_color(color):
+    """
+    Return a surface filled with given color
+    :param color: (int, int, int)
+    :return: Surface
+    """
+    surface = pygame.Surface((1,1))
+    surface.fill(color)
+    return surface
 
 def distance(p1, p2):
     """

@@ -3,8 +3,8 @@ from src.game_objects.interactible.consumable import Consumable
 
 
 class WarpConsumable(Consumable):
+    images = {"static": [solid_color(L_BLUE)]}
     width = height = 50
-    color = L_BLUE
 
     def __init__(self, *args,
                  pos,
@@ -14,8 +14,8 @@ class WarpConsumable(Consumable):
                          image=pygame.Surface((WarpConsumable.width, WarpConsumable.height)),
                          is_solid=False,
                          **kwargs)
-        self.color = self.__class__.color
-        self.image.fill(self.color)
+        
+        self.set_image("static")
 
     def update(self):
         super().update()

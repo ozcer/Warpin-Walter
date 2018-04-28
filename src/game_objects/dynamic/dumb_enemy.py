@@ -3,13 +3,15 @@ from src.game_objects.dynamic.enemy import Enemy
 
 
 class DumbEnemy(Enemy):
+    images = {"static": [solid_color(L_PURPLE)]}
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
                          image=pygame.Surface((50, 50)),
                          **kwargs)
 
-        self.color = L_PURPLE
-        self.image.fill(self.color)
+        self.set_image("static")
+        
         self.speed = 2
         self.hp = 1
         
