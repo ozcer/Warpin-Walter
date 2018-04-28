@@ -19,8 +19,8 @@ class TutorialTwo(Level):
         self.game.add_entity(player, "one")
         self.game.camera.follow(player)
         bottom_left_pos = (0, 1000)
-        room_width = 20
-        room_height = 5
+        room_width = 22
+        room_height = 6
     
         # Floor
         bottom_right_pos = build_row(Ground, self.game, bottom_left_pos, room_width)
@@ -43,7 +43,7 @@ class TutorialTwo(Level):
     
         # Low ceiling
         _pos = get_end_pos(Ground, top_right_pos, (2, 2), xreverse=True)
-        end_pos = build_array(Ground, self.game, _pos, (room_width - 8, 2), xreverse=True)
+        end_pos = build_array(Ground, self.game, _pos, (room_width - 7, room_height-3), xreverse=True)
     
         # warp charge
         pos = get_end_pos(Ground, end_pos, (2, 2))

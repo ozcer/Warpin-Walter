@@ -131,7 +131,7 @@ class Game:
             self.surface.fill(BLACK)
             self.surface.blit(level_surface, (0, 0))
             pygame.display.update()
-            time.sleep(2)
+            time.sleep(0)
             
         self.level.build()
     
