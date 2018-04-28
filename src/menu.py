@@ -38,7 +38,7 @@ class Menu:
         # Info panel
         self.panel_surf = pygame.Surface((Menu.width * 2, Menu.height))
         self.panel_rect = self.panel_surf.get_rect()
-        self.panel_rect.left = self.rect.right + 0
+        self.panel_rect.left = self.rect.right + 10
         self.panel_rect.centery = self.y
         self.panel_surf.fill(L_BLUE)
         self.panel_surf.set_alpha(155)
@@ -88,11 +88,11 @@ class Menu:
         for event in self.game.events:
             if event.type == KEYDOWN:
                 key = event.key
-                if key == K_UP:
+                if key in (K_UP, K_w):
                     self._change_selection(-1)
-                elif key == K_DOWN:
+                elif key in (K_DOWN, K_s):
                     self._change_selection(1)
-                elif key == K_RETURN:
+                elif key in (K_RETURN, K_SPACE):
                     self._make_selection()
         
     def _change_selection(self, change):
