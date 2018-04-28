@@ -1,17 +1,17 @@
-import logging
-import os
-import random
 import sys
 import time
-
-import itertools
-
 from pygame.locals import *
+
 from src.const import *
+from src.level.main_menu import MainMenu
 
 from src.sound_manager import SoundManager
 
+
 class Game:
+    logging.basicConfig(level=LOG_LEVEL,
+                        datefmt='%m/%d/%Y %I:%M:%S%p',
+                        format='%(asctime)s %(message)s')
     
     def __init__(self):
         # Initializing Pygame window
@@ -21,19 +21,18 @@ class Game:
         pygame.mixer.init()
         pygame.init()
         
-        self.sfxs = SoundManager()
-        
         pygame.display.set_caption(CAPTION)
         self.surface = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT), 0, 32)
         
         # Import here to avoid
         # pygame.error: cannot convert without pygame.display initialized
         from src.camera import Camera
-        from src.levels.levels import LEVELS
+        from src.level.tutorial_one import TutorialOne
+        from src.level.main_menu import MainMenu
+        from src.level.tutorial_two import TutorialTwo
+
+        levels = [MainMenu, TutorialOne, TutorialTwo]
         
-        logging.basicConfig(level=LOG_LEVEL,
-                            datefmt='%m/%d/%Y %I:%M:%S%p',
-                            format='%(asctime)s %(message)s')
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
         self.events = pygame.event.get()
@@ -41,9 +40,11 @@ class Game:
         screen = pygame.Rect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
         self.camera = Camera(self, screen)
         self.font = pygame.font.Font('src//font//font.otf', 30)
+
+        self.sfxs = SoundManager()
         
         self.background_color = None
-        self.levels = itertools.cycle(LEVELS)
+        self.levels = iter(levels)
         self.build_next_level()
 
         self.paused = True
@@ -121,19 +122,21 @@ class Game:
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.both_world_entities = pygame.sprite.Group()
         self.level = level
-        level_name = self.level("name")
-        if not level_name == "menu background":
-            level_surface = self.font.render(level_name, False, WHITE)
+        
+        # brief seconds to show level name
+        if not isinstance(self.level, MainMenu):
+            level_surface = self.font.render(self.level.name, False, WHITE)
             self.surface.fill(BLACK)
             self.surface.blit(level_surface, (0, 0))
             pygame.display.update()
             time.sleep(2)
-        self.level(self)
+            
+        self.level.build()
     
     def build_next_level(self):
-        next_level = next(self.levels)
+        next_level_cls = next(self.levels)
+        next_level = next_level_cls(self)
         self.build_level(next_level)
-        
     
     def reset_level(self):
         self.build_level(self.level)

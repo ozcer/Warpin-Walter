@@ -11,6 +11,7 @@ from src.game_objects.interactible.consumable import Consumable
 from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.dynamic.enemy import Enemy
 from src.game_objects.terrain.kill_field import KillField
+from src.level.main_menu import MainMenu
 
 
 class Player(Dynamic):
@@ -113,8 +114,8 @@ class Player(Dynamic):
         if self.hp <= 0:
             self.game.reset_level()
         
-        if self.game.level("name") == "menu background":
-            
+        # Menu script auto script
+        if isinstance(self.game.level, MainMenu):
             if self.y > 1000:
                 self._warp()
                 self.y = 0

@@ -2,6 +2,7 @@
 
 from pygame.locals import *
 from src.const import *
+from src.level.main_menu import MainMenu
 
 
 class Menu:
@@ -64,8 +65,8 @@ class Menu:
         # draw options
         dy = self.rect.h / (len(self.options) + 1)
         for index, option in enumerate(self.options):
-            # Resume becomes Play if game never started
-            if option == "Play" and not self.game.level("name") == "menu background":
+            # Play becomes Resume if game already started
+            if option == "Play" and not isinstance(self.game.level, MainMenu):
                 option = "Resume"
             
             option_surface = self.font.render(option, True, BLACK)
@@ -108,7 +109,7 @@ class Menu:
         # Play/Resume
         if self.selection_index == 0:
             self.game.paused = False
-            if self.game.level("name") == "menu background":
+            if isinstance(self.game.level, MainMenu):
                 self.game.build_next_level()
         
         elif self.selection_index == 1:
