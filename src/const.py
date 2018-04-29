@@ -211,3 +211,8 @@ def sign(n):
     get the sign of a number
     """
     return (n > 0) - (n < 0)
+
+
+def within_range(v, start, end):
+    return start <= v <= end
+

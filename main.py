@@ -34,8 +34,9 @@ class Game:
         from src.level.main_menu import MainMenu
         from src.level.tutorial_two import TutorialTwo
         from src.level.ledge import Ledge
+        from src.level.deathrun import DeathRun
         
-        levels = [Ledge, MainMenu, TutorialOne, TutorialTwo]
+        levels = [DeathRun, MainMenu, TutorialOne, TutorialTwo, Ledge, ]
         
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
@@ -46,12 +47,12 @@ class Game:
         self.font = pygame.font.Font('src//font//font.otf', 30)
 
         self.sfxs = SoundManager()
-        
         self.background_color = None
+        
+        self.paused = False
         self.levels = itertools.cycle(levels)
         self.build_next_level()
-
-        self.paused = False
+        
         self.run()
 
     def run(self):

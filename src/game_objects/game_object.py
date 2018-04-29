@@ -141,7 +141,8 @@ class GameObject(pygame.sprite.Sprite):
         if collidee and collidee.world == self.world:
             # Horizontal contact
             if side == "left" or side == "right":
-                if self.rect.top > collidee.rect.bottom or self.rect.bottom > collidee.rect.top:
+                if (within_range(self.rect.top, collidee.rect.top, collidee.rect.bottom)
+                        or within_range(self.rect.bottom, collidee.rect.top, collidee.rect.bottom)):
                     # Left contact
                     if collidee.rect.left == self.rect.right and side == "left":
                         return collidee
@@ -149,7 +150,8 @@ class GameObject(pygame.sprite.Sprite):
                     elif collidee.rect.right == self.rect.left and side == "right":
                         return collidee
             elif side == "top" or side == "bottom":
-                if self.rect.left > collidee.rect.right or self.rect.right > collidee.rect.left:
+                if (within_range(self.rect.left, collidee.rect.left, collidee.rect.right)
+                        or within_range(self.rect.right, collidee.rect.left, collidee.rect.right)):
                     # Top contact
                     if collidee.rect.bottom == self.rect.top and side == "top":
                         return collidee

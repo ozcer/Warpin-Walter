@@ -1,3 +1,5 @@
+import logging
+
 import pygame
 from pygame.locals import *
 
@@ -82,6 +84,7 @@ class Player(Dynamic):
                     
             crushed_enemy = self.contact_with(DumbEnemy, "bottom")
             if crushed_enemy:
+                logging.info(f"{self} crushing {crushed_enemy}")
                 crushed_enemy.get_hit(1)
     
             collidee = self.collide_with(Consumable)

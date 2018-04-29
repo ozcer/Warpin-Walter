@@ -9,15 +9,13 @@ class Chaser(Enemy):
               "move": load_image_folder("../gfx/slime/move"),
               }
     
-    width, height = 50, 50
+    width, height = 56, 28
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
                          image=pygame.Surface((Chaser.width, Chaser.height)),
                          **kwargs)
         
-        self.color = D_PURPLE
-        self.image.fill(self.color)
         self.speed = 4
         self.hp = 1
         
