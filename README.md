@@ -22,12 +22,13 @@ $ python3.6 ./main.py
 * Escape to pause
 
 # Assets used:
+* player gfx https://jesse-m.itch.io/jungle-pack
 * error sfx https://opengameart.org/content/interface-beeps
 * teleport sfx https://opengameart.org/content/teleport
-* player gfx https://jesse-m.itch.io/jungle-pack
 * warp charge https://kronbits.itch.io/matriax-free-assets
 * environment gfx https://opengameart.org/content/sci-fi-platform-tiles
 * enemy gfx https://rvros.itch.io/pixel-art-animated-slime
+* bgm https://opengameart.org/content/portal
 * font https://fontlibrary.org/en
 
 
