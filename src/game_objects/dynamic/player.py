@@ -16,7 +16,9 @@ class Player(Dynamic):
     images = {"run": load_image_folder("../gfx/player/run"),
               "idle": load_image_folder("../gfx/player/idle"),
               "fall": load_image_folder("../gfx/player/fall"),
-              "jump": load_image_folder("../gfx/player/jump")}
+              "jump": load_image_folder("../gfx/player/jump"),
+              "dead_flying": load_image_folder("../gfx/player/dead_flying"),
+              "dead_lying": load_image_folder("../gfx/player/dead_lying")}
     
     def __init__(self, *args,
                  warp_charges=99, **kwargs):
@@ -32,12 +34,14 @@ class Player(Dynamic):
         self.warp_charges = warp_charges
         self.won = False
         
-        self.stunned = False
         self.hp = 1
+        self.dying = False
+        self.die_counter = 0
+        self.stunned = False
         
         self.set_image("idle")
         self.ticks_per_frame = 5
-        self.depth = 0
+        
         self.won = False
 
     def update(self):
@@ -47,49 +51,42 @@ class Player(Dynamic):
         # physics
         ##############
         self.apply_gravity()
-            
+        
         if self.on_ground():
             self.dx = 0
-            self.jump_timer = -1
             self.stunned = False
         else:
             self.dx += -sign(self.dx) * .25
 
-        if not self.game.paused:
+        if not self.game.paused and self.is_alive():
             self.process_input()
         
         ##############
         # COLLISION
         ##############
-        kill_top = self.contact_with(KillField, "top")
-        kill_bot = self.contact_with(KillField, "bottom")
-        if kill_top:
-            self.hp = 0
-        elif kill_bot:
-            self.hp = 0
-            
         from src.game_objects.dynamic.chaser import Chaser
-        if self.contact_with(Enemy, "left"):
-            self.get_stunned("left")
-            if self._warpable():
-                self.warp()
-            else:
-                self.get_hit(1)
-        
-        elif self.contact_with(Enemy, "right") or self.contact_with(Chaser, "bottom"):
-            self.get_stunned("right")
-            if self._warpable():
-                self.warp()
-            else:
-                self.get_hit(1)
-                
-        crushed_enemy = self.contact_with(DumbEnemy, "bottom")
-        if crushed_enemy:
-            crushed_enemy.get_hit(1)
-
-        collidee = self.collide_with(Consumable)
-        if collidee:
-            self.consume(collidee)
+        if self.is_alive():
+            if self.contact_with(Enemy, "left"):
+                self.get_stunned("left")
+                if self._warpable():
+                    self.warp()
+                else:
+                    self.get_hit(1)
+            
+            elif self.contact_with(Enemy, "right") or self.contact_with(Chaser, "bottom"):
+                self.get_stunned("right")
+                if self._warpable():
+                    self.warp()
+                else:
+                    self.get_hit(1)
+                    
+            crushed_enemy = self.contact_with(DumbEnemy, "bottom")
+            if crushed_enemy:
+                crushed_enemy.get_hit(1)
+    
+            collidee = self.collide_with(Consumable)
+            if collidee:
+                self.consume(collidee)
         ##############
         # winning
         ##############
@@ -99,19 +96,23 @@ class Player(Dynamic):
         ##############
         # Sprite
         ##############
-        if self.on_ground():
-            if self.dx == 0:
-                self.set_image("idle")
+        if self.is_alive():
+            if self.on_ground():
+                if self.dx == 0:
+                    self.set_image("idle")
+                else:
+                    self.set_image("run")
             else:
-                self.set_image("run")
+                if self.dy <= 0:
+                    self.set_image("jump")
+                else:
+                    self.set_image("fall")
         else:
-            if self.dy <= 0:
-                self.set_image("jump")
+            if self.on_ground():
+                self.set_image("dead_lying")
             else:
-                self.set_image("fall")
-        if self.hp <= 0:
-            self.game.reset_level()
-        
+                self.set_image("dead_flying")
+
         # Menu script auto script
         if isinstance(self.game.level, MainMenu):
             if self.y > 1000:
@@ -119,6 +120,16 @@ class Player(Dynamic):
                 self.y = 0
                 self.dy = 0
         
+        if self.hp <= 0 and not self.dying:
+            self.die()
+            self.dying = True
+        
+        if self.die_counter > 0:
+            self.die_counter -= 1
+        else:
+            if not self.is_alive():
+                self.game.reset_level()
+            
     def draw(self):
         super().draw()
         
@@ -200,12 +211,26 @@ class Player(Dynamic):
         self.hp -= dmg
 
     def get_stunned(self, direction):
-        self.dy = -6
+        self.dy = -7
         self.stunned = True
         if direction == "left":
             self.dx = -10
         else:
             self.dx = 10
+    
+    def die(self):
+        self.die_counter = 100
+        
+        # rorate rect 90 degrees for lying pose
+        _surf = pygame.Surface(self.rect.size)
+        rotated_surf = pygame.transform.rotate(_surf, 90)
+        rotated_rect = rotated_surf.get_rect()
+        rotated_rect.center = self.rect.center
+        
+        self.rect = rotated_rect
+    
+    def is_alive(self):
+        return self.hp > 0
     
     def on_ground(self):
         detector = self.rect.copy()

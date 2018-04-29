@@ -47,12 +47,12 @@ class Chaser(Enemy):
                 or abs(self.x - target.x) < 2):
             self.dx = 0
         else:
-            self.render_text("!!!", pos=(0, -50), color=RED)
-            # Target on left
-            if target.x < self.x:
-                self.move("left")
-            else:
-                self.move("right")
+            if target.is_alive():
+                # Target on left
+                if target.x < self.x:
+                    self.move("left")
+                else:
+                    self.move("right")
 
     def move(self, direction):
         if direction == "left":
