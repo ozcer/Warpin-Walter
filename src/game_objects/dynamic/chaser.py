@@ -3,15 +3,17 @@ from src.game_objects.dynamic.enemy import Enemy
 from src.game_objects.dynamic.player import Player
 
 
-class Follower(Enemy):
+class Chaser(Enemy):
     
     images = {"idle": load_image_folder("../gfx/slime/idle"),
               "move": load_image_folder("../gfx/slime/move"),
               }
     
+    width, height = 50, 50
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
-                         image=pygame.Surface((50, 50)),
+                         image=pygame.Surface((Chaser.width, Chaser.height)),
                          **kwargs)
         
         self.color = D_PURPLE
@@ -19,7 +21,7 @@ class Follower(Enemy):
         self.speed = 4
         self.hp = 1
         
-        self.seek_range = 400
+        self.seek_range = 300
         self.ticks_per_frame = 5
         self.set_image("idle")
         

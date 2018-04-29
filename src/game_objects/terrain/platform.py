@@ -6,11 +6,8 @@ class Platform(GameObject):
     width, height = 162, 34
     images = {"static": load_image_folder("../gfx/enviro/steel_platform")}
     
-    def __init__(self, *args,
-                 pos,
-                 **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args,
-                         pos=pos,
                          image=pygame.Surface((Platform.width, Platform.height)),
                          **kwargs)
         self.set_image("static")

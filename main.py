@@ -6,6 +6,7 @@ import itertools
 from pygame.locals import *
 
 from src.const import *
+
 from src.level.main_menu import MainMenu
 from src.sound_manager import SoundManager
 
@@ -32,8 +33,9 @@ class Game:
         from src.level.tutorial_one import TutorialOne
         from src.level.main_menu import MainMenu
         from src.level.tutorial_two import TutorialTwo
-
-        levels = [MainMenu, TutorialOne, TutorialTwo]
+        from src.level.ledge import Ledge
+        
+        levels = [Ledge, MainMenu, TutorialOne, TutorialTwo]
         
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()
@@ -49,7 +51,7 @@ class Game:
         self.levels = itertools.cycle(levels)
         self.build_next_level()
 
-        self.paused = True
+        self.paused = False
         self.run()
 
     def run(self):

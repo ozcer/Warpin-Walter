@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 from src.const import *
+from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.dynamic.enemy import Enemy
 from src.game_objects.effects.warping_effect import WarpingEffect
@@ -27,8 +28,6 @@ class Player(Dynamic):
         self.is_player = True
         self.x_dir = 1
         self.jump_power = 15
-
-        self.apex = True
         
         self.warp_charges = warp_charges
         self.won = False
@@ -68,23 +67,23 @@ class Player(Dynamic):
             self.hp = 0
         elif kill_bot:
             self.hp = 0
-
-        
+            
+        from src.game_objects.dynamic.chaser import Chaser
         if self.contact_with(Enemy, "left"):
             self.get_stunned("left")
             if self._warpable():
                 self.warp()
             else:
                 self.get_hit(1)
-        elif self.contact_with(Enemy, "right"):
+        
+        elif self.contact_with(Enemy, "right") or self.contact_with(Chaser, "bottom"):
             self.get_stunned("right")
             if self._warpable():
                 self.warp()
             else:
-                
                 self.get_hit(1)
                 
-        crushed_enemy = self.contact_with(Enemy, "bottom")
+        crushed_enemy = self.contact_with(DumbEnemy, "bottom")
         if crushed_enemy:
             crushed_enemy.get_hit(1)
 

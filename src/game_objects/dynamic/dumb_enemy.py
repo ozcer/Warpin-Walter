@@ -5,9 +5,11 @@ from src.game_objects.dynamic.enemy import Enemy
 class DumbEnemy(Enemy):
     images = {"static": [solid_color(L_PURPLE)]}
     
+    width, height = 50, 50
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
-                         image=pygame.Surface((50, 50)),
+                         image=pygame.Surface((DumbEnemy.width, DumbEnemy.height)),
                          **kwargs)
 
         self.set_image("static")
