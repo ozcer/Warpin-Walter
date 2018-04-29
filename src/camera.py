@@ -4,10 +4,10 @@ from src.menu import Menu
 
 
 class Camera:
-    warp_charge_image = load_image_folder("../gfx/warp_charge")[0]
+    raw_warp_charge_image = load_image_folder("../gfx/warp_charge")[0]
     scaling = (3, 3)
-    scaled_size = warp_charge_image.get_width() * scaling[0], warp_charge_image.get_height() * scaling[1]
-    warp_charge_image = pygame.transform.scale(warp_charge_image, scaled_size)
+    scaled_size = raw_warp_charge_image.get_width() * scaling[0], raw_warp_charge_image.get_height() * scaling[1]
+    warp_charge_image = pygame.transform.scale(raw_warp_charge_image, scaled_size)
     
     def __init__(self, game, rect):
         self.game = game
@@ -17,7 +17,9 @@ class Camera:
         self.font = pygame.font.Font('src//font//font.otf', 30)
         
         self.menu = Menu(self.game)
-        
+
+        self._no_charge_error_counter = 0
+
     def follow(self, target):
         self.follow_target = target
     
@@ -26,6 +28,7 @@ class Camera:
         if self.follow_target:
             self.x, self.y = self.follow_target.x, self.follow_target.y
 
+        
     def adjust_rect(self, raw_rect):
         """
         given rect, return adjusted rect offset by camera
@@ -52,6 +55,10 @@ class Camera:
         self.draw_fps()
         self.draw_warp_charges()
         
+        if self._no_charge_error_counter > 0:
+            self._no_charge_error()
+            self._no_charge_error_counter -= 1
+        
         # draw menu if game paused
         if self.game.paused:
             self.menu.update()
@@ -73,7 +80,6 @@ class Camera:
     def draw_warp_charges(self):
         left_margin = 20
         top_margin = 20
-        scaling = (2, 2)
         
         last_left = left_margin
         player = find_closest(self, Player)
@@ -83,3 +89,22 @@ class Camera:
             rect.topleft = (last_left, top_margin)
             self.game.surface.blit(image, rect)
             last_left += rect.w
+    
+    def no_charge_error(self):
+        self._no_charge_error_counter = 20
+        
+    def _no_charge_error(self):
+        left_margin = 20
+        top_margin = 20
+    
+        error_surf = Camera.warp_charge_image.copy()
+        error_surf.set_alpha(50)
+        error_rect = error_surf.get_rect()
+        x_surf = self.font.render("X", True, RED)
+        x_rect = x_surf.get_rect()
+        x_rect.center = error_rect.center
+        error_surf.blit(x_surf, x_rect)
+    
+        error_rect.topleft = (left_margin, top_margin)
+        
+        self.game.surface.blit(error_surf, error_rect)

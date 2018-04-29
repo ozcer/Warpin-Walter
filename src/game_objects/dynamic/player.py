@@ -69,19 +69,22 @@ class Player(Dynamic):
         elif kill_bot:
             self.hp = 0
 
-        crushed_enemy = self.contact_with(Enemy, "bottom")
+        
         if self.contact_with(Enemy, "left"):
-            if not self.warp():
-                self.get_stunned("left")
-                self.get_hit(1)
+            self.get_stunned("left")
+            if self._warpable():
+                self.warp()
             else:
-                self.get_stunned("left")
+                self.get_hit(1)
         elif self.contact_with(Enemy, "right"):
-            if not self.warp():
-                self.get_stunned("right")
-                self.get_hit(1)
+            self.get_stunned("right")
+            if self._warpable():
+                self.warp()
             else:
-                self.get_stunned("right")
+                
+                self.get_hit(1)
+                
+        crushed_enemy = self.contact_with(Enemy, "bottom")
         if crushed_enemy:
             crushed_enemy.get_hit(1)
 
@@ -164,15 +167,13 @@ class Player(Dynamic):
     
     def warp(self):
         # check if going to warp into solid
-        collidee = self.detect_solid(self.rect, same_world=False)
-        if collidee is None and self.warp_charges > 0:
+        if self._warpable():
             self.warp_charges -= 1
             self._warp()
-            return True
         else:
+            collidee = self.detect_solid(self.rect, same_world=False)
             if self.warp_charges <= 0:
-                # TODO
-                pass
+                self.game.camera.no_charge_error()
             elif collidee:
                 collidee.flash_color(RED, alpha=155, period=5)
                 
@@ -186,6 +187,11 @@ class Player(Dynamic):
         target_world = "two" if self.game.world == "one" else "one"
         self.world = target_world
         self.game.change_world()
+    
+    def _warpable(self):
+        # check if going to warp into solid
+        collidee = self.detect_solid(self.rect, same_world=False)
+        return collidee is None and self.warp_charges > 0
     
     def consume(self, consumable):
         consumable.get_consumed(self)
