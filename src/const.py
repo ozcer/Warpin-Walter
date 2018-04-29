@@ -170,6 +170,26 @@ def solid_color(color):
     surface.fill(color)
     return surface
 
+def render_text_on_surface(text, surface, font, color=BLACK, top_padding=0, left_pading=0):
+    """
+    render text within boundary of surface's rect
+    :param text: str
+    :param surface: Surface
+    :param font: Font
+    :param paddings: {"left": int, "top":int}
+    :return: None
+    """
+    rect = surface.get_rect()
+    
+    last_top = rect.top + top_padding
+    for index, line in enumerate(text.split("\n")):
+        text_surf = font.render(line, True, color)
+        text_rect = text_surf.get_rect()
+        text_rect.topleft = (rect.left + left_pading, last_top)
+        surface.blit(text_surf, text_rect)
+        
+        last_top += text_rect.h
+
 def distance(p1, p2):
     """
     get distance between two points

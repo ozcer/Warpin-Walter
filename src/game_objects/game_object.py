@@ -182,7 +182,7 @@ class GameObject(pygame.sprite.Sprite):
         :param color: (int, int, int) rgb
         :return: None
         """
-        textsurface = self.font.render(text, False, color)
+        textsurface = self.font.render(text, True, color)
         text_rect = textsurface.get_rect()
         
         # Center Text

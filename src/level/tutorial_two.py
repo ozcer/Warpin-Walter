@@ -2,7 +2,7 @@ from src.const import *
 from src.game_objects.dynamic.dumb_enemy import DumbEnemy
 from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.goal import Goal
-from src.game_objects.interactible.warp_consumable import WarpConsumable
+from src.game_objects.interactible.warp_consumable import WarpCharge
 from src.game_objects.terrain.background_block import BackgroundBlock
 from src.game_objects.terrain.ground import Ground
 from src.level.level import Level
@@ -47,7 +47,7 @@ class TutorialTwo(Level):
     
         # warp charge
         pos = get_end_pos(Ground, end_pos, (2, 2))
-        charge = WarpConsumable(self.game, pos=pos)
+        charge = WarpCharge(self.game, pos=pos)
         self.game.add_entity(charge)
     
         # goal

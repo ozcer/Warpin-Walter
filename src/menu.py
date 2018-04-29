@@ -42,8 +42,8 @@ class Menu:
         self.panel_rect = self.panel_surf.get_rect()
         self.panel_rect.left = self.rect.right + 10
         self.panel_rect.centery = self.y
-        self.panel_surf.fill(L_BLUE)
         self.panel_surf.set_alpha(155)
+        self.panel_surf.fill(L_BLUE)
         self.panel_on = False
         self.panel_text = ""
         self.panel_font = pygame.font.Font('src//font//font.otf', 20)
@@ -57,10 +57,13 @@ class Menu:
         self.game.surface.blit(self.image, self.rect)
         
         if self.panel_on:
+            self.panel_surf.fill(L_BLUE)
+            
+            self._render_panel_text(self.panel_text)
             self.game.surface.blit(self.panel_surf, self.panel_rect)
-            self._show_panel(self.panel_text)
             
         self._draw_options()
+        
         
     def _draw_options(self):
         # draw options
@@ -120,18 +123,9 @@ class Menu:
             self.panel_on = True
             self.panel_text = (Menu.about_text)
     
-    def _show_panel(self, text):
-        left_padding = 10
-        top_padding = 10
-        
-        last_top = self.rect.top + top_padding
-        for index, line in enumerate(text.split("\n")):
-            text_surf = self.panel_font.render(line, True, BLACK)
-            text_rect = text_surf.get_rect()
-            text_rect.topleft = (self.panel_rect.left + left_padding, last_top)
-            self.game.surface.blit(text_surf, text_rect)
-            
-            last_top += text_rect.h
+    def _render_panel_text(self, text):
+        render_text_on_surface(text, self.panel_surf, self.panel_font,
+                               top_padding=10, left_pading=10)
 
     def __str__(self):
         return f"{self.__class__.__name__} at {self.x, self.y}"

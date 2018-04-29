@@ -2,16 +2,17 @@ from src.const import *
 from src.game_objects.interactible.consumable import Consumable
 
 
-class WarpConsumable(Consumable):
-    images = {"static": [solid_color(L_BLUE)]}
-    width = height = 50
+class WarpCharge(Consumable):
+    images = {"static": load_image_folder("../gfx/warp_charge")
+              }
+    width, height = 26, 32
 
     def __init__(self, *args,
                  pos,
                  **kwargs):
         super().__init__(*args,
                          pos=pos,
-                         image=pygame.Surface((WarpConsumable.width, WarpConsumable.height)),
+                         image=pygame.Surface((WarpCharge.width, WarpCharge.height)),
                          is_solid=False,
                          **kwargs)
         

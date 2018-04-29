@@ -1,7 +1,7 @@
 from src.const import *
 from src.game_objects.dynamic.player import Player
 from src.game_objects.interactible.goal import Goal
-from src.game_objects.interactible.warp_consumable import WarpConsumable
+from src.game_objects.interactible.warp_consumable import WarpCharge
 from src.game_objects.terrain.background_block import BackgroundBlock
 from src.game_objects.terrain.ground import Ground
 from src.game_objects.terrain.sign import Sign
@@ -45,13 +45,8 @@ class TutorialOne(Level):
     
         # warp charge
         pos = get_end_pos(Ground, block_pos, (3, 4), xreverse=True, yreverse=True)
-        charge = WarpConsumable(self.game, pos=pos)
+        charge = WarpCharge(self.game, pos=pos)
         self.game.add_entity(charge)
-        
-        # signage
-        pos = get_end_pos(Ground, bottom_left_pos, (4, 4), yreverse=True)
-        sign = Sign(self.game, pos=pos, dim=(2,1), text="hello")
-        self.game.add_entity(sign)
         
         # goal
         pos = get_end_pos(Ground, bottom_right_pos, (2, 2), xreverse=True, yreverse=True)
