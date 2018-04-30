@@ -13,7 +13,7 @@ from src.level.level import Level
 class DeathRun(Level):
     
     def __init__(self, game):
-        name = "Gotta Go Fast".title()
+        name = "Raining Slimes and Slimes".title()
         super().__init__(game, name=name)
     
     def build(self):
@@ -43,6 +43,9 @@ class DeathRun(Level):
 
         pos = get_end_pos(Ground, spawn, (1, 15), up=True)
         build_array(Chaser, self.game, pos, (2, 1), world="two")
+        
+        pos = get_end_pos(Ground, spawn, (9, 35), up=True)
+        build_array(Chaser, self.game, pos, (1, 1), world="two")
         
         
         # Left Guard

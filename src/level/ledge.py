@@ -14,7 +14,7 @@ from src.level.level import Level
 class Ledge(Level):
     
     def __init__(self, game):
-        name = "The Ledge"
+        name = "Blue's Clues Finds You"
         super().__init__(game, name=name)
     
     def build(self):

@@ -130,11 +130,13 @@ class Game:
         
         # brief seconds to show level name
         if not isinstance(self.level, MainMenu):
-            level_surface = self.font.render(self.level.name, False, WHITE)
+            text_surf = self.font.render(self.level.name, True, WHITE)
+            text_rect = text_surf.get_rect()
+            text_rect.center = DISPLAY_WIDTH/2, DISPLAY_HEIGHT/2
             self.surface.fill(BLACK)
-            self.surface.blit(level_surface, (0, 0))
+            self.surface.blit(text_surf, text_rect)
             pygame.display.update()
-            time.sleep(0)
+            time.sleep(2)
             
         self.level.build()
     

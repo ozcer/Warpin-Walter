@@ -11,7 +11,7 @@ from src.level.level import Level
 class TutorialOne(Level):
     
     def __init__(self, game):
-        name = "Make Space If There Is None"
+        name = "Get Berry, Be Merry"
         super().__init__(game, name=name)
     
     def build(self):

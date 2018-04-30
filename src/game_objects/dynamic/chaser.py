@@ -5,8 +5,8 @@ from src.game_objects.dynamic.player import Player
 
 class Chaser(Enemy):
     
-    images = {"idle": load_image_folder("../gfx/slime/idle"),
-              "move": load_image_folder("../gfx/slime/move"),
+    images = {"idle": load_image_folder("../gfx/blue_slime/idle"),
+              "move": load_image_folder("../gfx/blue_slime/move"),
               }
     
     width, height = 56, 28
@@ -20,7 +20,7 @@ class Chaser(Enemy):
         self.hp = 1
         
         self.seek_range = 300
-        self.ticks_per_frame = 5
+        self.ticks_per_frame = 6
         self.set_image("idle")
         
     def update(self):

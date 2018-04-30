@@ -16,7 +16,8 @@ class Menu:
     controls_text = ("WASD - move\n"
                      "Space - warp\n"
                      "R - restart\n"
-                     "Esc - pause\n")
+                     "Esc - pause\n\n"
+                     "Warp your way out of trouble!")
     
     about_text = ("PyWeek April 2018 entry \n"
                   "by Oscar Lin and Anas Elmi\n\n"
@@ -34,7 +35,7 @@ class Menu:
         self.x, self.y = Menu.x, Menu.y
         self.rect.center = self.x, self.y
         
-        self.options = ["Play", "Controls", "About"]
+        self.options = ["Play", "Help", "About"]
         self.selection_index = 0
         
         # Info panel

@@ -3,16 +3,18 @@ from src.game_objects.dynamic.enemy import Enemy
 
 
 class DumbEnemy(Enemy):
-    images = {"static": [solid_color(L_PURPLE)]}
+    images = {"idle": load_image_folder("../gfx/green_slime/idle"),
+              "move": load_image_folder("../gfx/green_slime/move"),
+              }
     
-    width, height = 50, 50
+    width, height = 56, 28
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args,
                          image=pygame.Surface((DumbEnemy.width, DumbEnemy.height)),
                          **kwargs)
-
-        self.set_image("static")
+        self.ticks_per_frame = 8
+        self.set_image("idle")
         
         self.speed = 2
         self.hp = 1
@@ -32,11 +34,18 @@ class DumbEnemy(Enemy):
         if self.detect_solid(detect_zone):
             self.dir = "right" if self.dir == "left" else "left"
         
+        if self.dx != 0 and self.dy != 0:
+            self.set_image("move")
+        else:
+            self.set_image("idle")
+        
     def draw(self):
         super().draw()
     
     def move(self, direction):
         if direction == "left":
+            self.x_dir = 1
             self.dx = -self.speed
         if direction == "right":
+            self.x_dir = -1
             self.dx = self.speed

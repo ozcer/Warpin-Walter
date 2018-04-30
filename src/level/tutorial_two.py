@@ -11,7 +11,7 @@ from src.level.level import Level
 class TutorialTwo(Level):
     
     def __init__(self, game):
-        name = "This hallway ain't big enough for the both of us".title()
+        name = "Tight Hallway".title()
         super().__init__(game, name=name)
     
     def build(self):

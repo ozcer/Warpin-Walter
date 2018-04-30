@@ -223,7 +223,7 @@ class Player(Dynamic):
     
     def die(self):
         self.die_counter = 100
-        
+        self.game.sfxs.play("oof")
         # rorate rect 90 degrees for lying pose
         _surf = pygame.Surface(self.rect.size)
         rotated_surf = pygame.transform.rotate(_surf, 90)

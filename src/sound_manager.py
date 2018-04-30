@@ -13,7 +13,7 @@ class SoundManager:
         for file in os.listdir(relative_path):
             _path = os.path.join(relative_path, file)
             pygame.mixer.music.load(_path)
-            #pygame.mixer.music.play(loops=-1)
+            pygame.mixer.music.play(loops=-1)
         
     def load_sounds(self, path):
         cwd = os.path.dirname(__file__)
