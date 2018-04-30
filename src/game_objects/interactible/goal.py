@@ -6,7 +6,7 @@ class Goal(Consumable):
     images = {"static": [solid_color(RED)]}
     
     width = 25
-    height = BLOCK_DIM[1]
+    height = BLOCK_DIM[1] - 2
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args,

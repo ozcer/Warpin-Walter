@@ -26,9 +26,9 @@ class TutorialTwo(Level):
         bottom_right_pos = build_row(Ground, self.game, bottom_left_pos, room_width)
     
         # Left Guard
-        top_left_pos = build_column(Ground, self.game, bottom_left_pos, room_height, reverse=True)
+        top_left_pos = build_column(Ground, self.game, bottom_left_pos, room_height, up=True)
         # Right Guard
-        build_column(Ground, self.game, bottom_right_pos, room_height, reverse=True)
+        build_column(Ground, self.game, bottom_right_pos, room_height, up=True)
     
         # Ceiling
         top_right_pos = build_row(Ground, self.game, top_left_pos, room_width)
@@ -37,13 +37,13 @@ class TutorialTwo(Level):
         build_array(BackgroundBlock, self.game, top_left_pos, (room_width, room_height), world="three")
     
         # Ennemy
-        spawn_pos = get_end_pos(Ground, bottom_left_pos, (8, 2), yreverse=True)
+        spawn_pos = get_end_pos(Ground, bottom_left_pos, (8, 2), up=True)
         enemy = DumbEnemy(self.game, pos=spawn_pos)
         self.game.add_entity(enemy, "one")
     
         # Low ceiling
-        _pos = get_end_pos(Ground, top_right_pos, (2, 2), xreverse=True)
-        end_pos = build_array(Ground, self.game, _pos, (room_width - 7, room_height-3), xreverse=True)
+        _pos = get_end_pos(Ground, top_right_pos, (2, 2), left=True)
+        end_pos = build_array(Ground, self.game, _pos, (room_width - 7, room_height-3), left=True)
     
         # warp charge
         pos = get_end_pos(Ground, end_pos, (2, 2))
@@ -51,9 +51,8 @@ class TutorialTwo(Level):
         self.game.add_entity(charge)
     
         # goal
-        pos = get_end_pos(Ground, bottom_right_pos, (2, 2), xreverse=True, yreverse=True)
-        goal = Goal(self.game, pos=pos)
-        self.game.add_entity(goal)
+        pos = get_end_pos(Ground, bottom_right_pos, (2, 2), left=True, up=True)
+        build_array(Goal, self.game, pos, (1, 1))
     
         # 2nd enemy
         enemy = DumbEnemy(self.game, pos=pos)

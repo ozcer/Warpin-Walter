@@ -1,6 +1,7 @@
 import logging
 
 from src.const import *
+from src.game_objects.dynamic.dynamic import Dynamic
 from src.game_objects.game_object import GameObject
 
 

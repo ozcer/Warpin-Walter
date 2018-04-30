@@ -203,6 +203,6 @@ class GameObject(pygame.sprite.Sprite):
     def _on_last_frame(self):
         total_frames = len(self.__class__.images[self.image_name])
         return self._frame_index % total_frames == total_frames -1
-
+    
     def __str__(self):
         return f"{self.__class__.__name__} at {self.x, self.y}"

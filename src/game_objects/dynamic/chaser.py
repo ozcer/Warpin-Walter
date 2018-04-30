@@ -42,7 +42,7 @@ class Chaser(Enemy):
         # If Player not found or too far or super close
         if (target is None
                 or distance((target.x, target.y), (self.x, self.y)) > self.seek_range
-                or abs(self.x - target.x) < 2):
+                or abs(self.x - target.x) < 5):
             self.dx = 0
         else:
             if target.is_alive():
@@ -51,6 +51,7 @@ class Chaser(Enemy):
                     self.move("left")
                 else:
                     self.move("right")
+        
 
     def move(self, direction):
         if direction == "left":

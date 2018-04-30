@@ -75,55 +75,55 @@ def _build_row(cls, game, start_pos, next_pos, amount, world=None, **kwargs):
             return pos
 
 
-def build_row(cls, game, start_pos, amount, reverse=False, world=None, **kwargs):
-    next_x = cls.width if not reverse else -cls.width
+def build_row(cls, game, start_pos, amount, left=False, world=None, **kwargs):
+    next_x = cls.width if not left else -cls.width
     next_pos = (next_x, 0)
     last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world, **kwargs)
     return last_pos
 
 
-def build_column(cls, game, start_pos, amount, reverse=False, world=None, **kwargs):
-    next_y = cls.height if not reverse else -cls.height
+def build_column(cls, game, start_pos, amount, up=False, world=None, **kwargs):
+    next_y = cls.height if not up else -cls.height
     next_pos = (0, next_y)
     last_pos = _build_row(cls, game, start_pos, next_pos, amount, world=world, **kwargs)
     return last_pos
 
 
-def build_array(cls, game, start_pos, dimensions, xreverse=False, yreverse=False, world=None, **kwargs):
+def build_array(cls, game, start_pos, dimensions, left=False, up=False, world=None, **kwargs):
     """
     build an array of objects
     :param cls: Type
     :param game: Game
     :param start_pos: (int, int)
     :param dimensions:  (int, int) width x height
-    :param xreverse: builds leftward
-    :param yreverse: builds upward
+    :param left: builds leftward
+    :param up: builds upward
     :param world: str or None
     :return: (int, int) last position
     """
     for row in range(dimensions[1]):
         dy = row * cls.height
-        if yreverse:
+        if up:
             dy = -dy
         pos = start_pos[0], start_pos[1] + dy
-        build_row(cls, game, pos, dimensions[0], xreverse, world, **kwargs)
-    return get_end_pos(cls, start_pos, dimensions, xreverse=xreverse, yreverse=yreverse)
+        build_row(cls, game, pos, dimensions[0], left, world, **kwargs)
+    return get_end_pos(cls, start_pos, dimensions, left=left, up=up)
 
 
-def get_end_pos(cls, start_pos, dimensions, xreverse=False, yreverse=False):
+def get_end_pos(cls, start_pos, dimensions, left=False, up=False):
     """
     calculate the end position if were to build an array of items
     :param cls: Type
     :param start_pos: (int, int)
     :param dimensions: (int, int)
-    :param xreverse: bool
-    :param yreverse: bool
+    :param left: bool: default builds rightward
+    :param up: bool: default builds downward
     :return: (int, int)
     """
     dx = (dimensions[0] - 1) * cls.width
-    if xreverse: dx = -dx
+    if left: dx = -dx
     dy = (dimensions[1] -1 ) * cls.height
-    if yreverse: dy = -dy
+    if up: dy = -dy
     
     end_pos = start_pos[0] + dx, start_pos[1] + dy
     return end_pos

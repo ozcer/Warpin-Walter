@@ -68,14 +68,14 @@ class Player(Dynamic):
         ##############
         from src.game_objects.dynamic.chaser import Chaser
         if self.is_alive():
-            if self.contact_with(Enemy, "left"):
+            if self.contact_with(Enemy, "left") or self.contact_with(Enemy, "top"):
                 self.get_stunned("left")
                 if self._warpable():
                     self.warp()
                 else:
                     self.get_hit(1)
             
-            elif self.contact_with(Enemy, "right") or self.contact_with(Chaser, "bottom"):
+            elif self.contact_with(Enemy, "right") or self.contact_with(Enemy, "bottom"):
                 self.get_stunned("right")
                 if self._warpable():
                     self.warp()

@@ -20,7 +20,7 @@ class TutorialOne(Level):
         room_height = 6
         block_at = 8
 
-        pos = get_end_pos(Ground, bottom_left_pos, (3, 4), yreverse=True)
+        pos = get_end_pos(Ground, bottom_left_pos, (3, 4), up=True)
         player = Player(self.game, pos=pos, warp_charges=0)
         self.game.add_entity(player, "one")
         self.game.camera.follow(player)
@@ -30,9 +30,9 @@ class TutorialOne(Level):
         bottom_right_pos = build_row(Ground, self.game, block_pos, room_width - block_at + 1)
     
         # Left Guard
-        top_left_pos = build_column(Ground, self.game, bottom_left_pos, room_height, reverse=True)
+        top_left_pos = build_column(Ground, self.game, bottom_left_pos, room_height, up=True)
         # Right Guard
-        build_column(Ground, self.game, bottom_right_pos, room_height, reverse=True)
+        build_column(Ground, self.game, bottom_right_pos, room_height, up=True)
     
         # Ceiling
         top_right_pos = build_row(Ground, self.game, top_left_pos, room_width)
@@ -41,14 +41,14 @@ class TutorialOne(Level):
         build_array(BackgroundBlock, self.game, top_left_pos, (room_width, room_height), world="three")
     
         # blockade
-        build_column(Ground, self.game, block_pos, room_height, reverse=True, world="one")
+        build_column(Ground, self.game, block_pos, room_height, up=True, world="one")
     
         # warp charge
-        pos = get_end_pos(Ground, block_pos, (3, 4), xreverse=True, yreverse=True)
+        pos = get_end_pos(Ground, block_pos, (3, 4), left=True, up=True)
         charge = WarpCharge(self.game, pos=pos)
         self.game.add_entity(charge)
         
         # goal
-        pos = get_end_pos(Ground, bottom_right_pos, (2, 2), xreverse=True, yreverse=True)
+        pos = get_end_pos(Ground, bottom_right_pos, (2, 2), left=True, up=True)
         goal = Goal(self.game, pos=pos)
         self.game.add_entity(goal)
