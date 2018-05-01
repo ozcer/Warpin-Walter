@@ -27,6 +27,6 @@ class WarpCharge(Consumable):
     def get_consumed(self, consumer):
         super().get_consumed(consumer)
         consumer.warp_charges += 1
-        
+        self.game.sfxs.play("collect_charge")
         self.kill()
 

@@ -20,5 +20,4 @@ class Consumable(GameObject):
         super().draw()
 
     def get_consumed(self, consumer):
-        self.game.sfxs.play("collect_charge")
         logging.info(f"{self} consumed by {consumer}")
