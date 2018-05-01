@@ -57,3 +57,5 @@ class Dynamic(GameObject):
     
     def apply_gravity(self, factor=1):
         self.dy += GRAVITY * factor
+        if self.dy > TERMIANL_VELOCITY:
+            self.dy = TERMIANL_VELOCITY

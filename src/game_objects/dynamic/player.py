@@ -48,7 +48,6 @@ class Player(Dynamic):
 
     def update(self):
         super().update()
-
         ##############
         # physics
         ##############

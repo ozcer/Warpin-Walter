@@ -5,7 +5,8 @@ from src.const import *
 
 
 class GameObject(pygame.sprite.Sprite):
-    
+    font = pygame.font.SysFont("monospace", 30)
+
     def __init__(self, game, *args,
                  pos, depth=0, image, world=None, is_solid=True, **kwargs):
         
@@ -23,7 +24,7 @@ class GameObject(pygame.sprite.Sprite):
         
         self.inactive_color = L_GREY
         
-        self.font = pygame.font.SysFont('Arial', 30)
+        self.font = GameObject.font
 
         self.ticks_per_frame = 1
         self._image_ticks = self.ticks_per_frame
@@ -43,16 +44,17 @@ class GameObject(pygame.sprite.Sprite):
             self._image_ticks = self.ticks_per_frame
     
     def draw(self):
-        if self.world is not None and self.world != self.game.world:
-            self.draw_inactive()
-        else:
-            self.draw_active()
-        
-        # Flashing
-        if hasattr(self, "_flash_timer") and self._flash_timer > 0:
-            if self._flash_timer % (2 * self._flash_period) in range(self._flash_period):
-                self.overlay_color(self._flash_color, alpha=self._flash_alpha)
-            self._flash_timer -= 1
+        if self.game.camera.rect.colliderect(self.rect):
+            if self.world is not None and self.world != self.game.world:
+                self.draw_inactive()
+            else:
+                self.draw_active()
+            
+            # Flashing
+            if hasattr(self, "_flash_timer") and self._flash_timer > 0:
+                if self._flash_timer % (2 * self._flash_period) in range(self._flash_period):
+                    self.overlay_color(self._flash_color, alpha=self._flash_alpha)
+                self._flash_timer -= 1
     
     def draw_active(self):
         adjusted = self.game.camera.adjust_rect(self.rect)

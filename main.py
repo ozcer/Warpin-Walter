@@ -36,7 +36,7 @@ class Game:
         from src.level.ledge import Ledge
         from src.level.deathrun import DeathRun
         
-        levels = [MainMenu, TutorialOne, TutorialTwo, Ledge, DeathRun,]
+        levels = [DeathRun, MainMenu, TutorialOne, TutorialTwo, Ledge, DeathRun,]
         
         self.entities = {ALL_SPRITES: pygame.sprite.Group()}
         self.fps_clock = pygame.time.Clock()

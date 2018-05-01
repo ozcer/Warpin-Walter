@@ -48,8 +48,8 @@ PLAYER_COLOR = D_OLIVE
 # Group of all entities
 ALL_SPRITES = "ALL"
 
-
 GRAVITY = .55
+TERMIANL_VELOCITY = 15
 
 BLOCK_DIM = 75, 75
 
