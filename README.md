@@ -26,6 +26,7 @@ $ python3.6 ./main.py
 * error sfx https://opengameart.org/content/interface-beeps
 * teleport sfx https://opengameart.org/content/teleport
 * warp charge https://kronbits.itch.io/matriax-free-assets
+* collect warp charge jingle https://opengameart.org/content/4-sci-fi-menu-sounds
 * environment gfx https://opengameart.org/content/sci-fi-platform-tiles
 * enemy gfx https://rvros.itch.io/pixel-art-animated-slime
 * bgm https://opengameart.org/content/portal
