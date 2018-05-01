@@ -93,7 +93,7 @@ class DeathRun(Level):
         build_array(WarpCharge, self.game, pos, (1, 1))
 
         eroom_end_base = get_end_pos(Ground, pit_tr, (eroom_start + eroom_width - 3, 2), up=True)
-        build_array(DumbEnemy, self.game, eroom_end_base, (3, 1), up=True, world="two")
+        build_array(DumbEnemy, self.game, eroom_end_base, (2, 1), up=True, world="two")
         
         # middle plat
         pos = get_end_pos(Ground, wall2_end, (6, 2), left=True, up=True)
