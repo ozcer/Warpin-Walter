@@ -38,7 +38,7 @@ class DeathRun(Level):
         self.game.camera.follow(player)
         
         # falling ene
-        pos = get_end_pos(Ground, spawn, (1, 15), up=True)
+        pos = get_end_pos(Ground, spawn, (1, 10), up=True)
         build_array(Chaser, self.game, pos, (2, 1), world="one")
         
         pos = get_end_pos(Ground, spawn, (20, 35), up=True)
