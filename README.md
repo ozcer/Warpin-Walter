@@ -1,6 +1,6 @@
 # Warpin' Walter
 
-<img src="/screenshots/menu.gif" width="320" height="240" />    <img src="/screenshots/gameplay.gif" width="320" height="240" />
+<img src="/screenshots/main.png" width="320" height="240" />    <img src="/screenshots/new_gameplay.gif" width="320" height="240" />
 
 Walter's been cursed, but can he be cured?
 Guide him through two frayed realities by warping through any obstacle before you. PyWeek April 2018 entry by Oscar Lin and Anas Elmi. Thank you PyWeek for organizing this event. The theme was two worlds.
@@ -33,28 +33,10 @@ $ python3.6 ./main.py
 * font https://fontlibrary.org/en
 
 
-# Progression
-## Day 1-3
-![](/screenshots/day3-1.png)
-![](/screenshots/day3-2.png)
+# History
 
-Completed:
-* player movement
-* gravity
-* camera system
-
-Initially we were going to code a basic playable level as well but collision logic took longer than expected. TODO tomorrow
-
-## Day 4
-![](/screenshots/day4-1.png)
-![](/screenshots/day4-2.png)
-![](/screenshots/day4-3.png)
-![](/screenshots/day4-4.png)
-
-Completed:
-* test level
-* warping
-* goal
+## Presented Product
+<img src="/screenshots/menu.gif" width="320" height="240" />    <img src="/screenshots/gameplay.gif" width="320" height="240" />
 
 ## Day 5
 * <img src="/screenshots/day5-dumb.gif" width="320" height="240" />
@@ -68,3 +50,29 @@ Completed:
   
 
 Plant on lock down on mechanics tomorrow or the day after in order to start making progress on graphics and level design
+
+## Day 4
+![](/screenshots/day4-1.png)
+![](/screenshots/day4-2.png)
+![](/screenshots/day4-3.png)
+![](/screenshots/day4-4.png)
+
+Completed:
+* test level
+* warping
+* goal
+
+## Day 1-3
+![](/screenshots/day3-1.png)
+![](/screenshots/day3-2.png)
+
+Completed:
+* player movement
+* gravity
+* camera system
+
+Initially we were going to code a basic playable level as well but collision logic took longer than expected. TODO tomorrow
+
+
+
+
