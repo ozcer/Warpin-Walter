@@ -27,8 +27,10 @@ class Camera:
         self.rect.center = self.x, self.y - 50
         if self.follow_target:
             self.x, self.y = self.follow_target.x, self.follow_target.y
+        else:
+            player = find_closest(self, Player)
+            self.follow(player)
 
-        
     def adjust_rect(self, raw_rect):
         """
         given rect, return adjusted rect offset by camera
@@ -83,13 +85,14 @@ class Camera:
         
         last_left = left_margin
         player = find_closest(self, Player)
-        for i in range(player.warp_charges):
-            image = Camera.warp_charge_image
-            rect = image.get_rect()
-            rect.topleft = (last_left, top_margin)
-            self.game.surface.blit(image, rect)
-            last_left += rect.w
-    
+        if player:
+            for i in range(player.warp_charges):
+                image = Camera.warp_charge_image
+                rect = image.get_rect()
+                rect.topleft = (last_left, top_margin)
+                self.game.surface.blit(image, rect)
+                last_left += rect.w
+        
     def no_charge_error(self):
         self._no_charge_error_counter = 20
         

@@ -47,6 +47,8 @@ class Game:
         self.font = pygame.font.Font('src//font//font.otf', 30)
 
         self.sfxs = SoundManager()
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
+        self.both_world_entities = pygame.sprite.Group()
         self.background_color = None
         
         self.paused = False
@@ -108,12 +110,7 @@ class Game:
         if world is None:
             self.both_world_entities.add(entity)
         entity.world = "one" if world is None else world
-        
-        # Add entity to class's sprite group
-        class_name = entity.__class__.__name__
-        if class_name not in self.entities:
-            self.entities[class_name] = pygame.sprite.Group()
-        self.entities[class_name].add(entity)
+    
         logging.info(f"{entity} created")
         
         # Also add to global sprite group
@@ -124,9 +121,9 @@ class Game:
         
     def build_level(self, level):
         self.world = "one"
-        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
-        self.both_world_entities = pygame.sprite.Group()
+        self.clear_entities()
         self.level = level
+        self.camera.follow_target = None
         
         # brief seconds to show level name
         if not isinstance(self.level, MainMenu):
@@ -147,12 +144,16 @@ class Game:
     
     def reset_level(self):
         self.build_level(self.level)
+    
+    def clear_entities(self):
+        self.entities = {ALL_SPRITES: pygame.sprite.Group()}
+        self.both_world_entities = pygame.sprite.Group()
 
     def change_world(self):
         self.world = "one" if self.world == "two" else "two"
         for entity in self.both_world_entities:
             entity.world = self.world
-
+    
     @staticmethod
     def exit_game(message=EXIT_MESSAGE, log=False):
         if log:

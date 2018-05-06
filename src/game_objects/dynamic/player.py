@@ -240,4 +240,4 @@ class Player(Dynamic):
         if self.detect_solid(detector):
             return True
         return False
-
+    
